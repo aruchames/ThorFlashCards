@@ -1,0 +1,100 @@
+The Design of YALLA 
+Yet another language learning app, very tentative name
+
+Andrew Ruchames, Andrew Semelhago, Cristian Andronic, Edward Lu, Michael Zhang
+
+
+Overview
+
+YALLA is a flashcard web application that helps you learn foreign languages more quickly and effectively.
+
+A common method for learning languages today consists of browsing news and other media outlets in the desired language. A tedium develops from the constant back-and-forth between on the one hand, translating words that are unfamiliar, and on the other hand, trying to remember these words. What happens is that because the process of translating the word is such a diversion from source media, the context in which the word was used becomes forgotten, removing an integral part of the language learning experience. YALLA aims to solve this problem by providing a suite of applications which enable fast translation of words through a plugin (for the Google Chrome browser), and the ability to directly add these translated words to a flashcard set. Current technologies allow for plugin translation (see WordReference Chrome Plugin), and other software allows for flashcard usage (see Anki, Memrise), but none combines the two functionalities and it is our belief that serving this niche vitally improves the fluidity in which one can immerse themselves in a language of their choice from their computer.
+
+Aside from the core features, there are other utilities that, time providing, we would like to add:
+ If the website is open and a card is added from the plugin, a message indicating a new card was added on the website will appear (website refreshes when user activates page)
+Flashcards can be shared and there can be a searchable online repository sorted by language and theme
+Flashcards can be used for definitions (e.g. use OED for English definitions), and chemical structures (e.g. for organic chemistry)
+Export flashcards to PDF / printable format
+
+
+Target Audience
+
+The target audience of this software is primarily those trying to learn languages. In addition, if the English definition utility is implemented, then the target audience expands to high school students trying to study for the SAT, undergraduates studying for the GRE, and any other folks trying to improve their vocabulary. The target of this software suite would be teachers who currently recommend software such as Anki – our goal is to displace them from this niche (in the classroom).
+
+
+Risk factors
+
+Get access to private API
+Differentiate from existing products via flashcard capability and more
+Have enough users to get established as the de-facto product that is recommended by teachers 
+Expand to as many languages as possible
+Dependency on accuracy of translation API (Possible improvements here by passing in more context for better translations)
+	
+
+Functionality
+
+So you want to learn a foreign language? Well you’ve probably spent time on things like Duolingo and Quizlet running over vocabulary words and elementary grammar, and at this point you’re looking for something to help you retain what you’ve learned and grow your knowledge in a meaningful way. We all know that making flashcards is a great way to learn vocabulary so that you don’t forget it, but it’s also a huge pain to make those flashcards. So our project will make them for you. Here’s how a typical session would go on the user end. 
+
+It’s the first time you’re running the program, you have heard about our project, so you go to our website www.somethingtbd.idk. First you are given a quick prompt to login with CAS authentication for now, hopefully Facebook and Google login once we get further in. Once there you are greeted by a landing page with a basic rundown of how the app works and a link to the google chrome store to download our plugin. Once you get the plugin we take you through a brief single page guide on how to use our product. Then we redirect you to a major website in the language of your choosing (for the moment only supporting French, Italian, Spanish, German and Portuguese) where you will make your first flash card. You will do this by picking out a sentence by highlighting, right clicking and choosing an option from the right click menu. The app will then parse the sentence and highlight the text. You will then click the words in the sentence that you want cards for and the app will add them to the deck of your choosing.
+
+The plugin button will bring down a small menu which will give you a scroll down menu of created decks and the option to create a new deck, as well as an option to study, which will then take you to the website where studying can be done. After selecting a deck, that deck will be your default on opening up the browser again. Now that you’ve made a solid 30 to 40 cards from a simple article in a newspaper, you want to learn, so you head over to www.somethingtbd.idk/learn which can be found by clicking a button on our plugin button, or by typing learn into the Google Chrome URL bar, as Chrome has an interface for creating custom URL commands. 
+
+Now you’re on the site. You have already created an account during the download plugin process and now you land on a profile page. Here you can view the decks, activity, and mastery level of you and your friends. So now you decide to study. You have the option of printing your cards as physical flashcards in PDF format which are easily cut at your nearest paper cutter or by the apt scissor-user, or you can be sociable and use our online flashcard study widget. This will bring you to a new page where there will be a windowed interface within the page that will show you the word that you selected in the original language. You will select how long you want to wait to review the word again, either “Missed It!”, “Don’t quite have it!” or “Got it” These options will determine when you will see this card and will also go into determining your mastery of the cards you’ve made.
+
+You can set a timer to keep you studying for a certain amount of time, or you can say you want to get a certain number of cards right, or that you want to see a certain number of cards. These options will all be in an options menu that will pop up when you start your study session. The actual flash card study will be controlled either by your mouse or by simple keyboard shortcuts. Once you have finished your session you will see a small congratulatory message, and you will be given the option to choose another deck or start another session. 
+
+
+Technical Design
+
+Sub-projects to implement
+Back-end web service and card API
+The backend service of YALLA will provide a standard RESTful api for authentication, manipulating decks of flashcards, and fetching flashcard data. We expect that this sub-project will be a substantial part of our code base as our top-level UI components (chrome extension in 3 and UI in 2) will depend on calling api functions to perform useful tasks. 
+Front-end web-based user interface for the client
+This sub-project involves using information from the backend to provide the features listed in functionality for regular users to view their flashcards, make new flashcards, and share their decks. It is the likely to be the second substantial part of our code base as it is indeed the main application our users will see.
+Chrome and possibly Firefox extension pending time constraints
+The implementation of one of our key features - instant card making from definitions - shall be done by building one or both of these.  
+
+Components:
+Backend:
+Django Framework on a Linux Server hosted by either Digital Ocean or Amazon AWS
+Postgres data store, potentially Redis/Mongo caching of definitions and flash card data
+Provides API interface for Login, Logout, Add Card to Deck, Remove Card to Deck, Edit Card, Edit Deck Access Permission and others as needed
+Frontend
+Bootstrap, jquery/Angular/React - any means necessary to make it look good. Currently leaning jquery. 
+Django templates
+Extension
+Standard Chrome or Firefox Dev Tools: html/css/javascript
+
+Tentative Technical Design Components and Sub-project data flow
+
+
+
+Milestones
+
+03/22 
+buy domain; set up webserver; familiarize with Django, Angular/jQuery/React, Bootstrap, AWS/Digital Ocean; Nginx; Chrome extension
+
+03/29
+set up website backend services (including API access, authentication, basic flashcard functionalities)
+front end not necessarily pretty by this point (bare bones meaning iterate through one set of flashcards)
+
+04/05
+start on Chrome extension (not necessarily translation, but ‘’add to flashcard deck functionality’’)
+iteratively improve front end appearance (add ability to have multiple distinct flash card decks)
+iteratively improve back end  (add ability to have multiple distinct flash card decks)
+
+04/12
+add translation functionality to Chrome extension
+iteratively improve front end appearance (add ability to test yourself)
+iteratively improve back end  (add ability to test yourself)
+
+04/19
+add OED definition functionality to Chrome extension
+iteratively improve front end appearance (add ability to export to PDF)
+iteratively improve back end  (add ability to export to PDF)
+
+04/26
+test our own product thoroughly
+
+05/03
+get others to test our product (alpha testing)
