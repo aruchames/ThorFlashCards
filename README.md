@@ -30,7 +30,7 @@ to
 Now run 
 
 ```
-pip install
+pip install -r requirements.txt
 ```
 
 You are now ready to run django scripts!
