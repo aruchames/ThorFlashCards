@@ -1,0 +1,11 @@
+{
+  "name": "Thor plugin",
+  "description": "Thor plugin",
+  "version": "1.0",
+  "permissions": ["contextMenus"],
+  "background": {
+    "persistent": false,
+    "scripts": ["sample.js"]
+  },
+  "manifest_version": 2
+}
