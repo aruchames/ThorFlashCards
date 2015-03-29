@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
+from thor_frontend import views
 
-urlpatterns = patterns('',
-    url(r'^login/$', 'django.contrib.auth.views.login'),
-    url(r'^logout/$', 'django.contrib.auth.views.login')
+urlpatterns = patterns('thor_frontend.views',
+    url(r'^login/$', views.login, name='login'),
 )

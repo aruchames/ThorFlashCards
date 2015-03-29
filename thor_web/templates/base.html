@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <title>Thor FC</title>
+    <link href='{% static "shared/style.css" %}' rel='stylesheet'>
+    {% block owncss %}
+    {% endblock owncss %}
+  </head>
+  <body>
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li
+            {% if message.tags %} 
+              class="{{ message.tags }}"
+            {% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% block content %}
+      <p>This is default content</p>
+    {% endblock content %}
+  </body>
+</html>

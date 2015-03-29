@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <p>Login to Thor FC</p>
+
+  <!-- TODO: update url linking -->
+  <p><a href="/">home</a></p>
+
+  <form action="/login/" method="POST">
+    {% csrf_token %}
+    <table border="0">
+      <tr>
+        <td>Username:</td>
+        <td><input id="username" type="text" name="username" /></td>
+      </tr>
+
+      <tr>
+        <td>Password:</td>
+        <td><input id="password" type="password" name="password" /></td>
+      </tr>
+    </table>
+
+    <input type="submit" value="Login" />
+  </form>
+
+  <!-- TODO: find a way to remove handwritten links -->
+  <p>Need to register? Click <a href="/register">here</a></p>
+{% endblock content %}
