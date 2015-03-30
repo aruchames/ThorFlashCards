@@ -23,6 +23,11 @@ def login(request):
         messages.add_message(request, messages.ERROR, "Username or password invalid")
         return redirect('/login')
     else:
-        t = loader.get_template('../templates/login.html')
+        t = loader.get_template('login.html')
         c = RequestContext(request, {})
         return HttpResponse(t.render(c))
+
+def index(request):
+    t = loader.get_template('index.html')
+    c = RequestContext(request, {})
+    return HttpResponse(t.render(c))
