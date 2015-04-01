@@ -11,8 +11,8 @@ chrome.contextMenus.onClicked.addListener(onClickHandler);
 chrome.runtime.onInstalled.addListener(function() {
 
     var context = "selection";
-    var title = "Thor plugin";
+    var title = "Use ThorFC to translate \"%s\"";
     var id = chrome.contextMenus.create({"title": title, "contexts":[context],
                                          "id": "context" + context});
-										 
+
 });
