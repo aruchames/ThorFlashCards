@@ -5,7 +5,7 @@
   "permissions": ["contextMenus"],
   "background": {
     "persistent": false,
-    "scripts": ["sample.js"]
+    "scripts": ["background.js"]
   },
   "manifest_version": 2
 }
