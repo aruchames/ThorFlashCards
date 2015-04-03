@@ -1,7 +1,8 @@
+var selectedText = "";
 function onClickHandler(info, tab) {
 
-	console.log("TEXT IS: " + info.selectionText)
-
+	console.log("TEXT IS: " + info.selectionText);
+	selectedText = info.selectionText;
 };
 
 chrome.contextMenus.onClicked.addListener(onClickHandler);
