@@ -65,9 +65,13 @@ WSGI_APPLICATION = 'thor_web.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+        'NAME': 'database_name_here',
+        'USER': 'user_name_here',
+        'PASSWORD': 'this_is_my_password',
+        'HOST': 'host_here',
+        'PORT': 'port_num',
+    },
 }
 
 # Internationalization
