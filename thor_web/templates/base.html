@@ -1,4 +1,4 @@
-{% load staticfiles %}
+p{% load staticfiles %}
 <html>
   <head>
         <meta charset="utf-8">
@@ -6,7 +6,7 @@
 	<meta name="description" content="Thor Flashcards">
 	<title>Thor Learning Solutions</title>
 
-	<link href='{% static "shared/css/bootstrap.css" %}' rel='stylesheet'>
+	<link href='{% static "shared/css/bootstrap.min.css" %}' rel='stylesheet'>
 	<link href='{% static "shared/css/style.css" %}' rel='stylesheet'>
 	{% block owncss %}
 	{% endblock owncss %}	
@@ -39,10 +39,24 @@
             <li class="#">
               <a href="#">Option 2</a>
             </li>
-            <li class="#">
-              <a href="../login">Login</a>
-            </li>
-          </ul>
+	    <li class="dropdown" id="menuLogin">
+	      <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
+	      <div class="dropdown-menu" style="padding:17px;">
+		<form class="form-signin" action="/login" method="POST">
+		  {% csrf_token %}
+		  <span id="reauth-email" class="reauth-email"></span>
+		  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		  <div id="remember" class="checkbox">
+		    <label>
+		      <input type="checkbox" value="remember-me"> Remember me
+		    </label>
+		  </div>
+		  <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit\
+										    ">Sign in</button>
+		</form>
+	      </div>
+            </li>   
         </div>
         <!-- /.navbar-collapse -->
       </div>
@@ -51,19 +65,21 @@
     <hr style="height:1em"/>
     {% if messages %}
     <ul class="messages">
-          {% for message in messages %}
-          <li
-            {% if message.tags %} 
-              class="{{ message.tags }}"
-            {% endif %}>{{ message }}</li>
-          {% endfor %}
-      </ul>
+      {% for message in messages %}
+      <li
+         {% if message.tags %} 
+         class="{{ message.tags }}"
+         {% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
     {% endif %}
-
+    
     {% block content %}
       <p>This is default content</p>
-    {% endblock content %}
+      {% endblock content %}
 
+      <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+      <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>     
       <script src='{% static "shared/js/bootstrap.min.js" %}'></script>
   </body>
 </html>
