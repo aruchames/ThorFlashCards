@@ -42,11 +42,12 @@ p{% load staticfiles %}
 	    <li class="dropdown" id="menuLogin">
 	      <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
 	      <div class="dropdown-menu" style="padding:17px;">
-		<form class="form-signin" action="/login" method="POST">
+		<form class="form-signin" action="/login/" method="POST">
 		  {% csrf_token %}
 		  <span id="reauth-email" class="reauth-email"></span>
-		  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-		  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		  <input type="text" id="inputEmail" class="form-control" name="username" placeholder="Email address" 
+          required autofocus>
+		  <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
 		  <div id="remember" class="checkbox">
 		    <label>
 		      <input type="checkbox" value="remember-me"> Remember me
