@@ -22,7 +22,7 @@ def login(request):
     Users can be suspended, preventing them from logging in
     """
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['username'].lower()
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
@@ -58,9 +58,9 @@ def register(request):
     At max a user can have 1 account
     """
     if request.method == 'POST':
-        username = request.POST["username"]
+        username = request.POST["username"].lower()
         password = request.POST["password"]
-        email = request.POST["email"]
+        email = request.POST["email"].lower()
 
         # Allow only one user per username
         user_exists = User.objects.filter(username=username).count() == 1
