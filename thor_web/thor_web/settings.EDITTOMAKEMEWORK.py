@@ -43,6 +43,7 @@ INSTALLED_APPS = (
 
     # Thor related-apps
     'thor_frontend',
+    'thor_backend',
 )
 
 MIDDLEWARE_CLASSES = (
