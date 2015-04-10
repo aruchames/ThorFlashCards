@@ -6,6 +6,7 @@
  * General styles
  */
 body, html {
+    padding-top: 5em;
     height: 100%;
     background-repeat: no-repeat;
     background-image: linear-gradient(#03a9f3, #00acc1);
@@ -14,6 +15,7 @@ body, html {
 .card-container.card {
     width: 350px;
     padding: 40px 40px;
+    padding-bottom:10px;
 }
 
 .btn {
@@ -79,6 +81,7 @@ body, html {
     box-sizing: border-box;
 }
 
+.form-signin #inputUsername,
 .form-signin #inputEmail,
 .form-signin #inputPassword {
     direction: ltr;
@@ -132,11 +135,6 @@ body, html {
 }
 
 .forgot-password {
-    color: rgb(104, 145, 162);
+    font-size: 14px;
 }
 
-.forgot-password:hover,
-.forgot-password:active,
-.forgot-password:focus{
-    color: rgb(12, 97, 33);
-}
