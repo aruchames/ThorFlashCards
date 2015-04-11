@@ -49,6 +49,14 @@ front end not necessarily pretty by this point (bare bones meaning iterate throu
 
 1. We need to set up the Database. ASAP. If that's not set up soon our forward progress will be greatly impeded. This is definitely Mike's thing.
 
+<<<<<<< HEAD
+2. We need to have the login and registration page down. Today Andrews edited the login to be a login button rather than login page, but we still need to do a few things with redirection from there, and we need the database set up in order to set up the Registration page. 
+
+3. Simultaneous with the registration, but after setting up the database, we need to make our chrome extension communicate with the database.
+
+4. We also need to have at least one user that can login and see a deck of cards that we've created. So in order to do that we will need a registration page done to add users. We can't worry about this goal until the database is up.
+
+=======
 2. We need to have the login and registration page down. Today Andrews edited the login to be a login button rather than login page, but we still need to do a few thin\
 gs with redirection from there, and we need the database set up in order to set up the Registration page.
 
@@ -56,3 +64,4 @@ gs with redirection from there, and we need the database set up in order to set 
 
 4. We also need to have at least one user that can login and see a deck of cards that we've created. So in order to do that we will need a registration page done to ad\
 d users. We can't worry about this goal until the database is up.
+>>>>>>> master
