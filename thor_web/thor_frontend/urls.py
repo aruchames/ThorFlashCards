@@ -9,3 +9,6 @@ urlpatterns = patterns('thor_frontend.views',
 
     url(r'^', views.error404, name='error404'),
 )
+
+
+handler404 = 'mysite.views.error404'
