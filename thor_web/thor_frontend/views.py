@@ -122,9 +122,21 @@ def index(request):
         return HttpResponse(t.render(c))
 
 
+def about(request):
+    t = loader.get_template('about.html')
+    c = RequestContext(request, {})
+    return HttpResponse(t.render(c))
+
+
+
+
+
+
 
 # Catch all for other URLs
 def error404(request):
     t = loader.get_template('404.html')
     c = RequestContext(request, {})
     return HttpResponse(t.render(c))
+
+
