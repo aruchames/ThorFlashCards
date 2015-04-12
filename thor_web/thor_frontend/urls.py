@@ -6,4 +6,6 @@ urlpatterns = patterns('thor_frontend.views',
     url(r'^login/$', views.login, name='login'),
     url(r'^register/$', views.register, name='register'),
     url(r'^logout/$', views.logout, name='logout'),
+
+    url(r'^', views.error404, name='error404'),
 )
