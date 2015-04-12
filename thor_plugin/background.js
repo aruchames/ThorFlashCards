@@ -6,7 +6,6 @@ function onClickHandler(info, tab) {
 };
 
 chrome.contextMenus.onClicked.addListener(onClickHandler);
-chrome.contextMenus.onclicked.
 
 // Set up context menu tree at install time.
 chrome.runtime.onInstalled.addListener(function() {
@@ -17,6 +16,6 @@ chrome.runtime.onInstalled.addListener(function() {
                                          "id": "context" + context});
     
     // Set up Login on install
-    
 
 });
+

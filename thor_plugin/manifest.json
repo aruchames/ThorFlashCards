@@ -4,17 +4,15 @@
     "version": "1.0",
     "permissions": ["contextMenus"],
     "background": {
-	"scripts": ["background.js"],
-	"persistent": false
+        "scripts": ["background.js"],
+	   "persistent": false
     },  
-    "content_scripts": [
-	{
-	    "matches": ["http://www.thorfc.com/extension/*"],
+    "icons": { "16":"favicon.ico"},
+    "content_scripts": [{
+	    "matches": ["<all_urls>"],
 	    "css": ["content.css"],
-	    "js": ["jquery.js", "content.js"]
-	}
-    ],
-	    
+	    "js": ["content.js"]
+	}],   
     "browser_action": {
 	"default_title": "ThorFC",
 	"default_popup": "browser_action/popup.html"

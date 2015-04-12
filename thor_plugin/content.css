@@ -1,0 +1,9 @@
+.selection_bubble {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:200px;
+  height:150px;
+  background-color: #03a9f3;
+}
