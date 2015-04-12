@@ -5,6 +5,10 @@ class Deck(models.Model):
     """
     The deck model represents a deck containing the flashcards.
     It contains many Cards. 
+    created_at : the time the deck was created
+    deck_name  : the name of the deck
+    created_by : the user who created the deck
+    private    : if true, only the creator can view
     """
     created_at = models.DateTimeField(auto_now_add=True)
     deck_name = models.CharField(max_length=100)
