@@ -1,14 +1,23 @@
 {
-  "name": "Thor plugin",
-  "description": "Thor plugin",
-  "version": "1.0",
-  "permissions": ["contextMenus"],
-  "background": {
-    "scripts": ["background.js"]
-  },
-  "browser_action": {
-      "default_title": "ThorFC",
-      "default_popup": "browser_action/popup.html"
-  },
-  "manifest_version": 2
+    "name": "Thor plugin",
+    "description": "Thor plugin",
+    "version": "1.0",
+    "permissions": ["contextMenus"],
+    "background": {
+	"scripts": ["background.js"],
+	"persistent": false
+    },  
+    "content_scripts": [
+	{
+	    "matches": ["http://www.thorfc.com/extension/*"],
+	    "css": ["content.css"],
+	    "js": ["jquery.js", "content.js"]
+	}
+    ],
+	    
+    "browser_action": {
+	"default_title": "ThorFC",
+	"default_popup": "browser_action/popup.html"
+    },
+    "manifest_version": 2
 }
