@@ -7,3 +7,19 @@
   height:150px;
   background-color: #03a9f3;
 }
+#startSelection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    background-color: yellow;
+    font-weight: bold;
+    font-size: 60%;
+}
+
+#bubbleDOM {
+  position: absolute;
+  width:200px;
+  height:150px;
+  overflow: scroll;
+  background-color: #03a9f3;
+}
