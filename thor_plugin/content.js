@@ -11,7 +11,7 @@ document.addEventListener('mouseup', function (e) {
   
   if (selection.length > 0) {
   	var rect = window.getSelection().getRangeAt(0).getBoundingClientRect()
-    renderBubble(rect.x, rect.clientY, selection);
+    renderBubble(rect.x, rect.clientY,  selection);
   }
 }, false);
 

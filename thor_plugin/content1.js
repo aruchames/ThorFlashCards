@@ -76,7 +76,14 @@ function showSelectionPosition() {
             lastx1 = startPos.x;
             lastx2 = endPos.x;
             var bubbleDOM = gEBI("bubbleDOM");
-            htmlFrag = "<form action='makecard.js'> Original Text:<br>" + rangy.getSelection().toString() + "<br> Translated Text:<br> <input type='back'> <br><br> <input type='submit' value='Make Card!'></form>";
+            var translateCall = "Translated Text"; 
+
+            var regex = /(<([^>]+)>)/ig;
+            var body = rangy.getSelection().toString();
+            var result = body.replace(regex, "");
+
+
+            htmlFrag = "<form id='card' action='makecard.js'> <h5>Original Text:</h5><div id='front'>"+/* rangy.getSelection().toString()*/ result + "</div><h5>Translated Text:</h5> <div id='back'>"+ translateCall + "</div><br> <input type='submit' value='Make Card!' id='submit'></form>";
             bubbleDOM.innerHTML = htmlFrag;
             bubbleDOM.style.left = (startPos.x - 32) + "px";
             bubbleDOM.style.top = (startPos.y - 150) + "px";
