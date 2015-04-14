@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib import messages
@@ -128,15 +128,6 @@ def about(request):
     return HttpResponse(t.render(c))
 
 
-
-
-
-
-
 # Catch all for other URLs
 def error404(request):
-    t = loader.get_template('404.html')
-    c = RequestContext(request, {})
-    return HttpResponse(t.render(c))
-
-
+   return HttpResponseNotFound(render_to_string('404.html'))

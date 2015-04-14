@@ -99,11 +99,20 @@
     </ul>
     {% endif %}
 
-      {% block content %}
-      <p>This is default content</p>
-      {% endblock content %}
+    {% block content %}
+    <p>This is default content</p>
+    {% endblock content %}
 
-
+    <footer class="footer footer-below bg-dark">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <p style="font-family:arial;" class="text-muted text-center">Made with love by Princeton-based Thor Flashcards Team<p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>     
     <script src='{% static "shared/js/bootstrap.min.js" %}'></script>
