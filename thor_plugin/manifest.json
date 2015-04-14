@@ -10,8 +10,9 @@
     "icons": { "16":"favicon.ico"},
     "content_scripts": [{
 	    "matches": ["<all_urls>"],
+        "run_at": "document_end",
 	    "css": ["content.css"],
-	    "js": ["js/log4javascript.js", "js/core.js", "js/dom.js", "js/domrange.js", "js/rangy-position.js", "js/wrappedrange.js", "js/wrappedselection.js", "js/rangy-position.js", "content1.js"]
+	    "js": ["js/log4javascript.js", "js/core.js", "js/dom.js", "js/domrange.js", "js/rangy-position.js", "js/wrappedrange.js", "js/wrappedselection.js", "js/rangy-position.js", "content2.js"]
 	}],
     "browser_action": {
 	"default_title": "ThorFC",

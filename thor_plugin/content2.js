@@ -1,0 +1,58 @@
+function hideAll() {
+    document.getElementById("thorfcIcon").style.visibility = "hidden";
+    document.getElementById("bubbleDOM").style.visibility = "hidden";
+}
+
+function showBubble() {
+    document.getElementById("bubbleDOM").style.visibility = "visible";
+}
+
+function onSelect() {
+    hideAll();
+    debugger;
+
+    var selection = rangy.getSelection();
+    var box = selection.getBoundingDocumentRect();
+
+    if (box.width == 0 && box.height == 0) {
+        return;
+    }
+
+    var startPos = selection.getStartDocumentPos();
+
+    var thorfcIcon = document.getElementById("thorfcIcon");
+    thorfcIcon.style.left = (startPos.x - 16) + "px";
+    thorfcIcon.style.top = (startPos.y - 16) + "px";
+    thorfcIcon.style.visibility = "visible";
+
+    var bubbleDOM = document.getElementById("bubbleDOM");
+    var translateCall = "Translated Text";
+    var regex = /(<([^>]+)>)/ig;
+    var body = rangy.getSelection().toString();
+    var result = body.replace(regex, "");
+    var htmlFrag = "<form id='card' action='makecard.js'> <h5>Original Text:</h5><div id='front'>"+/* rangy.getSelection().toString()*/ result + "</div><h5>Translated Text:</h5> <div id='back'>"+ translateCall + "</div><br> <input type='submit' value='Make Card!' id='submit'></form>";
+    bubbleDOM.innerHTML = htmlFrag;
+    bubbleDOM.style.left = (startPos.x - 24) + "px";
+    bubbleDOM.style.top = (startPos.y - 175) + "px";
+
+}
+
+window.onload = function() {
+    rangy.init();
+
+    var thorfcIcon = document.createElement("img");
+    thorfcIcon.setAttribute("src", chrome.extension.getURL("favicon.ico"));
+    thorfcIcon.addEventListener("click", showBubble);
+    thorfcIcon.id = "thorfcIcon";
+    thorfcIcon.style.visibility = "hidden";
+
+    var bubbleDOM = document.createElement("div");
+    bubbleDOM.id = "bubbleDOM";
+    bubbleDOM.style.visibility = "hidden";
+
+    document.body.appendChild(thorfcIcon);
+    document.body.appendChild(bubbleDOM);
+
+
+    document.addEventListener('mouseup', onSelect);
+}
