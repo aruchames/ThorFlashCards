@@ -1,9 +1,64 @@
-.selection_bubble {
-  visibility: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width:200px;
-  height:150px;
+#startSelection {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    background-color: yellow;
+    font-weight: bold;
+    font-size: 60%;
+}
+
+#bubbleDOM {
+  position: absolute;
+  width:250px;
+  height:175px;
   background-color: #03a9f3;
+  outline:1px solid #424242;
+  overflow-x:hidden;
+  overflow-y:auto;
+  z-index:10000;
+}
+#front{
+  background-color: #f05f40;
+  border: 1px solid #848484;
+  font-weight: bold;
+  font-size:14px;
+  outline: 2px solid #424242;
+  margin-right:10px;
+  
+}
+
+#card{
+  width: 250px;
+  height:150px;
+  position: relative;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+#back{
+  background-color: #f05f40;
+  border: 1px solid #848484;
+  font-weight: bold;
+  font-size:14px;
+  outline: 2px solid #424242;
+  margin-right:10px;
+}
+
+#submit{
+  padding:5px 15px; 
+  background:#E3E300;
+   border:0 none;
+  cursor:pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px; 
+  top: 2px;
+}
+h5{
+  text-family: Helvetica;
 }
