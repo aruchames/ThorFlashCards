@@ -12,7 +12,7 @@ class Deck(models.Model):
     """
     created_at = models.DateTimeField(auto_now_add=True)
     deck_name = models.CharField(max_length=100)
-    created_by = models.ForeignKey(User)
+    created_by = models.ForeignKey(User, related_name="decks")
     private = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -30,7 +30,7 @@ class Card(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     front = models.CharField(max_length=400)
     back = models.CharField(max_length=400)
-    deck = models.ForeignKey('Deck')
+    deck = models.ForeignKey(Deck, related_name="cards")
 
     def __unicode__(self):
         return self.front
