@@ -7,9 +7,24 @@ function showBubble() {
     document.getElementById("bubbleDOM").style.visibility = "visible";
 }
 
-function onSelect() {
-    hideAll();
+function onSelect(e) {
+
     debugger;
+
+    var el = e.target;
+
+    if (el.id == "thorfcIcon") {
+        el.style.visibility = "hidden";
+        return;
+    }
+    else if (el.className == "bubbleEl") {
+        return;
+    }
+
+
+    hideAll();
+
+
 
     var selection = rangy.getSelection();
     var box = selection.getBoundingDocumentRect();
@@ -48,6 +63,7 @@ window.onload = function() {
 
     var bubbleDOM = document.createElement("div");
     bubbleDOM.id = "bubbleDOM";
+    bubbleDOM.className = "bubbleEl";
     bubbleDOM.style.visibility = "hidden";
 
     document.body.appendChild(thorfcIcon);
