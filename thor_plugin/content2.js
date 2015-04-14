@@ -7,6 +7,7 @@ function showBubble() {
     document.getElementById("bubbleDOM").style.visibility = "visible";
 }
 
+<<<<<<< HEAD
 function onSelect(e) {
 
     debugger;
@@ -25,6 +26,11 @@ function onSelect(e) {
     hideAll();
 
 
+=======
+function onSelect() {
+    hideAll();
+    debugger;
+>>>>>>> 029149747c0c886766b74fa08209a08b3c90b580
 
     var selection = rangy.getSelection();
     var box = selection.getBoundingDocumentRect();
@@ -63,6 +69,7 @@ window.onload = function() {
 
     var bubbleDOM = document.createElement("div");
     bubbleDOM.id = "bubbleDOM";
+
     bubbleDOM.className = "bubbleEl";
     bubbleDOM.style.visibility = "hidden";
 
