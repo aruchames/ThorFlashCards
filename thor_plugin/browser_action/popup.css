@@ -1,10 +1,19 @@
 body {
-    width: 300px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
+    font-family: Helvetica;
 }
-p {
-    font-weight: bold;
+input{
+    padding: 5px 15px;
+    background: #03a9f3;
+    border: 1px solid #f4b9ff;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+    top: 2px;
+    left: 5px;
+    right: 5px;
+    font-family: Helvetica;
+    width: 90px;
 }
-#selection {
-    font-weight: normal;
-}
+
