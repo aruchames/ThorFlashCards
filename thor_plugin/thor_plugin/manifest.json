@@ -1,0 +1,23 @@
+{
+    "name": "Thor plugin",
+    "description": "Thor plugin",
+    "version": "1.0",
+    "permissions": ["contextMenus"],
+    "background": {
+        "scripts": ["background.js"],
+	   "persistent": false
+    },
+    "icons": { "16":"favicon.ico"},
+    "content_scripts": [{
+	    "matches": ["<all_urls>"],
+        "run_at": "document_end",
+	    "css": ["content.css"],
+	    "js": ["js/log4javascript.js", "js/core.js", "js/dom.js", "js/domrange.js", "js/rangy-position.js", "js/wrappedrange.js", "js/wrappedselection.js", "js/rangy-position.js", "content1.js"]
+	}],
+    "browser_action": {
+	"default_title": "ThorFC",
+	"default_popup": "browser_action/popup.html"
+    },
+    "web_accessible_resources": ["favicon.ico"] ,
+    "manifest_version": 2
+}
