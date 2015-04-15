@@ -1,15 +1,23 @@
+var thorFClastSelectionBox;
+
 function hideAll() {
     document.getElementById("thorfcIcon").style.visibility = "hidden";
     document.getElementById("bubbleDOM").style.visibility = "hidden";
 }
 
-function showBubble() {
-    document.getElementById("bubbleDOM").style.visibility = "visible";
+function setBubbleClass(el) {
+    el.className = "bubbleEl";
+    for (var i = 0; i < el.childNodes.length; i++) {
+        setBubbleClass(el.childNodes[i]);
+    }
 }
 
-<<<<<<< HEAD
-function onSelect(e) {
+function showBubble() {
+    document.getElementById("bubbleDOM").style.visibility = "visible";
+    setBubbleClass(document.getElementById("bubbleDOM"));
+}
 
+function onSelect(e) {
     debugger;
 
     var el = e.target;
@@ -24,20 +32,17 @@ function onSelect(e) {
 
 
     hideAll();
-
-
-=======
-function onSelect() {
-    hideAll();
-    debugger;
->>>>>>> 029149747c0c886766b74fa08209a08b3c90b580
-
     var selection = rangy.getSelection();
-    var box = selection.getBoundingDocumentRect();
 
+    var box = selection.getBoundingDocumentRect();
     if (box.width == 0 && box.height == 0) {
         return;
     }
+    if (JSON.stringify(box) === JSON.stringify(thorFClastSelectionBox)) {
+        thorFClastSelectionBox = {};
+        return;
+    }
+    thorFClastSelectionBox = box;
 
     var startPos = selection.getStartDocumentPos();
 
@@ -56,6 +61,10 @@ function onSelect() {
     bubbleDOM.style.left = (startPos.x - 24) + "px";
     bubbleDOM.style.top = (startPos.y - 175) + "px";
 
+}
+
+function onSelectDelayed(e) {
+    window.setTimeout(onSelect(e), 200);
 }
 
 window.onload = function() {
