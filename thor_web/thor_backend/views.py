@@ -200,10 +200,12 @@ def create_card(request):
   """
 
   # Card must have deck
-  if 'deck' not in request.data:
+  if u'deck' not in request.data:
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
-  deck_id = request.data.deck
+  print request.data
+
+  deck_id = request.data[u'deck']
 
   # Attempt to fetch the deck
   try:
