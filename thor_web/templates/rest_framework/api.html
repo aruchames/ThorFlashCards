@@ -1,0 +1,15 @@
+{% extends "rest_framework/base.html" %}
+
+<!-- Override default api base.html -->
+{% block bootstrap_theme %}
+    <link rel="stylesheet" href="/static/shared/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/shared/css/creative.css" type="text/css">
+{% endblock %}
+
+{% block title %}
+  Thorfc Developer API
+{% endblock %}
+
+{% block branding %}
+  <a class="navbar-brand page-scroll" href="/#page-top">Thor Flashcards API</a>
+{% endblock %}

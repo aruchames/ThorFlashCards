@@ -3,24 +3,23 @@ from rest_framework import serializers
 from thor_backend.models import Deck, Card
 from django.contrib.auth.models import User
 
-class CardSerializer(serializers.Serializer):
-  pk = serializers.IntegerField()
-  created_at = serializers.DateTimeField()
-  front = serializers.CharField(max_length=100)
-  back = serializers.CharField(max_length=100)
-
+class CardSerializer(serializers.ModelSerializer):
+  deck = serializers.ReadOnlyField(source='deck.id')
   class Meta:
     model = Card
-    fields = ('pk', 'created_at', 'front', 'back')
-    ordering=('pk',)
+    fields = ('pk', 'deck', 'created_at', 'front', 'back')
 
-class DeckSerializer(serializers.Serializer):
-  pk = serializers.IntegerField()
-  created_at = serializers.DateTimeField()
-  deck_name = serializers.CharField(max_length=100)
+class DeckSerializer(serializers.ModelSerializer):
   cards = CardSerializer(many=True, read_only=True)
+  created_by = serializers.ReadOnlyField(source='created_by.id')
 
   class Meta:
     model = Deck
-    ordering=('pk',)
-    fields = ('pk', 'created_at', 'deck_name', 'private', 'cards')
+    fields = ('pk', 'deck_name', 'created_by', 'private', 'cards')
+
+class UserSerializer(serializers.ModelSerializer):
+  decks = serializers.PrimaryKeyRelatedField(many=True, queryset=Deck.objects.all())
+
+  class Meta:
+    model = User
+    fields = ('id', 'username', 'decks')
