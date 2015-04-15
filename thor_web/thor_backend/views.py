@@ -186,6 +186,24 @@ class CardDetail(APIView):
     card.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['GET'])
+@permission_classes( (permissions.IsAuthenticated, ) )
+def user_me(request):
+  """
+  Request format:
+
+  ## /api/users/me
+
+  # Methods supported:
+
+  ## get
+  * Get information on the currently logged in user
+  * The user must be logged in for this to work
+  """
+  serializer = UserSerializer(request.user)
+  return Response(serializer.data)
+
+
 @api_view(['POST'])
 @permission_classes( (permissions.IsAuthenticated,) )
 def create_card(request):
