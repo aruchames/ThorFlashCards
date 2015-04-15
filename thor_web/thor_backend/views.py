@@ -167,6 +167,9 @@ class CardDetail(APIView):
     if deck_edit_forbidden(card.deck, request.user):
       return Response(status=HTTP_403_FORBIDDEN)
 
+    if u"deck" in request.data:
+      del request.data[u"deck"]
+
     serializer = CardSerializer(card, data=request.data)
     if serializer.is_valid():
       serializer.save()
