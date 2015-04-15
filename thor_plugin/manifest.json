@@ -18,6 +18,6 @@
 	"default_title": "ThorFC",
 	"default_popup": "browser_action/popup.html"
     },
-    "web_accessible_resources": ["favicon.ico"] ,
+    "web_accessible_resources": ["icon-22x21.png"] ,
     "manifest_version": 2
 }

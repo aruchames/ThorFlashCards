@@ -47,8 +47,8 @@ function onSelect(e) {
     var startPos = selection.getStartDocumentPos();
 
     var thorfcIcon = document.getElementById("thorfcIcon");
-    thorfcIcon.style.left = (startPos.x - 16) + "px";
-    thorfcIcon.style.top = (startPos.y - 16) + "px";
+    thorfcIcon.style.left = (startPos.x - 23) + "px";
+    thorfcIcon.style.top = (startPos.y - 23) + "px";
     thorfcIcon.style.visibility = "visible";
 
     var bubbleDOM = document.getElementById("bubbleDOM");
@@ -71,7 +71,7 @@ window.onload = function() {
     rangy.init();
 
     var thorfcIcon = document.createElement("img");
-    thorfcIcon.setAttribute("src", chrome.extension.getURL("favicon.ico"));
+    thorfcIcon.setAttribute("src", chrome.extension.getURL("icon-22x21.png"));
     thorfcIcon.addEventListener("click", showBubble);
     thorfcIcon.id = "thorfcIcon";
     thorfcIcon.style.visibility = "hidden";
