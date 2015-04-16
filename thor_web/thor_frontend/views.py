@@ -130,4 +130,4 @@ def about(request):
 
 # Catch all for other URLs
 def error404(request):
-   return HttpResponseNotFound(render_to_string('404.html'))
+   return HttpResponseNotFound(render_to_string('404.html'), status=404)

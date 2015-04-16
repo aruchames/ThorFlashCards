@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+# Used for testing
+from random import randint
+
 # Rest framework libraries
 from thor_backend.models import Deck, Card
 from django.contrib.auth.models import User
@@ -19,15 +22,89 @@ def deck_edit_forbidden(deck, user):
 def deck_view_forbidden(deck, user):
   return deck.created_by.id != user.id and deck.private
 
-# Create your views here.
+# 404 view
+# ========================================================================
+@api_view(['GET'])
+def error404(request):
+  return Response(status.HTTP_404_NOT_FOUND)
+
+
+# Translate API views
+# ========================================================================
+@api_view(['GET'])
+@permission_classes( (permissions.IsAuthenticated,) )
+def translate(request, query):
+  """
+  # Request format:
+
+  ## /api/translate/&lt;query&gt;
+
+  # Methods supported:
+
+  ## get
+  * Get a translation given the query
+  """
+  def randw():
+    arr = ["blah", "bleh", "blarg", "bleck", "bloh", "bee", "bop", "aeio", "aeii", "aeoli"]
+    return arr[randint(0, len(arr) - 1)]
+
+  translation1 = " ".join([randw() for w in query.split()])
+  translation2 = " ".join([randw() for w in query.split()])
+  translation3 = " ".join([randw() for w in query.split()])
+  re = {"q": query, "trans": [translation1, translation2, translation3], "lang": "derplang"}
+  return Response(re)
+
+# User Object API views 
+# ========================================================================
 class UserList(generics.ListAPIView):
+  """
+  # Request format:
+
+  ## /api/users
+
+  # Methods supported:
+
+  ## get
+  * Returns a list of all users and associated decks
+  """
   queryset = User.objects.all()
   serializer_class = UserSerializer
 
 class UserDetail(generics.RetrieveAPIView):
+  """
+  # Request format:
+
+  ## /api/users/&lt;user_id&gt;
+
+  # Methods supported:
+
+  ## get
+  # Returns information of a specific user with user_id
+  """
   queryset = User.objects.all()
   serializer_class = UserSerializer
 
+
+@api_view(['GET'])
+@permission_classes( (permissions.IsAuthenticated, ) )
+def user_me(request):
+  """
+  Request format:
+
+  ## /api/users/me
+
+  # Methods supported:
+
+  ## get
+  * Get information on the currently logged in user
+  * The user must be logged in for this to work
+  """
+  serializer = UserSerializer(request.user)
+  return Response(serializer.data)
+
+
+# Deck Object API views 
+# ========================================================================
 class DeckList(APIView):
   """
   # Request format:
@@ -122,6 +199,9 @@ class DeckDetail(APIView):
     deck.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+# Card API views
+# ========================================================================
 class CardDetail(APIView):
   """
   # Request format:
@@ -185,23 +265,6 @@ class CardDetail(APIView):
 
     card.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
-
-@api_view(['GET'])
-@permission_classes( (permissions.IsAuthenticated, ) )
-def user_me(request):
-  """
-  Request format:
-
-  ## /api/users/me
-
-  # Methods supported:
-
-  ## get
-  * Get information on the currently logged in user
-  * The user must be logged in for this to work
-  """
-  serializer = UserSerializer(request.user)
-  return Response(serializer.data)
 
 
 @api_view(['POST'])
