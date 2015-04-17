@@ -4,6 +4,10 @@ from django.http import HttpResponse
 # Used for testing
 from random import randint
 
+# For making RESTful API calls
+import requests
+from django.conf import settings
+
 # Rest framework libraries
 from thor_backend.models import Deck, Card
 from django.contrib.auth.models import User
@@ -33,7 +37,7 @@ def error404(request):
 # ========================================================================
 @api_view(['GET'])
 @permission_classes( (permissions.IsAuthenticated,) )
-def translate(request, query):
+def translate_dummy(request, query):
   """
   # Request format:
 
@@ -53,6 +57,35 @@ def translate(request, query):
   translation3 = " ".join([randw() for w in query.split()])
   re = {"q": query, "trans": [translation1, translation2, translation3], "lang": "derplang"}
   return Response(re)
+
+def translate_google(request, query):
+  """
+  # Request format:
+
+  ## /api/translate/&lt;query&gt;
+
+  # Methods supported:
+
+  ## get
+  * Get a translation given the query
+  """
+  def detect_language(q):
+    re = requests.get('https://www.googleapis.com/language/translate/v2/detect', \
+      params={'key': settings.GOOGLE_TRANSLATE_KEY, 'q': q})
+
+    if u"error" in re.json():
+      return re.json()
+
+  def translate_query(q, lang):
+    re = request.get('https://www.googleapis.com/language/translate/v2', \
+      params={'key': settings.GOOGLE_TRANSLATE_KEY, 'q': q, 'target': 'en'})
+
+    if u"error" in re.json(): 
+      return { "error" : "api error" }
+
+    return re.json()
+
+
 
 # User Object API views 
 # ========================================================================

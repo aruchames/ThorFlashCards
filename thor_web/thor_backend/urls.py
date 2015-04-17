@@ -12,5 +12,5 @@ urlpatterns = patterns('thor_backend.views',
   url(r'^decks/(?P<pk>[0-9]+)/$', views.DeckDetail.as_view()),
   url(r'^cards/$', views.create_card),
   url(r'^cards/(?P<pk>[0-9]+)/$', views.CardDetail.as_view()),
-  url(r'^translate/(?P<query>.+)/$', views.translate),
+  url(r'^translate/(?P<query>.+)/$', views.translate_dummy),
 )

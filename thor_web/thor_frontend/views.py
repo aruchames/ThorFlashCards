@@ -13,6 +13,11 @@ Figure out how to reverse lookup urls (ie redirect to a specific view rather tha
     coded URL)
 """
 
+def decks(request):
+    t = loader.get_template('deck_app/decks.html')
+    c = RequestContext(request, {})
+    return HttpResponse(t.render(c))
+
 # Create your models here.                                                      
 def login(request):
     """
