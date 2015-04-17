@@ -15,7 +15,7 @@ class DeckSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Deck
-    fields = ('pk', 'deck_name', 'created_by', 'private', 'cards')
+    fields = ('pk', 'deck_name', 'language', 'created_by', 'private', 'cards')
 
 class UserSerializer(serializers.ModelSerializer):
   decks = serializers.PrimaryKeyRelatedField(many=True, queryset=Deck.objects.all())
