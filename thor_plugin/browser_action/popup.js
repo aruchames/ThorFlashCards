@@ -41,14 +41,5 @@ $(document).ready(function () {
 
 		body.appendChild(deckView);
     }
-    //console.log(decks);
-
-		deckViewParent.appendChild(deckView);
-
-
-
-    }
-    console.log(decks);
-
 
 });

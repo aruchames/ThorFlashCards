@@ -1,7 +1,7 @@
 var thorFClastSelectionBox;
 
 function checkUserLoginStatus(){
-    
+
 }
 
 
@@ -24,7 +24,7 @@ function showBubble() {
 }
 
 function onSelect(e) {
-    
+
 
     var el = e.target;
 
@@ -62,9 +62,9 @@ function onSelect(e) {
     var regex = /(<([^>]+)>)/ig;
     var body = rangy.getSelection().toString();
     var result = body.replace(regex, "");
-    
+
     var translateURL = "https://www.thorfc.com/api/translate/"+ result;
-    
+
     var xhr = new XMLHttpRequest();
     xhr.open("GET", translateURL, false);
     xhr.send();
@@ -86,7 +86,7 @@ window.onload = function() {
     rangy.init();
 
     var thorfcIcon = document.createElement("img");
-    thorfcIcon.setAttribute("src", chrome.extension.getURL("icon-22x21.png"));
+    thorfcIcon.setAttribute("src", chrome.extension.getURL("icon24.png"));
     thorfcIcon.addEventListener("click", showBubble);
     thorfcIcon.id = "thorfcIcon";
     thorfcIcon.style.visibility = "hidden";

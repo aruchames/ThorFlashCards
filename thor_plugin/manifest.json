@@ -11,7 +11,10 @@
         "scripts": ["background.js"],
 	   "persistent": false
     },
-    "icons": { "16":"favicon.ico"},
+    "icons": {
+        "24":"icon24.png",
+        "128":"icon128.png"
+    },
     "content_scripts": [{
 	    "matches": ["<all_urls>"],
         "run_at": "document_end",
@@ -20,8 +23,9 @@
 	}],
     "browser_action": {
 	   "default_title": "ThorFC",
-	   "default_popup": "browser_action/popup.html"
+	   "default_popup": "browser_action/popup.html",
+       "default_icon": "icon24.png"
     },
-    "web_accessible_resources": ["icon-22x21.png"] ,
+    "web_accessible_resources": ["icon24.png"] ,
     "manifest_version": 2
 }
