@@ -2,26 +2,28 @@
 {% load static %}
 
 {% block content %}
+
 <link rel="stylesheet" type="text/css" href='{% static "shared/css/about.css" %}'> 
 <div class="content">
   <div class="about2" style="width:auto">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
+          
+          {% if user.is_authenticated %}
 
-          <h2 class="section-heading text-center">My Decks</h2>
-   
+
+          {% else %}
+
+          
           <p>Public decks:</p>
 
           <div id="id01"></div>
-
-          <p>Current deck:</p>
           
-          <div id="id02"></div>
+          <br>
+          <br>
 
-          <button type="button" onclick="loadNextDeck()">Next deck</button>
-          <br>
-          <br>
+          {% endif %}
 
           <hr/>
         </div>

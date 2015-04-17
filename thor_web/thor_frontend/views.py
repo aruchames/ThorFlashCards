@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 """
 General TODOs:
 Decide on a criteria for login/logout.
-Decide whether or not email is necessary or Reddit style (email unnecessary)
 Figure out how to reverse lookup urls (ie redirect to a specific view rather than hard
     coded URL)
 """
@@ -43,7 +42,7 @@ def login(request):
                 # TODO; find out how to reverse lookup URLS
                 return redirect('login')
  
-        messages.add_message(request, messages.ERROR, "Username or password invalid")
+        messages.add_message(request, messages.ERROR, "Login credentials invalid")
         return redirect('login')
     else:
         t = loader.get_template('login.html')
@@ -59,7 +58,7 @@ def register(request):
     """
     The register form logic. 
     Assumptions: 
-    User DOES NOT have to supply an email (email is optional).
+    User MUST supply an email
     At max a user can have 1 account
     """
     if request.method == 'POST':
@@ -70,22 +69,31 @@ def register(request):
         # Allow only one user per username
         user_exists = User.objects.filter(username=username).count() == 1
 
-        # Allow only one email per username, assuming email can be empty
-        email_exists = User.objects.filter(email=email).count() > 0 and email != ""
+        # Allow only one email per username
+        email_exists = User.objects.filter(email=email).count() > 0
 
         if user_exists or email_exists:
             messages.add_message(request, messages.ERROR, "Username or email already exists")
 
-            # TODO: find out how to reverse lookup URLS
+            # Redirect to register around
             return redirect('register')
 
-        # User registered with an email, so enter him in with his email
-        if email != "":
-            User.objects.create_user(username, email=email, password=password)
+        if "@" in username:
+            messages.add_message(request, messages.ERROR, "Username cannot contain '@'")
 
-        # User registered without an email, so create a new user with no email
+            # Redirect to register page
+            return redirect('register')
+
+
+        # User registered with an email, so enter him in with his email
+        if "@" in email:
+            User.objects.create_user(username, email=email, password=password)
+        # User registered without an email, Return invalid, email is necessary
         else:
-            User.objects.create_user(username, password=password)
+            messages.add_message(request, messages.ERROR, "Email field invalid")
+
+            # Redirect to register page
+            return redirect('register')
 
         # Pre-Authenticate the user after creation
         user = authenticate(username=username, password=password)
@@ -101,30 +109,9 @@ def register(request):
    
 
 def index(request):
-    # If the User requests to login with given credentials,
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                auth_login(request, user)
-                messages.add_message(request, messages.SUCCESS, "Login successful")
-                return redirect('index')
-            else:
-                messages.add_message(request, messages.ERROR, "User has been suspended")
-                return redirect('login')
- 
-        messages.add_message(request, messages.ERROR, "Username or password invalid")
-
-        # TODO: find out how to reverse lookup URLS
-        return redirect('login')
-
-    # If the user requests to GET the login page
-    else:
-        t = loader.get_template('index.html')
-        c = RequestContext(request, {})
-        return HttpResponse(t.render(c))
+    t = loader.get_template('index.html')
+    c = RequestContext(request, {})
+    return HttpResponse(t.render(c))
 
 
 def about(request):
