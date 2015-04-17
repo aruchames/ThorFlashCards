@@ -11,7 +11,20 @@ class Deck(models.Model):
     private    : if true, only the creator can view
     """
 
+    # TODO: Input all languages here:
+    # https://cloud.google.com/translate/v2/using_rest
+    LANGUAGE_CHOICES = (
+        ('en', 'English'),
+        ('ch', 'Chinese'),
+        ('fr', 'French'),
+        ('de', 'German'),
+        ('ja', 'Japanese'),
+        ('ko', 'Korean'),
+        ('es', 'Spanish')
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
+    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default='en')
     deck_name = models.CharField(max_length=100)
     created_by = models.ForeignKey(User, related_name="decks")
     private = models.BooleanField(default=False)
