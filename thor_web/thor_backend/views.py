@@ -100,6 +100,7 @@ class UserList(generics.ListAPIView):
   ## get
   * Returns a list of all users and associated decks
   """
+  permission_classes = (permissions.IsAuthenticated,)
   queryset = User.objects.all()
   serializer_class = UserSerializer
 
@@ -114,6 +115,7 @@ class UserDetail(generics.RetrieveAPIView):
   ## get
   # Returns information of a specific user with user_id
   """
+  permission_classes = (permissions.IsAuthenticated,)
   queryset = User.objects.all()
   serializer_class = UserSerializer
 
@@ -150,7 +152,7 @@ class DeckList(APIView):
   * If the user is anonymous, the API will list all public decks
   * If the user is logged in, the API will list all decks she owns 
   and all public decks.
-  ## Creating:
+  ## post:
   * If the user is anonymous, the API will return not authorized
   * If the user is logged in, the API will create a new deck such that 
   she is owner
@@ -231,6 +233,25 @@ class DeckDetail(APIView):
 
     deck.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+# Convenience function, view own decks
+@api_view(['GET'])
+@permission_classes( (permissions.IsAuthenticated, ) )
+def decks_mine(request):
+  """
+  Request format:
+
+  ## /api/decks/mine
+
+  # Methods supported:
+
+  ## get
+  * If the user is logged in, get decks owned by the currently logged in user
+  * The user must be logged in for this to work
+  """ 
+  decks = Deck.objects.filter(created_by=request.user.id)
+  serializer = DeckSerializer(decks, many=True)
+  return Response(serializer.data)
 
 
 # Card API views
