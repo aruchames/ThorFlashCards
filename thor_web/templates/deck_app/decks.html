@@ -1,16 +1,41 @@
-<html>
-  <head>
-    <title>Cards</title>
-    
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>     
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/js/cards.js"></script>
-  </head>
+{% extends "base.html" %}
+{% load static %}
 
-  <body>
-    <p class="myClass">What the heck man?</p>
+{% block content %}
+<link rel="stylesheet" type="text/css" href='{% static "shared/css/about.css" %}'> 
+<div class="content">
+  <div class="about2" style="width:auto">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <h2 class="section-heading text-center">My Decks</h2>
+   
+          <p>Public decks:</p>
+
+          <div id="id01"></div>
+
+          <p>Current deck:</p>
+          
+          <div id="id02"></div>
+
+          <button type="button" onclick="loadNextDeck()">Next deck</button>
+          <br>
+          <br>
+
+          <hr/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
 
 
-  </body>
-</html>
+
+{% block ownjavascript %}
+
+<script src="/static/js/decks.js"></script>
+
+{% endblock ownjavascript %}

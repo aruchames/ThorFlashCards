@@ -48,7 +48,8 @@
             {% if user.is_authenticated %}  
 
             <li id="user">
-              <a href="#">{{user.username | title}}'s cards</a>
+            <!-- find a way to change this to href="decks" and still be able to make ajax requests from api/-->
+              <a href="/decks">{{user.username | title}}'s cards</a>
             </li>
 
             <li id="menuLogout">
