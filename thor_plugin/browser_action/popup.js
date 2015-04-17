@@ -16,10 +16,17 @@ $(document).ready(function () {
     }
     // Load users decks in a scroll down menu and choose the deck that will be submit to.
     else{
+
     	//debugger;
     	//console.log(xhr);
     	var login = document.getElementById("login");
     	var body = login.parentNode;
+
+    	debugger;
+    	console.log(xhr);
+    	var login = document.getElementById("login");
+    	var deckViewParent = login.parentNode;
+
     	login.style.display="none";
     	var register = document.getElementById("register");
     	register.style.display="none";
@@ -31,8 +38,17 @@ $(document).ready(function () {
 
     	var deckView = document.createElement("deckView");
     	deckView.innerHTML="<div>User:<div id ='user'>ruchames</div>Decks:  <select name='decks'><option value='Chinese'> Chinese </option><option value='French'>French</option><option value='COS'>COS</option></select></div>";
+
 		body.appendChild(deckView);
     }
     //console.log(decks);
+
+		deckViewParent.appendChild(deckView);
+
+
+
+    }
+    console.log(decks);
+
 
 });
