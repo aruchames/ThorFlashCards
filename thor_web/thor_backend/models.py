@@ -10,6 +10,7 @@ class Deck(models.Model):
     created_by : the user who created the deck
     private    : if true, only the creator can view
     """
+
     created_at = models.DateTimeField(auto_now_add=True)
     deck_name = models.CharField(max_length=100)
     created_by = models.ForeignKey(User, related_name="decks")
