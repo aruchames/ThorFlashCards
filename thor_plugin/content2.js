@@ -1,5 +1,11 @@
 var thorFClastSelectionBox;
 
+function checkUserLoginStatus(){
+    
+}
+
+
+
 function hideAll() {
     document.getElementById("thorfcIcon").style.visibility = "hidden";
     document.getElementById("bubbleDOM").style.visibility = "hidden";
@@ -18,7 +24,7 @@ function showBubble() {
 }
 
 function onSelect(e) {
-    debugger;
+    
 
     var el = e.target;
 
@@ -52,11 +58,20 @@ function onSelect(e) {
     thorfcIcon.style.visibility = "visible";
 
     var bubbleDOM = document.getElementById("bubbleDOM");
-    var translateCall = "Translated Text";
+
     var regex = /(<([^>]+)>)/ig;
     var body = rangy.getSelection().toString();
     var result = body.replace(regex, "");
-    var htmlFrag = "<form id='card' action='makecard.js'> <h5>Original Text:</h5><div id='front'>"+/* rangy.getSelection().toString()*/ result + "</div><h5>Translated Text:</h5> <div id='back'>"+ translateCall + "</div><br> <input type='submit' value='Make Card!' id='submit'></form>";
+    
+    var translateURL = "https://www.thorfc.com/api/translate/"+ result;
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", translateURL, false);
+    xhr.send();
+
+    var raw = xhr.response;
+    var translateCall = JSON.parse(raw).trans[0];
+    var htmlFrag = "<form id='card'> <h5>Original Text:</h5><div id='front'>" + result + "</div><h5>Translated Text:</h5> <div id='back'>"+ translateCall + "</div><br> <input type='submit' value='Make Card!' id='submit'></form>";
     bubbleDOM.innerHTML = htmlFrag;
     bubbleDOM.style.left = (startPos.x - 24) + "px";
     bubbleDOM.style.top = (startPos.y - 175) + "px";
