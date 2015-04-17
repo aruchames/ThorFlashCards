@@ -52,7 +52,11 @@ p {
 }
 
 .bg-primary {
-    background-color: #f05f40;
+    background-color: #f05f40; 
+}
+
+.getStarted{
+    background-color: #85caf5;
 }
 
 .bg-dark {
@@ -178,7 +182,8 @@ header {
     min-height: auto;
     text-align: center;
     color:#e65100;
-    background-image: url(../img/header2.jpg);
+   # background-image: url(../img/header2.jpg);
+    background-color: #F05F40;
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
