@@ -3,7 +3,95 @@
 
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href='{% static "shared/css/about.css" %}'>
+<div class="content">
+  <div class="about1 bg-primary">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h2 class="section-heading text-center">My Cards</h2>
+          <hr/>
+          <p>Lorem ipsum dolor sit amet, duo ad quaeque fastidii corrumpit, an mediocrem assueverit interesset eum. Ad vim munere insolens. Vim an saepe dolores apeirian. Eos id malis vivendo quaerendum.</p>
+          
+       </div>
+      </div>
+    </div>
+  </div>
+  <div class="about2" style="width:auto">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h2 class="section-heading text-center">My Decks</h2>
+     
+      <p>Public decks:</p>
+
+      <div id="id01"></div>
+
+      <p>Current deck:</p>
+      
+      <div id="id02"></div>
+
+    <script>
+var xmlhttp = new XMLHttpRequest();
+var url = "decks/";
+var k = 0;
+
+xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var myArr = JSON.parse(xmlhttp.responseText);
+                        myFunction2(myArr, 0);
+                        myFunction(myArr);
+                            }
+}
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+
+function myFunction2(arr, i) {
+      var out = "";
+      i = i % arr.length;
+          out = '<h2>' + arr[i].deck_name + '</h2>';      
+                  document.getElementById("id02").innerHTML = out;
+}
+
+
+function myFunction(arr) {
+      var out = "";
+      var i;
+          for(i = 0; i < arr.length; i++) {
+            out += '<p>' + arr[i].deck_name + '</p>';      
+          } 
+
+          document.getElementById("id01").innerHTML = out;
+}
+
+
+
+function loadXMLDoc()
+{
+  var myArr = JSON.parse(xmlhttp.responseText);
+  myFunction2(myArr, ++k);
+
+}
+
+</script>
+
+<button type="button" onclick="loadXMLDoc()">Next deck</button>
+<br>
+<br>
+  <hr/>
+        </div>
+      </div>
+
+ 
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
 
+
+
 {% block ownjavascript %}
+
+
 {% endblock ownjavascript %}

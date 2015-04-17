@@ -9,6 +9,6 @@ urlpatterns = patterns('thor_frontend.views',
     url(r'^register/$', views.register, name='register'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^about/$', views.about, name='about'),
-    url(r'^decks/$', views.decks, name='deck_view'),
+    url(r'^api/$', views.decks, name='deck_view'),
 )
 
