@@ -16,7 +16,8 @@ Figure out how to reverse lookup urls (ie redirect to a specific view rather tha
 def deck_flag_convert(country_code):
     cc_dict = {
         "en": "gb",
-        "ko": "kr"
+        "ko": "kr",
+        "ja": "jp"
     }
 
     if country_code in cc_dict:
