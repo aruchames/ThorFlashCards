@@ -4,6 +4,7 @@ from django.template import RequestContext, loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
+from thor_backend.models import Deck
 
 """
 General TODOs:
@@ -13,8 +14,17 @@ Figure out how to reverse lookup urls (ie redirect to a specific view rather tha
 """
 
 def decks(request):
+    if request.user.is_authenticated():
+        decks = Deck.objects.filter(created_by=request.user.id)
+    else:
+        decks = Deck.objects.filter(private=False) | \
+            Deck.objects.filter(private=True, created_by=request.user.id)
+
+    print "This is a string!"
+    print list(decks)
+
     t = loader.get_template('deck_app/decks.html')
-    c = RequestContext(request, {})
+    c = RequestContext(request, {"decks": decks})
     return HttpResponse(t.render(c))
 
 # Create your models here.                                                      
