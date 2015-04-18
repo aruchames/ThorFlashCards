@@ -17,7 +17,8 @@ def deck_flag_convert(country_code):
     cc_dict = {
         "en": "gb",
         "ko": "kr",
-        "ja": "jp"
+        "ja": "jp",
+        "ch": "cn"
     }
 
     if country_code in cc_dict:
