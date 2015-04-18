@@ -13,6 +13,17 @@ Figure out how to reverse lookup urls (ie redirect to a specific view rather tha
     coded URL)
 """
 
+def deck_flag_convert(country_code):
+    cc_dict = {
+        "en": "gb",
+        "ko": "kr"
+    }
+
+    if country_code in cc_dict:
+        return cc_dict[country_code]
+
+    return country_code
+
 def decks(request):
     if request.user.is_authenticated():
         decks = Deck.objects.filter(created_by=request.user.id)
@@ -20,11 +31,12 @@ def decks(request):
         decks = Deck.objects.filter(private=False) | \
             Deck.objects.filter(private=True, created_by=request.user.id)
 
-    print "This is a string!"
-    print list(decks)
+    decks_list = list(decks)
+    for d in decks_list:
+        d.fl = deck_flag_convert(d.language)
 
     t = loader.get_template('deck_app/decks.html')
-    c = RequestContext(request, {"decks": decks})
+    c = RequestContext(request, {"decks": decks_list})
     return HttpResponse(t.render(c))
 
 # Create your models here.                                                      
