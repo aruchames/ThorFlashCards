@@ -11,23 +11,26 @@
     <div class="row-fluid">
 
       {% for deck in decks %}
-        <div class="col-sm-6">
-          <div class="stack">
-            {{deck.deck_name}}
+        <a href="/deck/{{deck.pk}}" style="display:block; text-decoration: none; color: black;">
+          <div class="col-sm-6">
+            <div class="stack">
+              {{deck.deck_name}}
 
-            <div class="row-fluid cardmetainfo">
-              <div class="col-xs-4">
-                <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
+              <div class="row-fluid cardmetainfo">
+                <div class="col-xs-4">
+                  <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
+                </div>
+                <div class="col-xs-4">
+                  <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
+                </div>
+                <div class="col-xs-4">
+                  <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
+                </div>
               </div>
-              <div class="col-xs-4">
-                <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
-              </div>
-              <div class="col-xs-4">
-                <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
-              </div>
+
             </div>
+          </a>
 
-          </div>
         </div>
       {% endfor %}
     </div>
