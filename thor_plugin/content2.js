@@ -1,11 +1,5 @@
 var thorFClastSelectionBox;
 
-function checkUserLoginStatus(){
-
-}
-
-
-
 function hideAll() {
     document.getElementById("thorfcIcon").style.visibility = "hidden";
     document.getElementById("bubbleDOM").style.visibility = "hidden";

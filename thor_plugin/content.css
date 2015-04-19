@@ -39,7 +39,7 @@
   margin-bottom: 5px;
 }
 
-::-webkit-scrollbar {
+#bubbleDOM::-webkit-scrollbar {
     display: none;
 }
 

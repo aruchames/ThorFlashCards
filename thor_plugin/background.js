@@ -16,6 +16,6 @@ chrome.runtime.onInstalled.addListener(function() {
                                          "id": "context" + context});
     
     // Set up Login on install
-
+    
 });
 
