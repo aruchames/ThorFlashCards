@@ -1,0 +1,110 @@
+html,body {
+    height: 100%;
+    padding-top: 25px;
+    background-color: #f05f40;
+}
+
+.content{
+    height:auto !important;
+    margin: 0 auto -45px; 
+    min-height: 100%;
+}
+
+.deckholder {
+    padding: 3em 1em 3em 1em;
+    background-color: #85caf5;
+    width: 100%;
+    overflow: auto;
+}
+
+.about2{
+    padding-top: 3em;
+    background-color: #85caf5;
+}
+
+.imgformat{
+    width: 15em;
+    height: 22em;
+}
+
+.lgimgformat{
+    float: left;
+    padding-bottom: 2em;
+}
+
+.lgimgtext{
+    padding-top: 5em;
+    padding-left: 18em;
+}
+
+.imgtext{
+    padding-bottom: 1em;
+}
+
+.lastimg{
+    padding-bottom: 8em;
+    width: 15em;
+    height: 28em;
+}
+
+.lastimgtext{
+    margin-top: -7em;
+    padding-bottom:5em;
+}
+
+.xstextformatting{
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.cardmetainfo {
+    padding-top: 30px;
+}
+
+/* Credit: https://css-tricks.com/snippets/css/stack-of-paper/ */
+.stack {
+  background-color: white;
+  height: 250px;
+  margin-top: 30px;
+  padding: 20px 30px 20px 20px;
+  word-wrap: break-word;
+  width: 95%;
+  font-size: 20px;
+  -webkit-box-shadow: 
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+        3px 3px   0 rgba(255, 255, 255, 1.0), 
+        4px 4px   0 rgba(0,   0,   0,   0.125), 
+        6px 6px   0 rgba(255, 255, 255, 1.0),  
+        7px 7px   0 rgba(0,   0,   0,   0.150), 
+        9px 9px   0 rgba(255, 255, 255, 1.0),  
+        10px 10px 0 rgba(0,   0,   0,   0.175),
+        12px 12px 0 rgba(255, 255, 255, 1.0),  
+        13px 13px 0 rgba(0,   0,   0,   0.175);
+  -moz-box-shadow: 
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+        3px 3px   0 rgba(255, 255, 255, 1.0), 
+        4px 4px   0 rgba(0,   0,   0,   0.125), 
+        6px 6px   0 rgba(255, 255, 255, 1.0),  
+        7px 7px   0 rgba(0,   0,   0,   0.150), 
+        9px 9px   0 rgba(255, 255, 255, 1.0),  
+        10px 10px 0 rgba(0,   0,   0,   0.175),
+        12px 12px 0 rgba(255, 255, 255, 1.0),  
+        13px 13px 0 rgba(0,   0,   0,   0.175);
+  box-shadow: 
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+        3px 3px   0 rgba(255, 255, 255, 1.0), 
+        4px 4px   0 rgba(0,   0,   0,   0.125), 
+        6px 6px   0 rgba(255, 255, 255, 1.0),  
+        7px 7px   0 rgba(0,   0,   0,   0.150), 
+        9px 9px   0 rgba(255, 255, 255, 1.0),  
+        10px 10px 0 rgba(0,   0,   0,   0.175),
+        12px 12px 0 rgba(255, 255, 255, 1.0),  
+        13px 13px 0 rgba(0,   0,   0,   0.175);
+    
+}
+
+.stack:hover {
+    font-size: 22px;
+    height: 250px;
+    width: 100%;
+};

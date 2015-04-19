@@ -1,33 +1,38 @@
-{% extends "base.html" %}
+{% extends "deck_app/deckbase.html" %}
 {% load static %}
 
+{% block owncss %}
+<link rel="stylesheet" type="text/css" href='{% static "shared/css/deckapp.css" %}'> 
+{% endblock %}
+
 {% block content %}
-
-<link rel="stylesheet" type="text/css" href='{% static "shared/css/about.css" %}'> 
 <div class="content">
-  <div class="about2" style="width:auto">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          
-          {% if user.is_authenticated %}
+  <div class="container deckholder">  
+    <div class="row-fluid">
 
+      {% for deck in decks %}
+        <a href="/deck/{{deck.pk}}" style="display:block; text-decoration: none; color: black;">
+          <div class="col-sm-6">
+            <div class="stack">
+              {{deck.deck_name}}
 
-          {% else %}
+              <div class="row-fluid cardmetainfo">
+                <div class="col-xs-4">
+                  <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
+                </div>
+                <div class="col-xs-4">
+                  <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
+                </div>
+                <div class="col-xs-4">
+                  <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
+                </div>
+              </div>
 
-          
-          <p>Public decks:</p>
+            </div>
+          </a>
 
-          <div id="id01"></div>
-          
-          <br>
-          <br>
-
-          {% endif %}
-
-          <hr/>
         </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </div>
@@ -37,7 +42,5 @@
 
 
 {% block ownjavascript %}
-
-<script src="/static/js/decks.js"></script>
 
 {% endblock ownjavascript %}

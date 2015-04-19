@@ -4,6 +4,10 @@ from django.template import RequestContext, loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
+from thor_backend.models import Deck
+
+# Helper functions
+# ============================================================================
 
 """
 General TODOs:
@@ -12,12 +16,75 @@ Figure out how to reverse lookup urls (ie redirect to a specific view rather tha
     coded URL)
 """
 
+def deck_flag_convert(country_code):
+    """ 
+    Convert between language code and flag css classes.
+    The current flag css library used is in /static/shared/flag-icon.min.css
+    """
+    cc_dict = {
+        "en": "gb",
+        "ko": "kr",
+        "ja": "jp",
+        "ch": "cn"
+    }
+
+    # Only return a value different from country_code if an alternative 
+    # is specified in cc_dict
+    if country_code in cc_dict:
+        return cc_dict[country_code]
+
+    return country_code
+
+def get_deck(deck_pk):
+    try:
+        return Deck.objects.get(pk=deck_pk)
+    except Deck.DoesNotExist:
+        raise Http404
+
+# Front end view logic
+# ============================================================================
+
 def decks(request):
+    """ 
+    View all decks associated with the current user or with anonymous users.
+    If the user is logged in, only his decks will be listed.
+    If the user is not logged in, all public decks will be listed.
+    """
+    if request.user.is_authenticated():
+        decks = Deck.objects.filter(created_by=request.user.id)
+        decks = decks.order_by('stars', 'views')
+    else:
+        decks = Deck.objects.filter(private=False) | \
+            Deck.objects.filter(private=True, created_by=request.user.id)
+        decks = decks.order_by('-stars', '-views')
+
+    decks_list = list(decks)
+
+    # Store information on what flag css type to render depending on the 
+    # language of the deck
+    for d in decks_list:
+        d.fl = deck_flag_convert(d.language)
+
     t = loader.get_template('deck_app/decks.html')
-    c = RequestContext(request, {})
+    c = RequestContext(request, {"decks": decks_list})
     return HttpResponse(t.render(c))
 
-# Create your models here.                                                      
+def deck_detail(request, deck_pk):
+    """
+    Explore the cards of a given deck. 
+    """
+
+    # Attempt to fetch the deck with the given pk. On failure, raise 404.
+    deck = get_deck(deck_pk)
+
+    # Increment the number of times the deck has been viewed
+    deck.views += 1
+    deck.save()
+
+    t = loader.get_template('deck_app/deckview.html')
+    c = RequestContext(request, {"deck": deck})
+    return HttpResponse(t.render(c));
+                                                    
 def login(request):
     """
     The login form logic.

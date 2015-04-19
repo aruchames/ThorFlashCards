@@ -28,6 +28,9 @@ class Deck(models.Model):
     deck_name = models.CharField(max_length=100)
     created_by = models.ForeignKey(User, related_name="decks")
     private = models.BooleanField(default=False)
+    views = models.IntegerField(default=0)
+    stars = models.IntegerField(default=0)
+    starred_by = models.ManyToManyField(User, related_name="starred_decks")
 
     def __unicode__(self):
         return self.deck_name
