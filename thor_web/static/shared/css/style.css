@@ -191,13 +191,13 @@ header {
     -o-background-size: cover;
    }
 
-.headerxs{
+.headerxs {
     padding-bottom: 8em;
 }
 
-
-.glyphiconplus{
-    font-size: 1em;
+#glyphiconplus {
+    font-size: 2em;
+    color: #4CAF50;
 }
 
 header .header-content {
