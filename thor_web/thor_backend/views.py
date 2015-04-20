@@ -336,6 +336,7 @@ def create_card(request):
   referring to the deck that the card will be added to
   * The card will only be created if the user has edit permissions to the given deck
   """
+  print "Entered this piece of shit!"
 
   # Card must have deck
   if u'deck' not in request.data:
@@ -353,7 +354,12 @@ def create_card(request):
 
   # Ensure that the user has edit permissions for the deck
   if deck_edit_forbidden(deck, request.user):
-    return Response(status=HTTP_403_FORBIDDEN)
+    print "Failed here!"
+    print "User: "
+    print deck.created_by.id
+    print request.user.id
+    
+    return Response(status=status.HTTP_403_FORBIDDEN)
 
   # Now create the card
   serializer = CardSerializer(data=request.data)

@@ -1,0 +1,39 @@
+{% extends "deck_app/deckbase.html" %}
+
+{% block content %}
+<div class="content">
+  <div class="container deckholder">  
+    <div class="row-fluid">
+      <div class="col-md-6">
+        <form class="form-horizontal">
+          <div class="form-group">
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <div class="stack">
+        <!-- Use jquery to insert the deck name here !-->
+        <div class="deckCreateName">Deck Name here</div>
+
+        <div class="row-fluid cardmetainfo">
+          <div class="col-xs-4">
+            <!-- USe jquery to insert deck language here -->
+            <span class="flag-icon flag-icon-gb"></span> 
+            <div class="deckLanguageName" style="display: inline">en</div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+
+
+{% block ownjavascript %}
+
+{% endblock ownjavascript %}

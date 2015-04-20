@@ -52,7 +52,7 @@ def decks(request):
     """
     if request.user.is_authenticated():
         decks = Deck.objects.filter(created_by=request.user.id)
-        decks = decks.order_by('stars', 'views')
+        decks = decks.order_by('-stars', '-views')
     else:
         decks = Deck.objects.filter(private=False) | \
             Deck.objects.filter(private=True, created_by=request.user.id)
@@ -67,6 +67,11 @@ def decks(request):
 
     t = loader.get_template('deck_app/decks.html')
     c = RequestContext(request, {"decks": decks_list})
+    return HttpResponse(t.render(c))
+
+def deck_create(request):
+    t = loader.get_template('deck_app/deckcreate.html')
+    c = RequestContext(request, {})
     return HttpResponse(t.render(c))
 
 def deck_detail(request, deck_pk):
