@@ -6,7 +6,7 @@ $(document).ready(function () {
     xhr.open("GET", userURL, false);
     xhr.send();
 	$("#login").children("input").on('click', function() {chrome.tabs.create({"url":"http://www.thorfc.com/login/"})});
-	$("#register").children("input").on('click', function() {chrome.tabs.create({"url":"http://www.thorfc.com/register/"})})
+	$("#register").children("input").on('click', function() {chrome.tabs.create({"url":"http://www.thorfc.com/register/"})});
 
 
     //If the user is not registered, load the view to send the user to login
@@ -37,9 +37,12 @@ $(document).ready(function () {
    	 	var username = userData.username;
     	var decks = userData.decks;
 
-    	var deckView = document.createElement("deckView");
-    	deckView.innerHTML="User: <div id ='user'>"+username+"</div> Decks:";
-   
+    	var deckView = document.createElement("div");
+        deckView.id = "deckView";
+        body.appendChild(deckView);
+    	deckView.innerHTML="<form id='chooseDeck'>User: <div id ='user'>"+username+"</div> Current Deck:";
+        
+        var stringHTML = "";
         for (i = 0; i < decks.length; i++){
             var xhr = new XMLHttpRequest();
             xhr.open("GET", deckURL+decks[i], false);
@@ -48,13 +51,18 @@ $(document).ready(function () {
 
             deckLanguage = deckData.language;
             deckName = deckData.deck_name;
+            
             if (i == 0)
-                deckView.innerHTML += "<select name='decks' id='decks'><option value=" + deckLanguage + ">" + deckName+ "</option>";
+                stringHTML += "<select id='decks'><option value='" + deckName + "'>" + deckName+ "</option>";
             else
-                deckView.innerHTML += "<option value=" + deckLanguage + ">" + deckName+ "</option>";
+                stringHTML += "<option value='" + deckName + "'>" + deckName + "</option>";
         }   
-        deckView.innerHTML += "</select>";
-		body.appendChild(deckView);
+        stringHTML += "</select><form><div id='deckChange'><input type='submit' value='Study Deck'></div></form>";
+        deckView.innerHTML += stringHTML;
+        $("#deckChange").on('click', function() {
+            var deckName = document.getElementById("decks").value;
+            chrome.tabs.create({"url":"http://www.thorfc.com/decks/study/"+deckName})
+        });
     }
 
 });
