@@ -16,4 +16,22 @@ input{
     font-family: Helvetica;
     width: 90px;
 }
+#user{
+  background-color: #f05f40;
+  border: 1px solid #848484;
+  font-weight: bold;
+  font-size:12px;
+  outline: 2px solid #424242;
+  margin-right:10px;
 
+}
+
+#decks{
+  background-color: #f05f40;
+  border: 1px solid #848484;
+  font-weight: bold;
+  font-size:12px;
+  outline: 2px solid #424242;
+  overflow-x:hidden;
+  border-right:15px;
+}

@@ -6,7 +6,8 @@
                     "https://*/",
                     "http://*/",
                     "https://www.thorfc.com/api/translate/*",
-                    "https://www.thorfc.com/api/*"],
+                    "https://www.thorfc.com/api/*",
+                    "storage"],
     "background": {
         "scripts": ["background.js"],
 	   "persistent": false
