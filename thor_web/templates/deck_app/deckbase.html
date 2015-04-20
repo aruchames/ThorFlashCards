@@ -45,6 +45,9 @@
             <li class="hidden">
               <a href="#page-top"></a>
             </li>
+            <li>
+              <a data-toggle="tooltip" title="Create A Deck" href="/create"><i id="glyphiconplus" class="fa fa-plus fa-3x wow bounceIn" data-wow-delay=".1s"> </i></a>
+            </li>
             {% if user.is_authenticated %}
             <li id="user">
               <!-- find a way to change this to href="decks" and still be able to make ajax  requests from api/-->
@@ -77,9 +80,6 @@
               </div>
             </li>
             {% endif %}
-            <li>
-              <a data-toggle="tooltip" title="Create A Deck" href="decks/create"><i id="glyphiconplus" class="fa fa-plus fa-3x wow bounceIn" data-wow-delay=".1s"> </i></a>
-            </li>
           </ul>
         </div>
         <!-- /.navbar-collapse -->
