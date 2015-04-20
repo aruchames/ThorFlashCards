@@ -195,6 +195,11 @@ header {
     padding-bottom: 8em;
 }
 
+
+.glyphiconplus{
+    font-size: 1em;
+}
+
 header .header-content {
     position: fixed;
     top: 50%;

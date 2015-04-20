@@ -25,24 +25,84 @@
   </head>
 
   <body id="page-top" class="index">
+    <!--NavBar-->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand page-scroll" href="../#">Thor Flashcards</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="hidden">
+              <a href="#page-top"></a>
+            </li>
+            {% if user.is_authenticated %}
+            <li id="user">
+              <!-- find a way to change this to href="decks" and still be able to make ajax  requests from api/-->
+              <a href="/decks">{{user.username | title}}'s cards</a>
+            </li>
+            
+            <li id="menuLogout">
+              <a href="/logout">Logout</a>
+            </li>
+            
+            {% else %}
+            
+            <li class="dropdown" id="menuLogin">
+              <a class="dropdown-toggle visible-lg visible-md visible-sm" href="#" data-toggle="dropdown" id="navLogin">Login</a>
+              <a class="visible-xs" href="/login">Login</a>
+              <div class="dropdown-menu" style="padding:17px;">
+                <form class="form-signin" action="/login/" method="POST">
+                  {% csrf_token %}
+                  <span id="reauth-email" class="reauth-email"></span>
+                  <input type="text" id="inputEmail" class="form-control" name="username" placeholder="Email address"
+                         required autofocus>
+                  <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+                  <div id="remember" class="checkbox">
+                    <label>
+                      <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                  </div>
+                  <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit\">Sign in</button>
+                </form>
+              </div>
+            </li>
+            {% endif %}
+            <li>
+              <a href="#"><i class="fa fa-plus fa-3x wow bounceIn glyphiconplus" data-wow-delay=".1s"></i></a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
 
-    {% block content %}
-    <p>This is default content</p>
-    {% endblock content %}
 
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
-    
-    <!-- Plugin JavaScript -->
-    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/FitText.js/1.1/jquery.fittext.min.js'></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js'></script>
+      {% block content %}
+      <p>This is default content</p>
+      {% endblock content %}
 
-    <!-- Custom Theme JavaScript -->
-    <script src='{% static "shared/js/creative.js" %}'></script>
+      <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+      <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+      
+      <!-- Plugin JavaScript -->
+      <script src='//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+      <script src='//cdnjs.cloudflare.com/ajax/libs/FitText.js/1.1/jquery.fittext.min.js'></script>
+      <script src='//cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js'></script>
 
-    {% block ownjavascript %}
-    {% endblock ownjavascript %}
+      <!-- Custom Theme JavaScript -->
+      <script src='{% static "shared/js/creative.js" %}'></script>
+
+      {% block ownjavascript %}
+      {% endblock ownjavascript %}
 
   </body>
 </html>
