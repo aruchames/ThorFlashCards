@@ -10,9 +10,20 @@ function thorFCmakeCard() {
 
     var xhr = new XMLHttpRequest();
 
-    xhr.open("POST", "https://www.thorfc.com/api/cards/", false);
-    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function (oEvent) {  
+        if (xhr.readyState === 4) {  
+            if (xhr.status === 201) {  
+              console.log(xhr.responseText)  
+            } else {  
+               console.log("Error", xhr.statusText, xhr.responseText); 
+            }  
+        }  
+    }; 
+
+    xhr.open("POST", "https://www.thorfc.com/api/cards/", true);
     xhr.withCredentials = true;
+    xhr.setRequestHeader("Content-type", "application/json");
+
     xhr.send(JSON.stringify(newCard));
 
 

@@ -289,7 +289,7 @@ class CardDetail(APIView):
 
     # User must be able to view the containing deck
     if deck_view_forbidden(card.deck, request.user):
-      return Response(status=HTTP_403_FORBIDDEN)
+      return Response(status=status.HTTP_403_FORBIDDEN)
 
     serializer = CardSerializer(card)
     return Response(serializer.data)
@@ -299,7 +299,7 @@ class CardDetail(APIView):
 
     # User must be able to edit the containing deck
     if deck_edit_forbidden(card.deck, request.user):
-      return Response(status=HTTP_403_FORBIDDEN)
+      return Response(status=status.HTTP_403_FORBIDDEN)
 
     if u"deck" in request.data:
       del request.data[u"deck"]
@@ -315,7 +315,7 @@ class CardDetail(APIView):
 
     # User must be able to edit the containing deck
     if deck_edit_forbidden(card.deck, request.user):
-      return Response(status=HTTP_403_FORBIDDEN)
+      return Response(status=status.HTTP_403_FORBIDDEN)
 
     card.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
