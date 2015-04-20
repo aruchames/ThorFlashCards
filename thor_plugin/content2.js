@@ -1,4 +1,24 @@
 var thorFClastSelectionBox;
+var thorFCdeckView;
+
+function thorFCmakeCard() {
+    debugger;
+    var newCard = {};
+    newCard.front = document.getElementById("thorFCfront").innerHTML;
+    newCard.back = document.getElementById("thorFCback").innerHTML;
+    newCard.deck = document.getElementById("decks").value;
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "https://www.thorfc.com/api/cards/", false);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.withCredentials = true;
+    xhr.send(JSON.stringify(newCard));
+
+
+
+
+}
 
 function hideAll() {
     document.getElementById("thorfcIcon").style.visibility = "hidden";
@@ -15,6 +35,7 @@ function setBubbleClass(el) {
 function showBubble() {
     document.getElementById("bubbleDOM").style.visibility = "visible";
     setBubbleClass(document.getElementById("bubbleDOM"));
+    document.getElementById("thorfcbutton").addEventListener('click', thorFCmakeCard);
 }
 
 function onSelect(e) {
@@ -59,7 +80,6 @@ function onSelect(e) {
 
     var translateURL = "https://www.thorfc.com/api/translate/"+ result;
 
-    debugger;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", translateURL, false);
     xhr.send();
@@ -70,9 +90,10 @@ function onSelect(e) {
     }
     else {
         var translateCall = response.trans[0];
-        var htmlFrag = "<form id='card'> <h5>Original Text:</h5><div id='front'>" + result + "</div><h5>Translated Text:</h5> <div id='back'>"+ translateCall + "</div><br> <input type='submit' value='Make Card!' id='submit'></form>";
+        var htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button value='Make Card!' id='thorfcbutton'></div>";
     }
     bubbleDOM.innerHTML = htmlFrag;
+    bubbleDOM.appendChild(thorFCdeckView);
     bubbleDOM.style.left = (startPos.x - 24) + "px";
     bubbleDOM.style.top = (startPos.y - 175) + "px";
 
@@ -102,4 +123,35 @@ window.onload = function() {
 
 
     document.addEventListener('mouseup', onSelect);
+
+
+
+    /* Get our decks */
+    var xhr2 = new XMLHttpRequest();
+    xhr2.open('GET', 'https://www.thorfc.com/api/decks/mine', false);
+    xhr2.send();
+    debugger;
+    var response = JSON.parse(xhr2.responseText);
+    if (response.hasOwnProperty('detail')) {
+        //do nothing
+    }
+    else {
+        thorFCdeckView = document.createElement("div");
+        thorFCdeckView.id = "thorFCdeckView";
+        thorFCdeckView.innerHTML="<form id='chooseDeck'>Current Deck:";
+
+        var stringHTML = "";
+        for (i = 0; i < response.length; i++) {
+
+            deckName = response[i].deck_name;
+
+            if (i == 0)
+                stringHTML += "<select id='decks'><option value='" + response[i].pk + "'>" + deckName+ "</option>";
+            else
+                stringHTML += "<option value='" + response[i].pk + "'>" + deckName + "</option>";
+        }
+        stringHTML += "</select>";
+        thorFCdeckView.innerHTML += stringHTML;
+    }
+
 }

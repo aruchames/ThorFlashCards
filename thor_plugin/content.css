@@ -19,7 +19,7 @@
   overflow-y:auto;
   z-index:10000;
 }
-#front{
+#thorFCfront {
   background-color: #f05f40;
   border: 1px solid #848484;
   font-weight: bold;
@@ -43,7 +43,7 @@
     display: none;
 }
 
-#back{
+#thorFCback {
   background-color: #f05f40;
   border: 1px solid #848484;
   font-weight: bold;
