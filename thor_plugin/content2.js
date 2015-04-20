@@ -95,7 +95,7 @@ function onSelect(e) {
     }
     else {
         var translateCall = response.trans[0];
-        var htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button value='Make Card!' id='thorfcbutton'></div>";
+        var htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorfcbutton'>Make Card!</button></div>";
     }
     bubbleDOM.innerHTML = htmlFrag;
     bubbleDOM.appendChild(thorFCdeckView);
