@@ -353,7 +353,7 @@ def create_card(request):
 
   # Ensure that the user has edit permissions for the deck
   if deck_edit_forbidden(deck, request.user):
-    return Response(status=HTTP_403_FORBIDDEN)
+    return Response(status=status.HTTP_403_FORBIDDEN)
 
   # Now create the card
   serializer = CardSerializer(data=request.data)

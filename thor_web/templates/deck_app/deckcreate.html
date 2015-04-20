@@ -1,0 +1,40 @@
+{% extends "deck_app/deckbase.html" %}
+
+{% block content %}
+<div class="content">
+  <div class="container deckholder">  
+    <div class="row-fluid">
+    
+
+      <div class="col-sm-6">
+        <div class="stack">
+
+          <!-- Use jquery to insert the deck name here !-->
+          <div class="deckCreateName"></div>
+
+          <div class="row-fluid cardmetainfo">
+            <div class="col-xs-4">
+              <!-- USe jquery to insert deck language here -->
+              <span class="flag-icon"></span> <div class="deckLanguageName"></div>
+            </div>
+            <div class="col-xs-4">
+              <span class="glyphicon glyphicon-star"></span> 
+            </div>
+            <div class="col-xs-4">
+              <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
+            </div>
+          </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+
+
+{% block ownjavascript %}
+
+{% endblock ownjavascript %}
