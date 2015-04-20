@@ -74,6 +74,10 @@ function onSelect(e) {
         thorFClastSelectionBox = {};
         return;
     }
+    if (selection.toString() === "") {
+        return;
+    }
+
     thorFClastSelectionBox = box;
 
     var startPos = selection.getStartDocumentPos();
@@ -94,6 +98,7 @@ function onSelect(e) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", translateURL, false);
     xhr.send();
+    //TODO What if AJAX fails? It 404'd on empty strings.
 
     var response = JSON.parse(xhr.response);
     if (response.hasOwnProperty('detail')) {
@@ -101,7 +106,7 @@ function onSelect(e) {
     }
     else {
         var translateCall = response.trans[0];
-        var htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button value='Make Card!' id='thorfcbutton'></div>";
+        var htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorfcbutton'>Make Card!</button></div>";
     }
     bubbleDOM.innerHTML = htmlFrag;
     bubbleDOM.appendChild(thorFCdeckView);

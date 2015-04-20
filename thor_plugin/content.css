@@ -52,7 +52,7 @@
   margin-right:10px;
 }
 
-#submit{
+#thorfcbutton {
   padding:5px 15px;
   background:#E3E300;
    border:0 none;
@@ -60,6 +60,7 @@
   -webkit-border-radius: 5px;
   border-radius: 5px;
   top: 2px;
+  margin-bottom: 15px;
 }
 h5{
   text-family: Helvetica;
