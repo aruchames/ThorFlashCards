@@ -63,6 +63,10 @@ function onSelect(e) {
         thorFClastSelectionBox = {};
         return;
     }
+    if (selection.toString() === "") {
+        return;
+    }
+
     thorFClastSelectionBox = box;
 
     var startPos = selection.getStartDocumentPos();
@@ -83,6 +87,7 @@ function onSelect(e) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", translateURL, false);
     xhr.send();
+    //TODO What if AJAX fails? It 404'd on empty strings.
 
     var response = JSON.parse(xhr.response);
     if (response.hasOwnProperty('detail')) {
