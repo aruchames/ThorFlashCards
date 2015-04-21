@@ -3,6 +3,7 @@
     "description": "Thor plugin",
     "version": "1.0",
     "permissions": ["contextMenus",
+                    "cookies",
                     "https://*/",
                     "http://*/",
                     "https://www.thorfc.com/api/translate/*",

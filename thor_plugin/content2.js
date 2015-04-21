@@ -8,27 +8,39 @@ function thorFCmakeCard() {
     newCard.back = document.getElementById("thorFCback").innerHTML;
     newCard.deck = document.getElementById("decks").value;
 
-    var xhr = new XMLHttpRequest();
+    function flashCardAPICall(csrftoken) {
+        console.log("Got token:", csrftoken);
 
-    xhr.onreadystatechange = function (oEvent) {  
-        if (xhr.readyState === 4) {  
-            if (xhr.status === 201) {  
-              console.log(xhr.responseText)  
-            } else {  
-               console.log("Error", xhr.statusText, xhr.responseText); 
+        if (csrftoken === null) {
+            console.log("Token does not exist, reauthenticate!");
+            /* Do extension stuff here */
+
+        }
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function (oEvent) {  
+            if (xhr.readyState === 4) {  
+                if (xhr.status === 201) {  
+                    console.log(xhr.responseText)  
+                } else {  
+                    console.log("Error", xhr.statusText, xhr.responseText); 
+                }  
             }  
-        }  
-    }; 
+        }; 
 
-    xhr.open("POST", "https://www.thorfc.com/api/cards/", true);
-    xhr.withCredentials = true;
-    xhr.setRequestHeader("Content-type", "application/json");
+        xhr.open("POST", "https://www.thorfc.com/api/cards/", true);
+        xhr.withCredentials = true;
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.setRequestHeader("X-CSRFToken", csrftoken.value);
 
-    xhr.send(JSON.stringify(newCard));
+        xhr.send(JSON.stringify(newCard));
+    }
 
-
-
-
+    console.log("Sending message");
+    console.log(chrome);
+    /* Get cookie, make API call */
+    chrome.runtime.sendMessage("getCSRFToken", flashCardAPICall);
 }
 
 function hideAll() {
