@@ -1,13 +1,13 @@
 var thorFClastSelectionBox;
 var thorFCdeckView;
+var isThorAuthenticated;
 
 function thorFCmakeCard() {
-    debugger;
     var newCard = {};
     newCard.front = document.getElementById("thorFCfront").innerHTML;
     newCard.back = document.getElementById("thorFCback").innerHTML;
-    newCard.deck = document.getElementById("decks").value;
-
+    newCard.deck = thorFCdeckView.value;
+    hideAll();
     function flashCardAPICall(csrftoken) {
         console.log("Got token:", csrftoken);
 
@@ -22,11 +22,12 @@ function thorFCmakeCard() {
         xhr.onreadystatechange = function (oEvent) {  
             if (xhr.readyState === 4) {  
                 if (xhr.status === 201) {  
-                    console.log(xhr.responseText)  
+                    console.log(xhr.responseText)
                 } else {  
                     console.log("Error", xhr.statusText, xhr.responseText); 
                 }  
-            }  
+            }
+
         }; 
 
         xhr.open("POST", "https://www.thorfc.com/api/cards/", true);
@@ -44,8 +45,8 @@ function thorFCmakeCard() {
 }
 
 function hideAll() {
-    document.getElementById("thorfcIcon").style.visibility = "hidden";
-    document.getElementById("bubbleDOM").style.visibility = "hidden";
+    document.getElementById("thorfcIcon").style.display = "none";
+    document.getElementById("bubbleDOM").style.display = "none";
 }
 
 function setBubbleClass(el) {
@@ -57,8 +58,12 @@ function setBubbleClass(el) {
 
 function showBubble() {
     document.getElementById("bubbleDOM").style.visibility = "visible";
+    document.getElementById("bubbleDOM").style.display = "";
+    debugger;
+    thorFCdeckView.style.display = "";
     setBubbleClass(document.getElementById("bubbleDOM"));
-    document.getElementById("thorfcbutton").addEventListener('click', thorFCmakeCard);
+    if(isThorAuthenticated)
+        document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
 }
 
 function onSelect(e) {
@@ -67,7 +72,7 @@ function onSelect(e) {
     var el = e.target;
 
     if (el.id == "thorfcIcon") {
-        el.style.visibility = "hidden";
+        el.style.display = "hidden";
         return;
     }
     else if (el.className == "bubbleEl") {
@@ -97,7 +102,7 @@ function onSelect(e) {
     var thorfcIcon = document.getElementById("thorfcIcon");
     thorfcIcon.style.left = (startPos.x - 23) + "px";
     thorfcIcon.style.top = (startPos.y - 23) + "px";
-    thorfcIcon.style.visibility = "visible";
+    thorfcIcon.style.display = "";
 
     var bubbleDOM = document.getElementById("bubbleDOM");
 
@@ -115,16 +120,18 @@ function onSelect(e) {
     var response = JSON.parse(xhr.response);
     if (response.hasOwnProperty('detail')) {
         var htmlFrag = "<h1>You haven't logged in yet!</h1><a target=\"_blank\" href=\"http://www.thorfc.com/login/\">Log in</a><a target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>";
+        bubbleDOM.innerHTML = htmlFrag;
     }
     else {
         var translateCall = response.trans[0];
-        var htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorfcbutton'>Make Card!</button></div>";
+        var htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorFCbutton'>Make Card!</button></div>";
+        debugger;
+        bubbleDOM.innerHTML = htmlFrag;
+        bubbleDOM.appendChild(thorFCdeckView);
     }
-    bubbleDOM.innerHTML = htmlFrag;
-    bubbleDOM.appendChild(thorFCdeckView);
     bubbleDOM.style.left = (startPos.x - 24) + "px";
     bubbleDOM.style.top = (startPos.y - 175) + "px";
-
+    
 }
 
 function onSelectDelayed(e) {
@@ -138,17 +145,15 @@ window.onload = function() {
     thorfcIcon.setAttribute("src", chrome.extension.getURL("icon24.png"));
     thorfcIcon.addEventListener("click", showBubble);
     thorfcIcon.id = "thorfcIcon";
-    thorfcIcon.style.visibility = "hidden";
 
     var bubbleDOM = document.createElement("div");
     bubbleDOM.id = "bubbleDOM";
 
     bubbleDOM.className = "bubbleEl";
-    bubbleDOM.style.visibility = "hidden";
 
     document.body.appendChild(thorfcIcon);
     document.body.appendChild(bubbleDOM);
-
+    hideAll();
 
     document.addEventListener('mouseup', onSelect);
 
@@ -158,28 +163,26 @@ window.onload = function() {
     var xhr2 = new XMLHttpRequest();
     xhr2.open('GET', 'https://www.thorfc.com/api/decks/mine', false);
     xhr2.send();
-    debugger;
     var response = JSON.parse(xhr2.responseText);
     if (response.hasOwnProperty('detail')) {
+        isThorAuthenticated = false;
         //do nothing
     }
     else {
-        thorFCdeckView = document.createElement("div");
-        thorFCdeckView.id = "thorFCdeckView";
-        thorFCdeckView.innerHTML="<form id='chooseDeck'>Current Deck:";
+        isThorAuthenticated = true;
 
+        thorFCdeckView = document.createElement("select");
+        thorFCdeckView.id = "thorFCdecks";
         var stringHTML = "";
+        stringHTML = "";
+        
+        thorFCdeckView.style.display = "none";
         for (i = 0; i < response.length; i++) {
 
             deckName = response[i].deck_name;
-
-            if (i == 0)
-                stringHTML += "<select id='decks'><option value='" + response[i].pk + "'>" + deckName+ "</option>";
-            else
-                stringHTML += "<option value='" + response[i].pk + "'>" + deckName + "</option>";
+            stringHTML += "<option value='" + response[i].pk + "'>" + deckName+ "</option>";
         }
-        stringHTML += "</select>";
+
         thorFCdeckView.innerHTML += stringHTML;
     }
-
 }
