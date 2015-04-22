@@ -1,20 +1,20 @@
 var thorFClastSelectionBox;
 var thorFCdeckView;
 var isThorAuthenticated;
+var decksReceived = false;
 
 function thorFCmakeCard() {
     var newCard = {};
     newCard.front = document.getElementById("thorFCfront").innerHTML;
     newCard.back = document.getElementById("thorFCback").innerHTML;
     newCard.deck = thorFCdeckView.value;
-    hideAll();
+    hideAll(); 
     function flashCardAPICall(csrftoken) {
         console.log("Got token:", csrftoken);
 
         if (csrftoken === null) {
             console.log("Token does not exist, reauthenticate!");
             /* Do extension stuff here */
-
         }
 
         var xhr = new XMLHttpRequest();
@@ -57,6 +57,7 @@ function setBubbleClass(el) {
 }
 
 function showBubble() {
+    $("#thorFCback").after(thorFCdeckView);
     document.getElementById("bubbleDOM").style.visibility = "visible";
     document.getElementById("bubbleDOM").style.display = "";
     debugger;
@@ -126,8 +127,7 @@ function onSelect(e) {
         var translateCall = response.trans[0];
         var htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorFCbutton'>Make Card!</button></div>";
         debugger;
-        bubbleDOM.innerHTML = htmlFrag;
-        bubbleDOM.appendChild(thorFCdeckView);
+        bubbleDOM.innerHTML = htmlFrag;     
     }
     bubbleDOM.style.left = (startPos.x - 24) + "px";
     bubbleDOM.style.top = (startPos.y - 175) + "px";
@@ -160,29 +160,32 @@ window.onload = function() {
 
 
     /* Get our decks */
-    var xhr2 = new XMLHttpRequest();
-    xhr2.open('GET', 'https://www.thorfc.com/api/decks/mine', false);
-    xhr2.send();
-    var response = JSON.parse(xhr2.responseText);
-    if (response.hasOwnProperty('detail')) {
-        isThorAuthenticated = false;
-        //do nothing
-    }
-    else {
-        isThorAuthenticated = true;
-
-        thorFCdeckView = document.createElement("select");
-        thorFCdeckView.id = "thorFCdecks";
-        var stringHTML = "";
-        stringHTML = "";
-        
-        thorFCdeckView.style.display = "none";
-        for (i = 0; i < response.length; i++) {
-
-            deckName = response[i].deck_name;
-            stringHTML += "<option value='" + response[i].pk + "'>" + deckName+ "</option>";
+    var response = {};
+    if (decksReceived == false){
+        var xhr2 = new XMLHttpRequest();
+        xhr2.open('GET', 'https://www.thorfc.com/api/decks/mine', false);
+        xhr2.send();
+        var response = JSON.parse(xhr2.responseText);
+        if (response.hasOwnProperty('detail')) {
+            isThorAuthenticated = false;
         }
+        else {
+            isThorAuthenticated = true;
 
-        thorFCdeckView.innerHTML += stringHTML;
+            thorFCdeckView = document.createElement("select");
+            thorFCdeckView.id = "thorFCdecks";
+            var stringHTML = "";
+            stringHTML = "";
+        
+            thorFCdeckView.style.display = "none";
+            for (i = 0; i < response.length; i++) {
+
+                deckName = response[i].deck_name;
+                stringHTML += "<option value='" + response[i].pk + "'>" + deckName+ "</option>";
+            }
+
+            thorFCdeckView.innerHTML += stringHTML;
+            chrome.storage.sync.set({"thorFCdeckViewHTML":thorFCdeckView.innerHTML});
+        }
     }
 }

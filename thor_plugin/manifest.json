@@ -8,7 +8,8 @@
                     "http://*/",
                     "https://www.thorfc.com/api/translate/*",
                     "https://www.thorfc.com/api/*",
-                    "storage"],
+                    "storage",
+                    "notifications"],
     "background": {
         "scripts": ["background.js"],
 	   "persistent": false
@@ -21,7 +22,7 @@
 	    "matches": ["<all_urls>"],
         "run_at": "document_end",
 	    "css": ["content.css"],
-	    "js": ["js/log4javascript.js", "js/core.js", "js/dom.js", "js/domrange.js", "js/rangy-position.js", "js/wrappedrange.js", "js/wrappedselection.js", "js/rangy-position.js", "content2.js"]
+	    "js": ["js/log4javascript.js", "js/core.js", "js/dom.js", "js/domrange.js", "js/rangy-position.js", "js/wrappedrange.js", "js/wrappedselection.js", "js/rangy-position.js", "js/jquery-1.11.2.min.js", "content2.js"]
 	}],
     "browser_action": {
 	   "default_title": "ThorFC",
