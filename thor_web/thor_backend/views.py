@@ -12,9 +12,11 @@ from django.conf import settings
 from thor_backend.models import Deck, Card
 from django.contrib.auth.models import User
 from thor_backend.serializers import DeckSerializer, CardSerializer, UserSerializer
+from thor_backend.throttling import TranslateRateThrottle
+
 from django.http import Http404
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework import generics
@@ -60,6 +62,7 @@ def translate_dummy(request, query):
 
 @api_view(['GET'])
 @permission_classes( (permissions.IsAuthenticated,) )
+@throttle_classes( (TranslateRateThrottle,) )
 def translate_google(request, query):
   """
   # Request format:
@@ -91,6 +94,10 @@ def translate_google(request, query):
       return { "error" : "api error" }
 
     return re.json()
+
+  if len(query) > 100:
+    re = {"error": "Translate query too long"}
+    return Response(re, status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
   res_query = translate_query(query)
 
