@@ -58,6 +58,8 @@ def translate_dummy(request, query):
   re = {"q": query, "trans": [translation1, translation2, translation3], "lang": "derplang"}
   return Response(re)
 
+@api_view(['GET'])
+@permission_classes( (permissions.IsAuthenticated,) )
 def translate_google(request, query):
   """
   # Request format:
@@ -70,21 +72,41 @@ def translate_google(request, query):
   * Get a translation given the query
   """
   def detect_language(q):
+    print "Detecting language"
     re = requests.get('https://www.googleapis.com/language/translate/v2/detect', \
       params={'key': settings.GOOGLE_TRANSLATE_KEY, 'q': q})
 
+    print re.json()
     if u"error" in re.json():
       return re.json()
 
-  def translate_query(q, lang):
-    re = request.get('https://www.googleapis.com/language/translate/v2', \
+  def translate_query(q):
+    print "Translating query"
+    re = requests.get('https://www.googleapis.com/language/translate/v2', \
       params={'key': settings.GOOGLE_TRANSLATE_KEY, 'q': q, 'target': 'en'})
+
+    print re.json()
 
     if u"error" in re.json(): 
       return { "error" : "api error" }
 
     return re.json()
 
+  res_query = translate_query(query)
+
+  print res_query
+  if "error" in res_query:
+    return Response(res_query, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+  # Get the translated text, store in array
+  translations = [res_query[u"data"][u"translations"][0][u"translatedText"]]
+
+  # Source language is first two characters of detected language
+  # We don't feel like differentiation between Taiwanese and Chinese for now
+  language = res_query[u"data"][u"translations"][0][u"detectedSourceLanguage"][:2]
+  re = {"q": query, "trans": translations, "lang": language}
+
+  return Response(re)
 
 
 # User Object API views 
