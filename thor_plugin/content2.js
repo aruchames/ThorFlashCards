@@ -1,8 +1,25 @@
+
+/*******************************************************************************/
+/*GLOBAL VARIABLES*/
+
+
+/* What does this do? I don't know. I don't know.*/
 var thorFClastSelectionBox;
+/* HTML element with the deck selection, global so that it can be selected 
+    from when the card is made*/
 var thorFCdeckView;
+/* Set whether the user is authenticated on load so that other calls don't break
+    the program. */
 var isThorAuthenticated;
+/* Set whether the decks have been received for the user.*/
 var decksReceived = false;
 
+/******************************************************************************/
+/* HELPER FUNCTIONS */
+
+/* Called when the make card button is pressed, it accesses the translated and
+    untranslated values from globals as well as the value of the deck. It adds 
+    the card to the deck selected in the thorFCdeckView element. */
 function thorFCmakeCard() {
     var newCard = {};
     newCard.front = document.getElementById("thorFCfront").innerHTML;
@@ -43,12 +60,12 @@ function thorFCmakeCard() {
     /* Get cookie, make API call */
     chrome.runtime.sendMessage("getCSRFToken", flashCardAPICall);
 }
-
+/* Clears the popup and icon button from the screen. */
 function hideAll() {
     document.getElementById("thorfcIcon").style.display = "none";
     document.getElementById("bubbleDOM").style.display = "none";
 }
-
+/* Sets class of child nodes to bubble so that they will also be displayed ???*/
 function setBubbleClass(el) {
     el.className = "bubbleEl";
     for (var i = 0; i < el.childNodes.length; i++) {
@@ -56,6 +73,8 @@ function setBubbleClass(el) {
     }
 }
 
+/* Shows bubble with translated text and decks. Bubble is already ready, just 
+    waiting to be shown. */
 function showBubble() {
     $("#thorFCback").after(thorFCdeckView);
     document.getElementById("bubbleDOM").style.visibility = "visible";
@@ -67,6 +86,10 @@ function showBubble() {
         document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
 }
 
+/* Placement logic for icon and card submission element. Makes call to translate
+    API and creates card for submission. */
+/* This function could probably be split into two. Also nt sure what the first 
+    part of it is doing. */
 function onSelect(e) {
 
 
@@ -133,11 +156,13 @@ function onSelect(e) {
     bubbleDOM.style.top = (startPos.y - 175) + "px";
     
 }
-
+/* Unknown purpose. Not called in code. */
 function onSelectDelayed(e) {
     window.setTimeout(onSelect(e), 200);
 }
-
+/* Prepares elements for usage, making the container elements and fetching the 
+    decks via a call to our API. Also stores deck values in storage, possibly  
+    move that to background. */
 window.onload = function() {
     rangy.init();
 
