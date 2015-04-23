@@ -44,6 +44,13 @@ def get_deck(deck_pk):
 # Front end view logic
 # ============================================================================
 
+def cards(request):
+    """
+    Create a stack of cards associated with the requested deck. 
+    Order the cards based on priority value. 
+    
+    """
+
 def decks(request):
     """ 
     View all decks associated with the current user or with anonymous users.
