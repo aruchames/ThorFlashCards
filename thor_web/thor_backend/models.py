@@ -31,6 +31,7 @@ class Deck(models.Model):
     views = models.IntegerField(default=0)
     stars = models.IntegerField(default=0)
     starred_by = models.ManyToManyField(User, related_name="starred_decks")
+    
 
     def __unicode__(self):
         return self.deck_name
@@ -48,6 +49,8 @@ class Card(models.Model):
     front = models.CharField(max_length=400)
     back = models.CharField(max_length=400)
     deck = models.ForeignKey(Deck, related_name="cards")
-
+    priority = models.IntegerField()
+    
+    
     def __unicode__(self):
         return self.front
