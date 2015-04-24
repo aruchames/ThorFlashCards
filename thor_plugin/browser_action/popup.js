@@ -12,6 +12,8 @@ $(window).load(window.setTimeout(function () {
     	//load login view
 		$('#loading').css('display', 'none');
 		$("#signin").css('display', 'inline');
+		$("#login1").on('click', function() {chrome.tabs.create({"url":"http://www.thorfc.com/login/"})});
+-		$("#register1").on('click', function() {chrome.tabs.create({"url":"http://www.thorfc.com/register/"})});
     }
     // Load users decks in a scroll down menu and choose the deck that will be submit to.
     else{
