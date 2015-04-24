@@ -60,4 +60,4 @@ $(window).load(window.setTimeout(function () {
 		});
     }
 
-}, 100));
+}, 200));
