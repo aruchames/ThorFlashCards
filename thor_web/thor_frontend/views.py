@@ -198,7 +198,6 @@ def about(request):
     c = RequestContext(request, {})
     return HttpResponse(t.render(c))
 
-
 # Catch all for other URLs
 def error404(request):
    return HttpResponseNotFound(render_to_string('404.html'), status=404)
