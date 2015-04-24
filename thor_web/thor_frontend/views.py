@@ -70,9 +70,27 @@ def decks(request):
     return HttpResponse(t.render(c))
 
 def deck_create(request):
-    t = loader.get_template('deck_app/deckcreate.html')
-    c = RequestContext(request, {})
-    return HttpResponse(t.render(c))
+    if request.method == 'POST':
+        print request.POST
+        deck_name = request.POST['deck_name']
+        language = request.POST['language']
+        viewability = request.POST['viewability']
+
+        inv_lang_dict = dict( (lang, key) for key, lang in Deck.LANGUAGE_CHOICES )
+        lang_code = inv_lang_dict[language]
+
+        if viewability == 'public':
+            Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
+                private=False)
+        else:
+            Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
+                private=True)
+
+        return redirect('deck_view')
+    else:
+        t = loader.get_template('deck_app/deckcreate.html')
+        c = RequestContext(request, {"languages": [a[1] for a in Deck.LANGUAGE_CHOICES] })
+        return HttpResponse(t.render(c))
 
 def deck_detail(request, deck_pk):
     """

@@ -35,7 +35,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_THROTTLE_RATES': {
         'anon': '1/min',
-        'user': '1000/min'
+        'user': '1000/min',
+        'translate': '2/day'
     }
 }
 
