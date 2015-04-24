@@ -5,7 +5,7 @@
 
 /* What does this do? I don't know. I don't know.*/
 var thorFClastSelectionBox;
-/* HTML element with the deck selection, global so that it can be selected 
+/* HTML element with the deck selection, global so that it can be selected
     from when the card is made*/
 var thorFCdeckView;
 /* Set whether the user is authenticated on load so that other calls don't break
@@ -18,14 +18,14 @@ var decksReceived = false;
 /* HELPER FUNCTIONS */
 
 /* Called when the make card button is pressed, it accesses the translated and
-    untranslated values from globals as well as the value of the deck. It adds 
+    untranslated values from globals as well as the value of the deck. It adds
     the card to the deck selected in the thorFCdeckView element. */
 function thorFCmakeCard() {
     var newCard = {};
     newCard.front = document.getElementById("thorFCfront").innerHTML;
     newCard.back = document.getElementById("thorFCback").innerHTML;
     newCard.deck = thorFCdeckView.value;
-    hideAll(); 
+    hideAll();
     function flashCardAPICall(csrftoken) {
         console.log("Got token:", csrftoken);
 
@@ -36,16 +36,16 @@ function thorFCmakeCard() {
 
         var xhr = new XMLHttpRequest();
 
-        xhr.onreadystatechange = function (oEvent) {  
-            if (xhr.readyState === 4) {  
-                if (xhr.status === 201) {  
+        xhr.onreadystatechange = function (oEvent) {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 201) {
                     console.log(xhr.responseText)
-                } else {  
-                    console.log("Error", xhr.statusText, xhr.responseText); 
-                }  
+                } else {
+                    console.log("Error", xhr.statusText, xhr.responseText);
+                }
             }
 
-        }; 
+        };
 
         xhr.open("POST", "https://www.thorfc.com/api/cards/", true);
         xhr.withCredentials = true;
@@ -73,7 +73,7 @@ function setBubbleClass(el) {
     }
 }
 
-/* Shows bubble with translated text and decks. Bubble is already ready, just 
+/* Shows bubble with translated text and decks. Bubble is already ready, just
     waiting to be shown. */
 function showBubble() {
     $("#thorFCback").after(thorFCdeckView);
@@ -88,7 +88,7 @@ function showBubble() {
 
 /* Placement logic for icon and card submission element. Makes call to translate
     API and creates card for submission. */
-/* This function could probably be split into two. Also nt sure what the first 
+/* This function could probably be split into two. Also nt sure what the first
     part of it is doing. */
 function onSelect(e) {
 
@@ -134,7 +134,7 @@ function onSelect(e) {
     var body = rangy.getSelection().toString();
     var result = body.replace(regex, "");
 
-    var translateURL = "https://www.thorfc.com/api/translate/"+ result;
+    var translateURL = "https://www.thorfc.com/api/translate_beta/"+ result;
 
     var xhr = new XMLHttpRequest();
     xhr.open("GET", translateURL, false);
@@ -150,18 +150,18 @@ function onSelect(e) {
         var translateCall = response.trans[0];
         var htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorFCbutton'>Make Card!</button></div>";
         debugger;
-        bubbleDOM.innerHTML = htmlFrag;     
+        bubbleDOM.innerHTML = htmlFrag;
     }
     bubbleDOM.style.left = (startPos.x - 24) + "px";
     bubbleDOM.style.top = (startPos.y - 175) + "px";
-    
+
 }
 /* Unknown purpose. Not called in code. */
 function onSelectDelayed(e) {
     window.setTimeout(onSelect(e), 200);
 }
-/* Prepares elements for usage, making the container elements and fetching the 
-    decks via a call to our API. Also stores deck values in storage, possibly  
+/* Prepares elements for usage, making the container elements and fetching the
+    decks via a call to our API. Also stores deck values in storage, possibly
     move that to background. */
 window.onload = function() {
     rangy.init();
@@ -201,7 +201,7 @@ window.onload = function() {
             thorFCdeckView.id = "thorFCdecks";
             var stringHTML = "";
             stringHTML = "";
-        
+
             thorFCdeckView.style.display = "none";
             for (i = 0; i < response.length; i++) {
 
