@@ -29,7 +29,7 @@ $(window).load(window.setTimeout(function () {
     	var deckView = document.createElement("div");
         deckView.id = "deckView";
 		deckView.className = "container";
-		deckView.innerHTML = "<div class='row'>Welcome back, " +username+"!</div>"
+		deckView.innerHTML = "<div class='row' style='font-weight:bold'>Welcome back, " +username+"!</div>"
     	//deckView.innerHTML="<div class='row'>User: <div id ='user'>"+username+"</div></div> <div class='row'>Current Deck:";
 
         var stringHTML = "";
