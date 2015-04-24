@@ -110,6 +110,7 @@ CardLearner = (function() {
   CardLearner.prototype.next = function() {
 
   	if (this.m < this.N) {
+      this.last = this.m;
   		this.m = this.m + 1;
   		this.last = this.m;
   		return this.m;
@@ -126,13 +127,13 @@ CardLearner = (function() {
     }
 
    //don't show the same card two times in a row
-   if (this.last == (i + 1)) return myCardLearner.next();
+   if (this.last == i) return myCardLearner.next();
 
   	this.m = this.m + 1;
   	
-  	this.last = i + 1;
+  	this.last = i;
   	
-  	return (i + 1);
+  	return i;
   };
   
   return CardLearner;
