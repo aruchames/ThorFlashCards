@@ -18,10 +18,8 @@ $(window).load(window.setTimeout(function () {
     // Load users decks in a scroll down menu and choose the deck that will be submit to.
     else{
 
-    	//debugger;
     	var body = document.getElementsByTagName("body")[0];
 
-    	debugger;
     	console.log(xhr);
     	var login = document.getElementById("login");
 

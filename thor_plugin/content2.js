@@ -79,7 +79,6 @@ function showBubble() {
     $("#thorFCback").after(thorFCdeckView);
     document.getElementById("bubbleDOM").style.visibility = "visible";
     document.getElementById("bubbleDOM").style.display = "";
-    debugger;
     thorFCdeckView.style.display = "";
     setBubbleClass(document.getElementById("bubbleDOM"));
     if(isThorAuthenticated)
@@ -143,13 +142,12 @@ function onSelect(e) {
 
     var response = JSON.parse(xhr.response);
     if (response.hasOwnProperty('detail')) {
-        var htmlFrag = "<div><h3>To start using Thor Flash Cards, please first <a target=\"_blank\" href=\"http://www.thorfc.com/login/\"><br>Log in</a>/<a target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>.</h3></div>";
+        var htmlFrag = "<div><h3>To start using Thor Flash Cards, please first: <a target=\"_blank\" href=\"http://www.thorfc.com/login/\"><br>Log in</a>/<a target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>.</h3></div>";
         bubbleDOM.innerHTML = htmlFrag;
     }
     else {
         var translateCall = response.trans[0];
         var htmlFrag = "<div class='container' id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorFCbutton'>Make Card!</button></div>";
-        debugger;
         bubbleDOM.innerHTML = htmlFrag;
     }
     bubbleDOM.style.left = (startPos.x - 24) + "px";
@@ -204,7 +202,6 @@ window.onload = function() {
 
             thorFCdeckView.style.display = "none";
             for (i = 0; i < response.length; i++) {
-
                 deckName = response[i].deck_name;
                 stringHTML += "<option value='" + response[i].pk + "'>" + deckName+ "</option>";
             }
