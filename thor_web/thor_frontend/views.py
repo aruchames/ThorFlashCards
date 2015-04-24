@@ -111,7 +111,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-                messages.add_message(request, messages.SUCCESS, "Login successful")
+                # messages.add_message(request, messages.SUCCESS, "Login successful")
 
                 # TODO: find out how to reverse lookup URLS
                 return redirect('index')
@@ -130,7 +130,7 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    messages.add_message(request, messages.INFO, "You have been logged out")
+    # messages.add_message(request, messages.INFO, "You have been logged out")
     return redirect('index')
 
 def register(request):
