@@ -1,7 +1,7 @@
 body {
     width: 200px;
     height: 200px;
-    font-family: Helvetica;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif; !important
 }
 input{
     padding: 5px 15px;
@@ -13,7 +13,6 @@ input{
     top: 2px;
     left: 5px;
     right: 5px;
-    font-family: Helvetica;
     width: 90px;
 }
 #user{
@@ -62,6 +61,7 @@ input{
 }
 #signin {
     display: none;
+    font-weight: bold;
 }
 #signin > p {
     text-align: center;

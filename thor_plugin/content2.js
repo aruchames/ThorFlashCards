@@ -143,7 +143,7 @@ function onSelect(e) {
 
     var response = JSON.parse(xhr.response);
     if (response.hasOwnProperty('detail')) {
-        var htmlFrag = "<h1>You haven't logged in yet!</h1><a target=\"_blank\" href=\"http://www.thorfc.com/login/\">Log in</a><a target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>";
+        var htmlFrag = "<h3 style=\"font-family:'Open Sans', 'Helvetica Neue', Arial, sans-serif;\">To start using Thor Flash Cards, please first Login/Register.</h3><a target=\"_blank\" href=\"http://www.thorfc.com/login/\">Log in</a><a target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>";
         bubbleDOM.innerHTML = htmlFrag;
     }
     else {
