@@ -44,6 +44,13 @@ def get_deck(deck_pk):
 # Front end view logic
 # ============================================================================
 
+def cards(request):
+    """
+    Create a stack of cards associated with the requested deck. 
+    Order the cards based on priority value. 
+    
+    """
+
 def decks(request):
     """ 
     View all decks associated with the current user or with anonymous users.
@@ -122,7 +129,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-                messages.add_message(request, messages.SUCCESS, "Login successful")
+                # messages.add_message(request, messages.SUCCESS, "Login successful")
 
                 # TODO: find out how to reverse lookup URLS
                 return redirect('index')
@@ -141,7 +148,7 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    messages.add_message(request, messages.INFO, "You have been logged out")
+    # messages.add_message(request, messages.INFO, "You have been logged out")
     return redirect('index')
 
 def register(request):
@@ -208,7 +215,6 @@ def about(request):
     t = loader.get_template('about.html')
     c = RequestContext(request, {})
     return HttpResponse(t.render(c))
-
 
 # Catch all for other URLs
 def error404(request):

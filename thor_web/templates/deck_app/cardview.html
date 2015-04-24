@@ -1,0 +1,74 @@
+{% extends "deck_app/deckbase.html" %}
+
+{% block content%}
+<div class="content">
+</div>
+{% endblock content %}
+
+{% block ownjavascript %}
+/******************************************************************************/
+
+/* CONFIG VARIABLES */
+var preloadCards = 10;
+var swipeXThreshold = 30;
+var swipeYThreshold = 90;
+var leftKeyCode = 37;
+var rightKeyCode = 39;
+var loadingMessageDelay = 2000;
+var loadingMessageSpeed = 1200;
+
+/******************************************************************************/
+
+var currentCard = 0;
+var totalCards = 0;
+var cards = new Array();
+var cardBuffer = new Array();
+var loading = true;
+
+$(init)
+
+function init() {
+
+$("#loading").delay( loadingMessageDelay);
+fadeInLoadingMessage();
+$("#deck card").load( handleCardLoad);
+
+/*For each of the cards:
+1. Hide the card
+2. Record its pk
+3. Store it in the cards array
+4. Perform the update frequency operations.
+5. Show card
+*/
+
+
+$("#deck card").each( function() {
+$(this).hide();
+$(this).data( "cardNum", totalCards);
+cards[totalCards++] = $(this);
+if(this.complete) $(this).trigger("load");
+});
+
+
+// Recenter the card if the user resizes the window
+$(window.resize(centerCard));
+
+$("#deck").swipe({
+swipeLeft: moveLeft,
+swipeRight: moveRight,
+threshold: { x:swipeXThreshold, y:swipeYThreshold}
+});
+
+$(document).keydown( function(event) {
+if (event.which == leftKeyCode) moveLeft();
+if (event.which == rightKeyCode) moveRight();
+});
+
+if ( $(this).data("cardNum") == 0 ) {
+centerCard();
+$(this).fadeTo( "slow", cardOpacity);
+} else{
+$(this).fadeTo( "slow", backgroundSlideOpacity);
+}
+}
+{% endblock ownjavascript %}

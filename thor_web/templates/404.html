@@ -3,10 +3,16 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href='{% static "shared/css/404.css" %}'>
-<div class="row">
-  <h3>404. The requested URL was not found.</h3>
-  <hr>
-  <h4>Go <a href="javascript:history.back()">back</a></h4>
+<div class="content">
+  <div class="container footerpaddingfix">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 text-center">
+        <hr>
+        <h1>404. The requested URL was not found.</h1>
+        <hr>
+        <h4 class="darkfont">Go <a href="javascript:history.back()">back</a></h4>
+      </div>
+    </div>
+  </div>
 </div>
-
 {% endblock content %}

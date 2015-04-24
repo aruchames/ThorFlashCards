@@ -1,20 +1,37 @@
-var thorFClastSelectionBox;
-var thorFCdeckView;
-var isThorAuthenticated;
 
+/*******************************************************************************/
+/*GLOBAL VARIABLES*/
+
+
+/* What does this do? I don't know. I don't know.*/
+var thorFClastSelectionBox;
+/* HTML element with the deck selection, global so that it can be selected 
+    from when the card is made*/
+var thorFCdeckView;
+/* Set whether the user is authenticated on load so that other calls don't break
+    the program. */
+var isThorAuthenticated;
+/* Set whether the decks have been received for the user.*/
+var decksReceived = false;
+
+/******************************************************************************/
+/* HELPER FUNCTIONS */
+
+/* Called when the make card button is pressed, it accesses the translated and
+    untranslated values from globals as well as the value of the deck. It adds 
+    the card to the deck selected in the thorFCdeckView element. */
 function thorFCmakeCard() {
     var newCard = {};
     newCard.front = document.getElementById("thorFCfront").innerHTML;
     newCard.back = document.getElementById("thorFCback").innerHTML;
     newCard.deck = thorFCdeckView.value;
-    hideAll();
+    hideAll(); 
     function flashCardAPICall(csrftoken) {
         console.log("Got token:", csrftoken);
 
         if (csrftoken === null) {
             console.log("Token does not exist, reauthenticate!");
             /* Do extension stuff here */
-
         }
 
         var xhr = new XMLHttpRequest();
@@ -43,12 +60,12 @@ function thorFCmakeCard() {
     /* Get cookie, make API call */
     chrome.runtime.sendMessage("getCSRFToken", flashCardAPICall);
 }
-
+/* Clears the popup and icon button from the screen. */
 function hideAll() {
     document.getElementById("thorfcIcon").style.display = "none";
     document.getElementById("bubbleDOM").style.display = "none";
 }
-
+/* Sets class of child nodes to bubble so that they will also be displayed ???*/
 function setBubbleClass(el) {
     el.className = "bubbleEl";
     for (var i = 0; i < el.childNodes.length; i++) {
@@ -56,7 +73,10 @@ function setBubbleClass(el) {
     }
 }
 
+/* Shows bubble with translated text and decks. Bubble is already ready, just 
+    waiting to be shown. */
 function showBubble() {
+    $("#thorFCback").after(thorFCdeckView);
     document.getElementById("bubbleDOM").style.visibility = "visible";
     document.getElementById("bubbleDOM").style.display = "";
     debugger;
@@ -66,6 +86,10 @@ function showBubble() {
         document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
 }
 
+/* Placement logic for icon and card submission element. Makes call to translate
+    API and creates card for submission. */
+/* This function could probably be split into two. Also nt sure what the first 
+    part of it is doing. */
 function onSelect(e) {
 
 
@@ -126,18 +150,19 @@ function onSelect(e) {
         var translateCall = response.trans[0];
         var htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorFCbutton'>Make Card!</button></div>";
         debugger;
-        bubbleDOM.innerHTML = htmlFrag;
-        bubbleDOM.appendChild(thorFCdeckView);
+        bubbleDOM.innerHTML = htmlFrag;     
     }
     bubbleDOM.style.left = (startPos.x - 24) + "px";
     bubbleDOM.style.top = (startPos.y - 175) + "px";
     
 }
-
+/* Unknown purpose. Not called in code. */
 function onSelectDelayed(e) {
     window.setTimeout(onSelect(e), 200);
 }
-
+/* Prepares elements for usage, making the container elements and fetching the 
+    decks via a call to our API. Also stores deck values in storage, possibly  
+    move that to background. */
 window.onload = function() {
     rangy.init();
 
@@ -160,29 +185,32 @@ window.onload = function() {
 
 
     /* Get our decks */
-    var xhr2 = new XMLHttpRequest();
-    xhr2.open('GET', 'https://www.thorfc.com/api/decks/mine', false);
-    xhr2.send();
-    var response = JSON.parse(xhr2.responseText);
-    if (response.hasOwnProperty('detail')) {
-        isThorAuthenticated = false;
-        //do nothing
-    }
-    else {
-        isThorAuthenticated = true;
-
-        thorFCdeckView = document.createElement("select");
-        thorFCdeckView.id = "thorFCdecks";
-        var stringHTML = "";
-        stringHTML = "";
-        
-        thorFCdeckView.style.display = "none";
-        for (i = 0; i < response.length; i++) {
-
-            deckName = response[i].deck_name;
-            stringHTML += "<option value='" + response[i].pk + "'>" + deckName+ "</option>";
+    var response = {};
+    if (decksReceived == false){
+        var xhr2 = new XMLHttpRequest();
+        xhr2.open('GET', 'https://www.thorfc.com/api/decks/mine', false);
+        xhr2.send();
+        var response = JSON.parse(xhr2.responseText);
+        if (response.hasOwnProperty('detail')) {
+            isThorAuthenticated = false;
         }
+        else {
+            isThorAuthenticated = true;
 
-        thorFCdeckView.innerHTML += stringHTML;
+            thorFCdeckView = document.createElement("select");
+            thorFCdeckView.id = "thorFCdecks";
+            var stringHTML = "";
+            stringHTML = "";
+        
+            thorFCdeckView.style.display = "none";
+            for (i = 0; i < response.length; i++) {
+
+                deckName = response[i].deck_name;
+                stringHTML += "<option value='" + response[i].pk + "'>" + deckName+ "</option>";
+            }
+
+            thorFCdeckView.innerHTML += stringHTML;
+            chrome.storage.sync.set({"thorFCdeckViewHTML":thorFCdeckView.innerHTML});
+        }
     }
 }

@@ -40,6 +40,10 @@ REST_FRAMEWORK = {
     }
 }
 
+AUTHENTICATION_BACKENDS {
+	'thor_backend.backends.EmailOrUsernameModelBackend',
+	'django.contrib.auth.backends.ModelBackend',
+}
 
 # Application definition
 

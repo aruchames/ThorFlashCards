@@ -4,29 +4,31 @@
 {% block content %}
 <link href='{% static "shared/css/login.css" %}' rel='stylesheet'>
 
-<div class="row">   
-  <!-- TODO: update url linking -->
-  <div class="container">
-    <div class="card card-container">
-      <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-      <p id="profile-name" class="profile-name-card"></p>
-      <form class="form-signin" action="/login/" method="POST">
-    	{% csrf_token %}
-    	<span id="reauth-email" class="reauth-email"></span>
-        <input type="text" id="inputEmail" class="form-control" placeholder="Username" name="username" required autofocus>
-    	<input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
-    	<div id="remember" class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-    	</div>
-    	<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
-      </form><!-- /form -->
-      <hr>
-      <p class="forgot-password">Forgot your password? Click <a href="#" class="forgot-password">here</a></p>
-      <p class="forgot-password">Need to register? Click <a href="/register/">here</a></p>
-    </div><!-- /card-container -->
-  </div><!-- /container -->
-</div>  
+<div class="container footerpaddingfix">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 text-center">
+      <!-- TODO: update url linking -->
+      <div class="card card-container">
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin" action="/login/" method="POST">
+          {% csrf_token %}
+          <span id="reauth-email" class="reauth-email"></span>
+          <input type="text" id="inputEmail" class="form-control" placeholder="Email address" name="username" required autofocus>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+          <div id="remember" class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+        </form><!-- /form -->
+        <hr>
+        <p class="forgot-password">Forgot your password? Click <a href="#" class="forgot-password">here</a></p>
+        <p class="forgot-password">Need to register? Click <a href="/register/">here</a></p>
+      </div><!-- /card-container -->
+    </div>
+  </div>
+</div>
 <!-- TODO: find a way to remove handwritten links -->
 {% endblock content %}
