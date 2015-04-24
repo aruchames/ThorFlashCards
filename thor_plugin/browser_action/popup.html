@@ -1,17 +1,29 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="popup.css">
-        <script src="/js/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <script src="../js/jquery-1.11.2.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
         <script src="popup.js"></script>
         <title>ThorFC</title>
     </head>
     <body>
-      <form id="login">
-	     <h3>Register or login here</h3>
-	     <input type="submit" value="Login">
-      </form>
-      <form id="register">
-	     <input type="submit" value="Register">
-      </form>
+        <div class="container">
+            <div class="row">
+                <img id="logo" class="img-responsive center-block" src="../icon128.png"/>
+            </div>
+        </div>
+        <div class="container">
+            <div id="loading" class="row">
+                <img class="img-responsive center-block" src="../34.gif"/>
+                <p>Please wait while we grab your decks!</p>
+            </div>
+            <div id="signin" class="row center-block">
+                <p>Whoops, we don't know who are you are yet!</p>
+                <a id="login1" href="https://www.thorfc.com/login/" class="btn btn-sm btn-primary">Log in</a>
+                <a id="register1" href="https://www.thorfc.com/register/" class="btn btn-sm btn-primary">Sign up</a>
+            </div>
+        </div>
     </body>
 </html>

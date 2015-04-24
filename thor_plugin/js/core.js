@@ -9,7 +9,6 @@
  */
 
 (function(global) {
-    var log = log4javascript.getLogger("rangy.core");
     var amdSupported = (typeof global.define == "function" && global.define.amd);
 
     var OBJECT = "object", FUNCTION = "function", UNDEFINED = "undefined";
@@ -260,8 +259,8 @@
                 initListeners[i](api);
             } catch (ex) {
                 errorMessage = "Rangy init listener threw an exception. Continuing. Detail: " + getErrorDesc(ex);
-                log.error(errorMessage, ex);
-                consoleLog(errorMessage);
+                //log.error(errorMessage, ex);
+                //consoleLog(errorMessage);
             }
         }
     }
@@ -321,15 +320,15 @@
                     throw new Error("required module '" + moduleName + "' not supported");
                 }
             }
-            
+
             // Now run initializer
             this.initializer(this)
         },
-        
+
         fail: function(reason) {
             this.initialized = true;
             this.supported = false;
-            log.error("Module '" + this.name + "' failed to load: " + reason);
+            //log.error("Module '" + this.name + "' failed to load: " + reason);
             throw new Error("Module '" + this.name + "' failed to load: " + reason);
         },
 
@@ -346,7 +345,7 @@
             return new Error("Error in Rangy " + this.name + " module: " + msg);
         }
     };
-    
+
     function createModule(isCore, name, dependencies, initFunc) {
         var newModule = new Module(name, dependencies, function(module) {
             if (!module.initialized) {
@@ -356,18 +355,18 @@
                     module.supported = true;
                 } catch (ex) {
                     var errorMessage = "Module '" + name + "' failed to load: " + getErrorDesc(ex);
-                    log.error(errorMessage, ex);
-                    consoleLog(errorMessage);
+                    //log.error(errorMessage, ex);
+                    //consoleLog(errorMessage);
                 }
             }
         });
         modules[name] = newModule;
-        
+
 /*
         // Add module AMD support
         if (!isCore && amdSupported) {
             global.define(["rangy-core"], function(rangy) {
-                
+
             });
         }
 */
@@ -408,7 +407,7 @@
     var docReady = false;
 
     var loadHandler = function(e) {
-        log.info("loadHandler, event is " + e.type);
+        //log.info("loadHandler, event is " + e.type);
         if (!docReady) {
             docReady = true;
             if (!api.initialized) {
@@ -435,7 +434,7 @@
     addListener(window, "load", loadHandler);
 
     /*----------------------------------------------------------------------------------------------------------------*/
-    
+
     // AMD, for those who like this kind of thing
 
     if (amdSupported) {
@@ -445,8 +444,8 @@
             return api;
         });
     }
-    
+
     // Create a "rangy" property of the global object in any case. Other Rangy modules (which use Rangy's own simple
     // module system) rely on the existence of this global property
     global.rangy = api;
-})(this);    
+})(this);

@@ -1,6 +1,6 @@
 body {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     font-family: Helvetica;
 }
 input{
@@ -9,7 +9,7 @@ input{
     border: 1px solid #f4b9ff;
     cursor: pointer;
     -webkit-border-radius: 5px;
-    border-radius: 5px; 
+    border-radius: 5px;
     top: 2px;
     left: 5px;
     right: 5px;
@@ -25,7 +25,7 @@ input{
   margin-right:10px;
 
 }
-
+/*
 #decks{
   background-color: #f05f40;
   border: 1px solid #848484;
@@ -34,4 +34,38 @@ input{
   outline: 2px solid #424242;
   overflow-x:hidden;
   border-right:15px;
+} */
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+}
+#logo {
+    width: 96px;
+    height: 96px;
+}
+#login1 {
+    width: 60px;
+    float: left;
+}
+#register1 {
+    width: 60px;
+    float: right;
+}
+#loading > img {
+    width: 36px;
+    height: 36px;
+}
+#loading > p {
+    text-align: center;
+}
+#signin {
+    display: none;
+}
+#signin > p {
+    text-align: center;
+}
+.row {
+    padding: 0.5em;
 }
