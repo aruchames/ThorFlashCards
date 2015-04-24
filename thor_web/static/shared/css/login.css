@@ -9,7 +9,7 @@ body, html {
     padding-top: 5em;
     height: 100%;
     background-repeat: no-repeat;
-    background-image: linear-gradient(#03a9f3, #00acc1);
+    background-color: #85caf5;
 }
 
 .card-container.card {
@@ -25,6 +25,10 @@ body, html {
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
+}
+
+.navbar{
+    background-color: f05f40;
 }
 
 /*
@@ -138,3 +142,10 @@ body, html {
     font-size: 14px;
 }
 
+.footerpaddingfix{
+    padding-bottom: 218px;
+}
+
+.footerpaddingfix2{
+    padding-bottom: 286px;
+}
