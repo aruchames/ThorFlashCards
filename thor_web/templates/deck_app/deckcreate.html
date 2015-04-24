@@ -5,21 +5,50 @@
   <div class="container deckholder">  
     <div class="row-fluid">
       <div class="col-md-6">
-        <form class="form-horizontal">
+
+        <form style="text-align: center" action="/decks/create" method="POST">
+          {% csrf_token %}
+          <hr/>
+          <h2>New deck</h2>
+
           <div class="form-group">
+            <label for="DeckNameInput"></label>
+            <input type="text" class="form-control" 
+                      id="DeckNameInput" placeholder="Deck Name" name="deck_name" required>
           </div>
+
+          <select name="language" id="LanguageInput" class="form-control">
+            {% for language in languages %}
+              <option value="{{language}}">{{language}}</option>
+            {% endfor %}
+          </select>
+
+          <hr style="visibility: hidden;"/>
+
+          <div class="form-group">
+            <label class="radio-inline">
+              <input type="radio" name="viewability" id="PublicRadio" value="public" checked> Public
+            </label>
+
+            <label class="radio-inline">
+              <input type="radio" name="viewability" id="PrivateRadio" value="private"> Private
+            </label>
+          </div>
+
+          <button class="btn">Create!</button>
         </form>
+
       </div>
 
       <div class="col-md-6">
         <div class="stack">
         <!-- Use jquery to insert the deck name here !-->
-        <div class="deckCreateName">Deck Name here</div>
+        <div class="deckCreateName">Deck Name</div>
 
         <div class="row-fluid cardmetainfo">
           <div class="col-xs-4">
             <!-- USe jquery to insert deck language here -->
-            <span class="flag-icon flag-icon-gb"></span> 
+            <span id="FlagDisplay" class="flag-icon flag-icon-gb"></span> 
             <div class="deckLanguageName" style="display: inline">en</div>
 
           </div>
@@ -36,4 +65,5 @@
 
 {% block ownjavascript %}
 
+<script src="/static/js/deckcreate.js"></script>
 {% endblock ownjavascript %}

@@ -1,97 +1,18 @@
 {% extends "deck_app/deckbase.html" %}
-<head>
-<link rel="stylesheet" href=
-</head>
+{% block owncss %}
+<link rel="stylesheet" type="text/css"  href="/static/css/deckview.css">
+{% endblock owncss%}
 
-{% block content %}
-<div class="content">
-  <div class="stack">
-    
+  {% block content %}
+  <div class="content">
+    <div class="stack">
+      
+    </div>
   </div>
-</div>
-{% endblock content%}
+  {% endblock content%}
 
-{% block javascript %}
-
-var deckLearner = new CardLearner()
-
-var pathname = window.location.href;
-var res  = pathname.split("/");
-var pk   = res[res.length-1];
-var url  = "https://www.thorfc.com/api/decks/" + pk;
-
-var frontFacing = true;
-var xhr = new XMLHttpRequest();
-xhr.open("GET", url, false);
-xhr.send();
-var cards = JSON.parse(xhr.responseText).cards;
-var N = cards.length;
-thorFCloadCard(JSON.parse(cards[0]));
-var cardLearner = new CardLearner(N);
-thorFCloadCard(cardLearner.next());
-
-function thorFCloadCard(card){
-    $(".stack").text(card.front);
-}
-
-function thorFCflip(card){
-    if (frontFacing){
-        $(".stack").text(card.back);
-        frontFacing = false;
-    }
-    else{
-        $(".stack").text(card.front);
-        frontFacing = true;
-    }
-}
-
-function thorFCswipeRight(){
-    
-}
-function thorFCswipeLeft(){
-
-}
-
-$(".stack").on("click", function(){
-    thorFCflip();
-});
-
-document.onkeydown = checkKey;
-
-function checkKey(e) {
-    e = e || window.event;
-
-    else if (e.keyCode == '32' && !frontFacing) {
-        // spacebar to flip if card is on back.
-        thorFCflip();
-    }
-    else if (e.keyCode == '37') {
-       // left arrow
-       thorFCswipeLeft();
-    }
-    else if (e.keyCode == '39') {
-       // right arrow
-       thorFCswipeRight();
-    }
-
-}
-
-var i = 0;
-$("#container").on("click", function(){
-var cardHTML = "<div class='buddy' style='display: block;'><div class='avatar'></div></div>";
-var strings = ["AS", "AR", "DCA", "EL"];
-$("#container").append(cardHTML);
-if(i == strings.length-1) i = 0;
-$(".avatar").text(strings[i++]);
-
-$(".buddy").on("swiperight",function(){
-$(this).addClass('rotate-left').delay(700).fadeOut(1);
-$('.buddy').find('.status').remove(); 
-    });
-    $(".buddy").on("swipeleft", function(){
-$(this).addClass('rotate-right').delay(700).fadeOut(1);
-  $('.buddy').find('.status').remove();
-    });
-
-
-{% endblock javascript %}
+  {% block javascript %}
+  <script type="text/javascript" src='/static/js/CardLearner.js'></script>
+  <script type="text/javascript" src='/static/js/deckview.js'></script>
+  {% endblock javascript %}
+</body>

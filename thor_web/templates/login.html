@@ -14,7 +14,7 @@
         <form class="form-signin" action="/login/" method="POST">
           {% csrf_token %}
           <span id="reauth-email" class="reauth-email"></span>
-          <input type="text" id="inputEmail" class="form-control" placeholder="Username" name="username" required autofocus>
+          <input type="text" id="inputEmail" class="form-control" placeholder="Email address" name="username" required autofocus>
           <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
           <div id="remember" class="checkbox">
             <label>
