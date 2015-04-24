@@ -1,72 +1,78 @@
 var frontFacing = true;
 var i = 0;
 var cardLearner = {};
-var cards = {};
+var cards = [];
+var currentCard;
+
 $(document).ready(function(){
     document.onkeydown = checkKey;
 });
 
-$(document).ready(function(){
+$(document).ready(function prepPage(){
 
     /*Get cards in deck from server.*/
     var pathname = window.location.href;
     var res  = pathname.split("/");
+    
     // Last element in array is blank because there is a / at the end.
     var pk   = res[res.length-2];
-    var url  = "https://www.thorfc.com/api/decks/" + pk;
-
+    var url  = "http://www.thorfc.com/api/decks/" + pk;
+/*
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, false);
-    xhr.send();
+    xhr.send();*/
 
     /* Make a card learner from the number of cards in the deck. */
-    cards = JSON.parse(xhr.responseText).cards;
+    cards = [{"front":"hi", "back":"world"},{"front":"bye", "back":"world"}];
     var N = cards.length;
     cardLearner = new CardLearner(N);
-
-    thorFCloadCard(JSON.parse(cards[cardLearner.next()]));
+    currentCard = JSON.stringify(cards[cardLearner.next()]);
+    
+    thorFCloadCard();
 });
 
 
-function thorFCloadCard(card){
-    var cardHTML = "<div id='cardText'>" + card.front + "</div>";
-    $(".stack").appentext(card.front);
-    /*$(".buddy").on("swiperight",function(){
+function thorFCloadCard(){
+    
+    var cardHTML = "<div id='cardText'>" + currentCard.front + "</div>";
+    $(".stack").append(cardHTML);
+    
+    $(".stack").on("click", function(){
+	thorFCflip();
+    });
+    
+    $(".stack").on("swiperight",function(){
         thorFCswipeRight();
     });
     
-    $(".buddy").on("swipeleft", function(){
+    $(".stack").on("swipeleft", function(){
         thorFCswipeLeft();
-    });*/
+    });
 }
 
-function thorFCflip(card){
+function thorFCflip(){
     if (frontFacing){
-        $(".stack").text(card.back);
+        $(".stack").text(currentCard.back);
         frontFacing = false;
     }
     else{
-        $(".stack").text(card.front);
+        $(".stack").text(currentCard.front);
         frontFacing = true;
     }
 }
 
 function thorFCswipeRight(){
-    $(this).addClass('rotate-left').delay(700).fadeOut(1);
-    $('.buddy').find('.status').remove(); 
-    thorFCloadCard(JSON.parse(cards[cardLearner.next()]));
+    $('#cardText').addClass('rotate-left').delay(700).fadeOut(1);
+    currentCard = JSON.parse(cards[cardLearner.next()]);
+    thorFCloadCard();
 }
 
 function thorFCswipeLeft(){
     $(this).addClass('rotate-right').delay(700).fadeOut(1);
     $('.buddy').find('.status').remove();
-    thorFCloadCard(JSON.parse(cards[cardLearner.next()]));
+    currentCard = JSON.parse(cards[cardLearner.next()]);
+    thorFCloadCard();
 }
-
-$(".stack").on("click", function(){
-    thorFCflip();
-});
-
 
 function checkKey(e) {
     e = e || window.event;
