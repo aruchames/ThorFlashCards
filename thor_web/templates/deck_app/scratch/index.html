@@ -6,6 +6,7 @@
 <body>
 
 <h1 id="currDeck">My Deck</h1>
+<h1 id="currWord">My Word</h1>
 
 <form action="">
 <input type="radio" name="known" value="1">Known<br>
@@ -13,10 +14,22 @@
 </form>
 
 <script>
-    var myCardLearner = new CardLearner(5);
+		//for testing only - delete in production----------
+		bag = ["he", "country", "is", "not", "just", "the", "cradle", "of", "civilization", "it", "has", "played", "a", "significant", "role", "in", "the", "formation", "of", "many", "of", "the", "world's", "top", "religions", "It", "is", "not", "only", "the", "location", "of", "the", "biblical", "kingdom", "of", "Sheba"];
+    N = 15;
+    //-------------------------------------------------
+
+    var myCardLearner = new CardLearner(N);
 </script>
     
 <input type="button" id="nextButton" value="Next" onclick="next_button()"/>
+<h1 id="nCards"></h1>
+
+<script>
+
+      var nCards = document.getElementById('nCards');
+      nCards.innerHTML = "Total # of cards: " + myCardLearner.nCards();//; + N;
+ </script>
 
 </body>
 </html>

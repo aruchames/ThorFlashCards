@@ -4,7 +4,7 @@ function next_button(){
    
    var currCard = document.getElementById('currDeck').innerHTML;
    
-    var radios = document.getElementsByName('known');
+   var radios = document.getElementsByName('known');
 
    known = 0;
     
@@ -15,8 +15,6 @@ for (var i = 0, length = radios.length; i < length; i++) {
     }
   }
   
-  var currCard = document.getElementsByName('known');
-
   //update
   myCardLearner.learn(currCard, known);
 
@@ -25,10 +23,9 @@ for (var i = 0, length = radios.length; i < length; i++) {
   var title = document.getElementById('currDeck');
   title.innerHTML = s;
 
+  var word = document.getElementById('currWord');
+  word.innerHTML = bag[s];
 }
-
-
-
 
 
 /* Javascript CardLearner stub  */
@@ -43,7 +40,7 @@ CardLearner = (function() {
    * or no) and uses the data to make a decision about the next card */
   function CardLearner(N) {
     // Example Constructor 
-    
+
     /* The probability that each card appears */
     this.probs = []
     for (var i = 0; i < N; i++) {
@@ -63,12 +60,31 @@ CardLearner = (function() {
 
 //implement this
   CardLearner.prototype.learn = function(id, got) {
-     //pass through all cards in first run
-      return this.probs[0];
 
-      this.m = this.m + 1;
+    acc = 0;
+    if (got == 0) {
+    	this.probs[id-1] *= 2;
+    }
+    else {
+    	this.probs[id-1] /= 2;
+    }
+
+  	for (var i = 0; i < this.N; i++) {
+      acc += this.probs[i];
+      }
+    
+  	for (var i = 0; i < this.N; i++) {
+      this.probs[i] /= acc;
+      }
+
+   //   this.m = this.m + 1;
   };
-  
+
+
+  CardLearner.prototype.nCards = function() {
+  	return this.N;
+  };
+
   /* CardLearner next
    * Return the next card the user should view given what he got right and what
    * he got wrong
@@ -78,11 +94,28 @@ CardLearner = (function() {
 
   	if (this.m < this.N) {
   		this.m = this.m + 1;
+  		this.last = this.m;
   		return this.m;
   	}
 
-  		this.m = this.m + 1;
-  		return this.m + 100;
+  	rand = Math.random();
+    acc = 0;
+
+  	for (var i = 0; i < this.N; i++) {
+      acc += this.probs[i];
+      if (rand <= acc) {
+      	break;
+      }
+    }
+
+   //don't show the same card two times in a row
+   if (this.last == (i + 1)) return myCardLearner.next();
+
+  	this.m = this.m + 1;
+  	
+  	this.last = i + 1;
+  	
+  	return (i + 1);
   };
   
   return CardLearner;
