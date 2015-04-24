@@ -22,7 +22,10 @@ input{
   font-size:12px;
   outline: 2px solid #424242;
   margin-right:10px;
-
+}
+#decks {
+    cursor: pointer;
+    cursor: hand;
 }
 /*
 #decks{
