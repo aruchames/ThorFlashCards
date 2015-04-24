@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
 from thor_backend.models import Deck
+from thor_backend.models import Card
 
 # Helper functions
 # ============================================================================
@@ -43,13 +44,6 @@ def get_deck(deck_pk):
 
 # Front end view logic
 # ============================================================================
-
-def cards(request):
-    """
-    Create a stack of cards associated with the requested deck. 
-    Order the cards based on priority value. 
-    
-    """
 
 def decks(request):
     """ 
