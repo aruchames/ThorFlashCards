@@ -25,7 +25,11 @@ for (var i = 0, length = radios.length; i < length; i++) {
 
   var word = document.getElementById('currWord');
   word.innerHTML = bag[s];
+
+   var nCards = document.getElementById('nCards');
+   nCards.innerHTML = "Known: " + myCardLearner.nKnownCards() + "/" + myCardLearner.nCards();//; + N;
 }
+
 
 
 /* Javascript CardLearner stub  */
@@ -42,13 +46,16 @@ CardLearner = (function() {
     // Example Constructor 
 
     /* The probability that each card appears */
-    this.probs = []
+    this.probs = [];
+    this.known = [];
     for (var i = 0; i < N; i++) {
       this.probs[i] = 1 / N;
+      this.known[i] = 0;
     }
       // number of cards seen so far 
       this.m = 0;
       this.N = N;
+      this.nKnown = 0;
   };
     
   
@@ -64,13 +71,17 @@ CardLearner = (function() {
     acc = 0;
     if (got == 0) {
     	this.probs[id-1] *= 2;
+    	this.known[id-1] = 0;
     }
     else {
     	this.probs[id-1] /= 2;
+    	this.known[id-1] = 1;
     }
 
+    this.nKnown = 0;
   	for (var i = 0; i < this.N; i++) {
       acc += this.probs[i];
+      this.nKnown += this.known[i];
       }
     
   	for (var i = 0; i < this.N; i++) {
@@ -83,6 +94,10 @@ CardLearner = (function() {
 
   CardLearner.prototype.nCards = function() {
   	return this.N;
+  };
+
+  CardLearner.prototype.nKnownCards = function() {
+  	return this.nKnown;
   };
 
   /* CardLearner next

@@ -28,7 +28,9 @@
 <script>
 
       var nCards = document.getElementById('nCards');
-      nCards.innerHTML = "Total # of cards: " + myCardLearner.nCards();//; + N;
+      nCards.innerHTML = "Known: " + myCardLearner.nKnownCards() + "/" + myCardLearner.nCards();//; + N;
+
+      next_button();
  </script>
 
 </body>
