@@ -92,16 +92,17 @@
     </nav>
 
     {% if messages %}
-    <ul class="messages" style="padding:5em">
+    <div class="messages alert alert-warning">
+      <a href="#" class="close" data-dismiss="alert">&times;</a>
       {% for message in messages %}
       <li
-         {% if message.tags %} 
-         class="{{ message.tags }}"
-         {% endif %}>{{ message }}</li>
+        {% if message.tags %} 
+        class="{{ message.tags }}"
+        {% endif %}>{{ message }}</li>
       {% endfor %}
-    </ul>
+    </div>
     {% endif %}
-
+    
     {% block content %}
     <p>This is default content</p>
     {% endblock content %}
