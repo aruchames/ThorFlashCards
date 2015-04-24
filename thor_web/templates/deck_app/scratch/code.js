@@ -64,8 +64,6 @@ CardLearner = (function() {
    * got = boolean, true if the user got the card, false if the user missed it 
    * Update the CardLearner instance using the new data (update this.probs)
    */
-
-//implement this
   CardLearner.prototype.learn = function(id, got) {
 
     acc = 0;
@@ -88,14 +86,19 @@ CardLearner = (function() {
       this.probs[i] /= acc;
       }
 
-   //   this.m = this.m + 1;
   };
 
-
+  /* CardLearner nCards
+   * Return the total number of cards
+   */
   CardLearner.prototype.nCards = function() {
   	return this.N;
   };
 
+
+  /* CardLearner nKnownCards
+   * Return the total number of cards the user knows
+   */
   CardLearner.prototype.nKnownCards = function() {
   	return this.nKnown;
   };
@@ -104,7 +107,6 @@ CardLearner = (function() {
    * Return the next card the user should view given what he got right and what
    * he got wrong
    */
-  //impleent this
   CardLearner.prototype.next = function() {
 
   	if (this.m < this.N) {
