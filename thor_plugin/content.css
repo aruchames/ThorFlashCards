@@ -11,7 +11,6 @@
 }
 
 #bubbleDOM {
-  all: initial;
   position: absolute;
   width:250px;
   outline:1px solid #424242;
@@ -75,7 +74,7 @@
     all: initial;
     font-size:14px;
     color: black;
-    font-family: 'Merriweather','Helvetica Neue',Arial,sans-serif;
+    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 #bubbleDOM div {
     display: block;
