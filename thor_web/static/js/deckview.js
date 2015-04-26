@@ -1,7 +1,7 @@
 var frontFacing = true;
 var i = 0;
 var cardLearner = {};
-var cards = [];
+var cards;
 var currentCard;
 
 $(document).ready(function(){
@@ -17,7 +17,8 @@ $(document).ready(function prepPage(){
     // Last element in array is blank because there is a / at the end.
     var pk   = res[res.length-2];
     var url  = "http://www.thorfc.com/api/decks/" + pk;
-/*
+    
+    /*
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, false);
     xhr.send();*/
@@ -26,7 +27,7 @@ $(document).ready(function prepPage(){
     cards = [{"front":"hi", "back":"world"},{"front":"bye", "back":"world"}];
     var N = cards.length;
     cardLearner = new CardLearner(N);
-    currentCard = JSON.stringify(cards[cardLearner.next()]);
+    currentCard = cards[cardLearner.next()];
     
     thorFCloadCard();
 });
@@ -63,14 +64,15 @@ function thorFCflip(){
 
 function thorFCswipeRight(){
     $('#cardText').addClass('rotate-left').delay(700).fadeOut(1);
-    currentCard = JSON.parse(cards[cardLearner.next()]);
+    $('#cardText').find('.status').remove(); 
+    currentCard = cards[cardLearner.next()];
     thorFCloadCard();
 }
 
 function thorFCswipeLeft(){
     $(this).addClass('rotate-right').delay(700).fadeOut(1);
     $('.buddy').find('.status').remove();
-    currentCard = JSON.parse(cards[cardLearner.next()]);
+    currentCard = cards[cardLearner.next()];
     thorFCloadCard();
 }
 
