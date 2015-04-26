@@ -1,3 +1,7 @@
+.content{
+    display: table;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -7,13 +11,22 @@
   height: 300px;
   align-items: center;
   justify-content:center;
+  vertical-align: center;
+  display: inline-block;
+  text-align: center;
 }
 #cardText{
-    line-height: 300px;
+    line-height: 270px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .stack:hover{
     font-size: 22px;
@@ -26,6 +39,7 @@
   margin-left: 400px;
   cursor: e-resize;
   opacity: 0;
+  background-color: green;
 }
 .rotate-right {
   transform: rotate(0deg) scale(0.8);
@@ -33,4 +47,5 @@
   opacity: 0;
   margin-left: -400px;
   cursor: w-resize;
+  background-color: red;
 }
