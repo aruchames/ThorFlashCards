@@ -29,6 +29,6 @@
 	   "default_popup": "browser_action/popup.html",
        "default_icon": "icon24.png"
     },
-    "web_accessible_resources": ["icon24.png"] ,
+    "web_accessible_resources": ["icon24.png", "iconCentered.png"] ,
     "manifest_version": 2
 }

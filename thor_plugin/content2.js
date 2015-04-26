@@ -63,7 +63,8 @@ function thorFCmakeCard() {
     var bubbleDOM = document.getElementById("bubbleDOM");
     var searchSt = "[value='" + newCard.deck + "']";
     var deckName = $("#bubbleDOM").find(searchSt).html();
-    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:</h4><h5>" + deckName + "</h5></div><div><h5 style='color: #333'>" + "Front: <div style='border: 1px inset #848484;   outline: 2px solid #424242;'>" + newCard.front + "</div></h5></div><div><h5 style='color: #333'>Back: <div style='border: 1px inset #848484;   outline: 2px solid #424242;'>" + newCard.back + "</div></h5></div>";
+    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:</h4><h5>\"" + deckName + "\"</h5></div><div><h5 style='color: #3399FF'>" + "Front: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.front + "</div></h5></div><div><h5 style='color: #3399FF'>Back: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.back + "</div></h5></div>";
+    setBubbleClass(bubbleDOM);
 }
 /* Clears the popup and icon button from the screen. */
 function hideAll() {
@@ -81,13 +82,18 @@ function setBubbleClass(el) {
 /* Shows bubble with translated text and decks. Bubble is already ready, just
     waiting to be shown. */
 function showBubble() {
-    $("#thorFCback").after(thorFCdeckView);
+    if (isThorAuthenticated) {
+        var label = document.createElement("h5");
+        label.innerHTML = "Decks:";
+        $("#thorFCback").after(thorFCdeckView);
+        $("#thorFCback").after(label);
+        thorFCdeckView.style.display = "";
+        document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
+    }
+
     document.getElementById("bubbleDOM").style.visibility = "visible";
     document.getElementById("bubbleDOM").style.display = "";
-    thorFCdeckView.style.display = "";
     setBubbleClass(document.getElementById("bubbleDOM"));
-    if(isThorAuthenticated)
-        document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
 }
 
 /* Placement logic for icon and card submission element. Makes call to translate
@@ -165,12 +171,13 @@ function onSelect(e) {
 
     var response = JSON.parse(xhr.response);
     if (response.hasOwnProperty('detail')) {
-        htmlFrag = "<div><h3>To start using Thor Flash Cards, please first: <a target=\"_blank\" href=\"http://www.thorfc.com/login/\"><br>Log in</a>/<a target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>.</h3></div>";
+        htmlFrag = "<div style='text-align:center; padding-top: 1em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
+        htmlFrag += "<div><h2 style='font-weight:bold'>To start using Thor Flash Cards, please first: <a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/login/\">Log in</a>/<a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>.</h3></div>";
         bubbleDOM.innerHTML = htmlFrag;
     }
     else {
         var translateCall = response.trans[0];
-        htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorFCbutton'>Make Card!</button></div>";
+        htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div> <button id='thorFCbutton'>Make Card!</button></div>";
         bubbleDOM.innerHTML = htmlFrag;
     }
     if (startPos.x < 24) {

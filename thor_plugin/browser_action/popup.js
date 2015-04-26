@@ -43,9 +43,9 @@ $(window).load(window.setTimeout(function () {
             deckName = deckData.deck_name;
 
             if (i == 0)
-                stringHTML += "<div class='row'><select class='form-control' id='decks'><option value='" + deckName + "'>" + deckName+ "</option>";
+                stringHTML += "<div class='row'><select class='form-control' id='decks'><option value='" + deckData.pk + "'>" + deckName+ "</option>";
             else
-                stringHTML += "<option value='" + deckName + "'>" + deckName + "</option>";
+                stringHTML += "<option value='" + deckData.pk + "'>" + deckName + "</option>";
         }
         stringHTML += "</select></div><div class='row'><a style='float:right' id='deckChange' class='btn btn-sm btn-primary'>Study Deck</div></div></div>";
         deckView.innerHTML += stringHTML;
@@ -54,7 +54,7 @@ $(window).load(window.setTimeout(function () {
 		$("#deckChange").on('click', function() {
 			var deckName = document.getElementById("decks").value;
 			console.error("run");
-			chrome.tabs.create({"url":"http://www.thorfc.com/decks/study/"+deckName});
+			chrome.tabs.create({"url":"http://www.thorfc.com/decks/study/"+deckName+"/"});
 		});
     }
 
