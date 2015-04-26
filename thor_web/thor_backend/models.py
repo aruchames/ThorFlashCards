@@ -49,7 +49,6 @@ class Card(models.Model):
     front = models.CharField(max_length=400)
     back = models.CharField(max_length=400)
     deck = models.ForeignKey(Deck, related_name="cards")
-    priority = models.IntegerField()
     
     
     def __unicode__(self):
