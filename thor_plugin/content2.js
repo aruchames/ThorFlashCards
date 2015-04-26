@@ -25,7 +25,7 @@ function thorFCmakeCard() {
     newCard.front = document.getElementById("thorFCfront").innerHTML;
     newCard.back = document.getElementById("thorFCback").innerHTML;
     newCard.deck = thorFCdeckView.value;
-    hideAll();
+
     function flashCardAPICall(csrftoken) {
         console.log("Got token:", csrftoken);
 
@@ -59,6 +59,11 @@ function thorFCmakeCard() {
     console.log(chrome);
     /* Get cookie, make API call */
     chrome.runtime.sendMessage("getCSRFToken", flashCardAPICall);
+    debugger;
+    var bubbleDOM = document.getElementById("bubbleDOM");
+    var searchSt = "[value='" + newCard.deck + "']";
+    var deckName = $("#bubbleDOM").find(searchSt).html();
+    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:<br>" + deckName + "</h4></div><div><h5>" + "Front: <div style='border: 1px inset #848484;   outline: 2px solid #424242;'>" + newCard.front + "</div></h5></div><div><h5>Back: <div style='border: 1px inset #848484;   outline: 2px solid #424242;'>" + newCard.back + "</div></h5></div>";
 }
 /* Clears the popup and icon button from the screen. */
 function hideAll() {
@@ -123,35 +128,62 @@ function onSelect(e) {
     var startPos = selection.getStartDocumentPos();
 
     var thorfcIcon = document.getElementById("thorfcIcon");
-    thorfcIcon.style.left = (startPos.x - 23) + "px";
-    thorfcIcon.style.top = (startPos.y - 23) + "px";
-    thorfcIcon.style.display = "";
+
+    if (startPos.x < 23) {
+        thorfcIcon.style.left = "0px";
+    } else {
+        thorfcIcon.style.left = (startPos.x - 23) + "px";
+    }
+    if (startPos.y < 23) {
+        thorfcIcon.style.top = "0px";
+    } else {
+        thorfcIcon.style.top = (startPos.y - 23) + "px";
+    }
+
+    thorfcIcon.style.display = "inline";
 
     var bubbleDOM = document.getElementById("bubbleDOM");
-
     var regex = /(<([^>]+)>)/ig;
     var body = rangy.getSelection().toString();
     var result = body.replace(regex, "");
-
     var translateURL = "https://www.thorfc.com/api/translate_beta/"+ result;
 
+    var htmlFrag;
     var xhr = new XMLHttpRequest();
+    /*
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status != 200) {
+                htmlFrag = "<div><h3>Whoops, something went wrong. Don't worry, we are looking at the issue right now! For now, please refresh the page and try again</h3></div>";
+                console.warn("SOMETHING WENT WRONG");
+            }
+        }
+    } */
     xhr.open("GET", translateURL, false);
     xhr.send();
     //TODO What if AJAX fails? It 404'd on empty strings.
 
     var response = JSON.parse(xhr.response);
     if (response.hasOwnProperty('detail')) {
-        var htmlFrag = "<div><h3>To start using Thor Flash Cards, please first: <a target=\"_blank\" href=\"http://www.thorfc.com/login/\"><br>Log in</a>/<a target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>.</h3></div>";
+        htmlFrag = "<div><h3>To start using Thor Flash Cards, please first: <a target=\"_blank\" href=\"http://www.thorfc.com/login/\"><br>Log in</a>/<a target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>.</h3></div>";
         bubbleDOM.innerHTML = htmlFrag;
     }
     else {
         var translateCall = response.trans[0];
-        var htmlFrag = "<div class='container' id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorFCbutton'>Make Card!</button></div>";
+        htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorFCbutton'>Make Card!</button></div>";
         bubbleDOM.innerHTML = htmlFrag;
     }
-    bubbleDOM.style.left = (startPos.x - 24) + "px";
-    bubbleDOM.style.top = (startPos.y - 175) + "px";
+    if (startPos.x < 24) {
+        bubbleDOM.style.left = "0px";
+    } else {
+        bubbleDOM.style.left = (startPos.x - 24) + "px";
+    }
+
+    if (startPos.y < 175) {
+        bubbleDOM.style.top = "0px";
+    } else {
+        bubbleDOM.style.top = (startPos.y - 175) + "px";
+    }
 
 }
 /* Unknown purpose. Not called in code. */
