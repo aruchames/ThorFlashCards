@@ -52,9 +52,9 @@ $(window).load(window.setTimeout(function () {
 		$('#loading').css('display', 'none');
 		body.appendChild(deckView);
 		$("#deckChange").on('click', function() {
-			var deckName = document.getElementById("decks").value;
+			var deckID = document.getElementById("decks").value;
 			console.error("run");
-			chrome.tabs.create({"url":"http://www.thorfc.com/decks/study/"+deckName+"/"});
+			chrome.tabs.create({"url":"http://www.thorfc.com/decks/"+deckID+"/"});
 		});
     }
 
