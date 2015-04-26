@@ -63,7 +63,7 @@ function thorFCmakeCard() {
     var bubbleDOM = document.getElementById("bubbleDOM");
     var searchSt = "[value='" + newCard.deck + "']";
     var deckName = $("#bubbleDOM").find(searchSt).html();
-    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:<br>" + deckName + "</h4></div><div><h5>" + "Front: <div style='border: 1px inset #848484;   outline: 2px solid #424242;'>" + newCard.front + "</div></h5></div><div><h5>Back: <div style='border: 1px inset #848484;   outline: 2px solid #424242;'>" + newCard.back + "</div></h5></div>";
+    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:</h4><h5>" + deckName + "</h5></div><div><h5 style='color: #333'>" + "Front: <div style='border: 1px inset #848484;   outline: 2px solid #424242;'>" + newCard.front + "</div></h5></div><div><h5 style='color: #333'>Back: <div style='border: 1px inset #848484;   outline: 2px solid #424242;'>" + newCard.back + "</div></h5></div>";
 }
 /* Clears the popup and icon button from the screen. */
 function hideAll() {
