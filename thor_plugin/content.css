@@ -21,6 +21,8 @@
   font-family: 'Merriweather','Helvetica Neue',Arial,sans-serif;
   display: table-cell;
   vertical-align: middle;
+  width: 240px;
+  height: 220px;
 }
 
 #card{
@@ -48,6 +50,8 @@
   font-size:14px;
   outline: 2px solid #424242;
   margin-right:10px;
+  margin-bottom:5px;
+  margin-top: 5px;
 }
 
 #thorFCbutton {
@@ -62,10 +66,11 @@
 #thorFCdecks{
   margin-right:10px;
   top: 5px;
- /*background-color:#f05f40;*/
+  background-color:#f05f40;
   width: 93%;
   border: 1px inset #848484;
   outline: 2px solid #424242;
+  margin-top: 5px;
 }
 #bubbleDOM h5{
   text-align: center;
@@ -80,4 +85,9 @@
 }
 #bubbleDOM div {
     display: block;
+}
+#bubbleDOM a:hover {
+  color: #3399FF;
+  text-decoration: none;
+  border-bottom: 1px blue dotted;
 }
