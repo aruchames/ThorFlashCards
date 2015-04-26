@@ -1,35 +1,48 @@
 {% extends "deck_app/deckbase.html" %}
+{% load static %}
 
 {% block content %}
-<div class="content">
-  <div class="container deckholder">  
-    <div class="row-fluid">
 
-      {% for deck in decks %}
-        <a href="/decks/{{deck.pk}}" style="display:block; text-decoration: none; color: black;">
-          <div class="col-sm-6">
-            <div class="stack">
-              {{deck.deck_name}}
+<link href='{% static "shared/css/decks.css" %}' rel='stylesheet'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-              <div class="row-fluid cardmetainfo">
-                <div class="col-xs-4">
-                  <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
-                </div>
-                <div class="col-xs-4">
-                  <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
-                </div>
-                <div class="col-xs-4">
-                  <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
-                </div>
-              </div>
-
-            </div>
-          </a>
-
-        </div>
-      {% endfor %}
+<div class="container-fluid" style="z-index:-100;">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li class="active"><a class="sidebarfont">{{user.username | title}}'s Overview<span class="sr-only">(current)</span></a></li>
+      </ul>
+      <hr style="height: 1em">
+      <ul class="nav nav-sidebar">
+        <li><a class="sidebarfont2" href=""><h4># Words Learned: XX</h4></a></li>
+        <li><a class="sidebarfont2" href=""><h4># Words Created: YY</h4></a></li>
+        <li><a class="sidebarfont2" href=""><h4># Decks: ZZ</h4></a></li>
+      </ul>
     </div>
   </div>
+</div>
+<div class="content">
+  {% for deck in decks %}
+  <a href="/decks/{{deck.pk}}" style=" display:block; text-decoration: none; color: black">
+    <div class="col-md-6" style="padding-left: 24em">
+      <div class="stack">
+        {{deck.deck_name}}
+
+        <div class="row-fluid cardmetainfo">
+          <div class="col-xs-4">
+            <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
+          </div>
+          <div class="col-xs-4">
+            <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
+          </div>
+          <div class="col-xs-4">
+            <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
 </div>
 
 {% endblock content %}
