@@ -63,7 +63,8 @@ function thorFCmakeCard() {
     var bubbleDOM = document.getElementById("bubbleDOM");
     var searchSt = "[value='" + newCard.deck + "']";
     var deckName = $("#bubbleDOM").find(searchSt).html();
-    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:</h4><h5>" + deckName + "</h5></div><div><h5 style='color: #333'>" + "Front: <div style='border: 1px inset #848484;   outline: 2px solid #424242;'>" + newCard.front + "</div></h5></div><div><h5 style='color: #333'>Back: <div style='border: 1px inset #848484;   outline: 2px solid #424242;'>" + newCard.back + "</div></h5></div>";
+    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:</h4><h5>\"" + deckName + "\"</h5></div><div><h5 style='color: #3399FF'>" + "Front: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.front + "</div></h5></div><div><h5 style='color: #3399FF'>Back: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.back + "</div></h5></div>";
+    setBubbleClass(bubbleDOM);
 }
 /* Clears the popup and icon button from the screen. */
 function hideAll() {
@@ -81,7 +82,14 @@ function setBubbleClass(el) {
 /* Shows bubble with translated text and decks. Bubble is already ready, just
     waiting to be shown. */
 function showBubble() {
+    var container = document.createElement("div");
+    var label = document.createElement("h5");
+    label.innerHTML = "Decks:";
+    container.appendChild(label);
+    container.appendChild(thorFCdeckView);
+
     $("#thorFCback").after(thorFCdeckView);
+    $("#thorFCback").after(label);
     document.getElementById("bubbleDOM").style.visibility = "visible";
     document.getElementById("bubbleDOM").style.display = "";
     thorFCdeckView.style.display = "";
@@ -170,7 +178,7 @@ function onSelect(e) {
     }
     else {
         var translateCall = response.trans[0];
-        htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div><br> <button id='thorFCbutton'>Make Card!</button></div>";
+        htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div> <button id='thorFCbutton'>Make Card!</button></div>";
         bubbleDOM.innerHTML = htmlFrag;
     }
     if (startPos.x < 24) {
