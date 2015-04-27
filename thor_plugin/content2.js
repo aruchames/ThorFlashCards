@@ -20,10 +20,6 @@ var decksReceived = false;
 /* Called when the make card button is pressed, it accesses the translated and
     untranslated values from globals as well as the value of the deck. It adds
     the card to the deck selected in the thorFCdeckView element. */
-function UserException(message) {
-   this.message = message;
-   this.name = "UserException";
-}
 
 function thorFCmakeCard() {
     var newCard = {};
@@ -34,13 +30,11 @@ function thorFCmakeCard() {
 
     function flashCardAPICall(csrftoken) {
         console.log("Got token:", csrftoken);
-        debugger;
 
         if (csrftoken === null) {
             console.log("Token does not exist, reauthenticate!");
             /* Do extension stuff here */
         }
-
 
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function (oEvent) {
@@ -95,11 +89,19 @@ function displayError() {
 /* Shows bubble with translated text and decks. Bubble is already ready, just
     waiting to be shown. */
 function showBubble() {
+    var label = document.createElement("h5");
+    label.innerHTML = "Decks:";
+    $("#thorFCback").after(thorFCdeckView);
+    $("#thorFCback").after(label);
+    if (thorFCdeckView.id === "thorFCnoDecks") {
+        try {
+            document.getElementById("thorFCbutton").style.display = "none";
+        } catch (e) {
+            displayError();
+        }
+    }
+
     if (isThorAuthenticated) {
-        var label = document.createElement("h5");
-        label.innerHTML = "Decks:";
-        $("#thorFCback").after(thorFCdeckView);
-        $("#thorFCback").after(label);
         thorFCdeckView.style.display = "";
         try {
             document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
@@ -251,6 +253,11 @@ window.onload = function() {
         var response = JSON.parse(xhr2.responseText);
         if (response.hasOwnProperty('detail')) {
             isThorAuthenticated = false;
+        }
+        else if (response.length === 0) {
+            thorFCdeckView = document.createElement("div");
+            thorFCdeckView.id = "thorFCnoDecks";
+            thorFCdeckView.innerHTML = "<h3>Whoops! Looks like you don't have any decks yet! Create one <a style='color: #3399FF; font-weight:bold' target='_blank' href='https://www.thorfc.com/decks/create'>here</a>. Then, refresh the page. </h3>";
         }
         else {
             isThorAuthenticated = true;

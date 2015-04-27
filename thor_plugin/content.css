@@ -90,3 +90,6 @@
   text-decoration: none;
   border-bottom: 1px blue dotted;
 }
+#thorFCnoDecks > h3 {
+    font-weight: bold;
+}
