@@ -79,6 +79,13 @@ function setBubbleClass(el) {
     }
 }
 
+function displayError() {
+    var htmlFrag;
+    htmlFrag = "<div style='text-align:center; padding-top: 0.25em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
+    htmlFrag += "<div><h3 style='font-weight:bold'>Whoops, something went wrong! Don't worry, we are right on the issue. In the meantime, refresh the page and try again!</h3></div>";
+    document.getElementById("bubbleDOM").innerHTML = htmlFrag;
+}
+
 /* Shows bubble with translated text and decks. Bubble is already ready, just
     waiting to be shown. */
 function showBubble() {
@@ -88,7 +95,11 @@ function showBubble() {
         $("#thorFCback").after(thorFCdeckView);
         $("#thorFCback").after(label);
         thorFCdeckView.style.display = "";
-        document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
+        try {
+            document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
+        } catch (e) {
+            displayError();
+        }
     }
 
     document.getElementById("bubbleDOM").style.visibility = "visible";
@@ -154,32 +165,32 @@ function onSelect(e) {
     var result = body.replace(regex, "");
     var translateURL = "https://www.thorfc.com/api/translate_beta/"+ result;
 
-    var htmlFrag;
-    var xhr = new XMLHttpRequest();
-    /*
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status != 200) {
-                htmlFrag = "<div><h3>Whoops, something went wrong. Don't worry, we are looking at the issue right now! For now, please refresh the page and try again</h3></div>";
-                console.warn("SOMETHING WENT WRONG");
-            }
-        }
-    } */
-    xhr.open("GET", translateURL, false);
-    xhr.send();
-    //TODO What if AJAX fails? It 404'd on empty strings.
+    /* Try to translate */
+    try {
+        var htmlFrag;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", translateURL, false);
+        xhr.send();
 
-    var response = JSON.parse(xhr.response);
-    if (response.hasOwnProperty('detail')) {
-        htmlFrag = "<div style='text-align:center; padding-top: 0.25em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
-        htmlFrag += "<div><h2 style='font-weight:bold'>To start using Thor Flash Cards, please first: <a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/login/\">Log in</a>/<a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>. If you just logged in, please refresh the page.</h3></div>";
-        bubbleDOM.innerHTML = htmlFrag;
+        var response = JSON.parse(xhr.response);
+        if (response.hasOwnProperty('detail')) {
+            htmlFrag = "<div style='text-align:center; padding-top: 0.25em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
+            htmlFrag += "<div><h2 style='font-weight:bold'>To start using Thor Flash Cards, please first: <a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/login/\">Log in</a>/<a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>. If you just logged in, please refresh the page.</h3></div>";
+            bubbleDOM.innerHTML = htmlFrag;
+        }
+        else {
+            var translateCall = response.trans[0];
+            htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div> <button id='thorFCbutton'>Make Card!</button></div>";
+            bubbleDOM.innerHTML = htmlFrag;
+        }
     }
-    else {
-        var translateCall = response.trans[0];
-        htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div> <button id='thorFCbutton'>Make Card!</button></div>";
-        bubbleDOM.innerHTML = htmlFrag;
+    /* If fails, show error message */
+    catch (e) {
+        displayError();
     }
+
+
+    /* Set positions */
     if (startPos.x < 24) {
         bubbleDOM.style.left = "0px";
     } else if (startPos.x + 240 > $(document).width()) {
@@ -188,12 +199,12 @@ function onSelect(e) {
         bubbleDOM.style.left = (startPos.x - 24) + "px";
     }
 
-    if (startPos.y < 200) {
+    if (startPos.y < 225) {
         bubbleDOM.style.top = "0px";
     } else if (startPos.y + 220 > $(document).height()) {
         bubbleDOM.style.top = ($(document).height() - 220) + "px";
     } else {
-        bubbleDOM.style.top = (startPos.y - 200) + "px";
+        bubbleDOM.style.top = (startPos.y - 225) + "px";
     }
 
 }
@@ -227,7 +238,7 @@ window.onload = function() {
 
     /* Get our decks */
     var response = {};
-    if (decksReceived == false){
+    if (decksReceived == false) {
         var xhr2 = new XMLHttpRequest();
         xhr2.open('GET', 'https://www.thorfc.com/api/decks/mine', false);
         xhr2.send();
