@@ -171,8 +171,8 @@ function onSelect(e) {
 
     var response = JSON.parse(xhr.response);
     if (response.hasOwnProperty('detail')) {
-        htmlFrag = "<div style='text-align:center; padding-top: 1em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
-        htmlFrag += "<div><h2 style='font-weight:bold'>To start using Thor Flash Cards, please first: <a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/login/\">Log in</a>/<a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>.</h3></div>";
+        htmlFrag = "<div style='text-align:center; padding-top: 0.25em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
+        htmlFrag += "<div><h2 style='font-weight:bold'>To start using Thor Flash Cards, please first: <a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/login/\">Log in</a>/<a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>. If you just logged in, please refresh the page.</h3></div>";
         bubbleDOM.innerHTML = htmlFrag;
     }
     else {
@@ -182,14 +182,18 @@ function onSelect(e) {
     }
     if (startPos.x < 24) {
         bubbleDOM.style.left = "0px";
+    } else if (startPos.x + 240 > $(document).width()) {
+        bubbleDOM.style.left = ($(document).width() - 240) + "px";
     } else {
         bubbleDOM.style.left = (startPos.x - 24) + "px";
     }
 
-    if (startPos.y < 175) {
+    if (startPos.y < 200) {
         bubbleDOM.style.top = "0px";
+    } else if (startPos.y + 220 > $(document).height()) {
+        bubbleDOM.style.top = ($(document).height() - 220) + "px";
     } else {
-        bubbleDOM.style.top = (startPos.y - 175) + "px";
+        bubbleDOM.style.top = (startPos.y - 200) + "px";
     }
 
 }
