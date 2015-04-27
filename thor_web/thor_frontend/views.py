@@ -26,7 +26,7 @@ def deck_flag_convert(country_code):
         "en": "gb",
         "ko": "kr",
         "ja": "jp",
-        "ch": "cn"
+        "zh": "cn"
     }
 
     # Only return a value different from country_code if an alternative 
