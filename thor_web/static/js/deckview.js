@@ -72,11 +72,14 @@ thorFCloadCard();
 // cards are in the deck.
 function thorFCloadCard(){
     if (N!= 0){
+	debugger;
 	var cardHTML = "<div id='cardText'>" + currentCard.front + "</div>";
 	$(".stack").append(cardHTML);
 	frontFacing = true;
     }
-    $(".stack").text("Your deck has no cards");
+    else{
+	$(".stack").text("Your deck has no cards");
+    }
 }
 // Displays other side of card text. 
 function thorFCflip(){
