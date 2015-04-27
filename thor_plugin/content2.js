@@ -20,51 +20,57 @@ var decksReceived = false;
 /* Called when the make card button is pressed, it accesses the translated and
     untranslated values from globals as well as the value of the deck. It adds
     the card to the deck selected in the thorFCdeckView element. */
+function UserException(message) {
+   this.message = message;
+   this.name = "UserException";
+}
+
 function thorFCmakeCard() {
     var newCard = {};
     newCard.front = document.getElementById("thorFCfront").innerHTML;
     newCard.back = document.getElementById("thorFCback").innerHTML;
     newCard.deck = thorFCdeckView.value;
+    var success;
 
     function flashCardAPICall(csrftoken) {
         console.log("Got token:", csrftoken);
+        debugger;
 
         if (csrftoken === null) {
             console.log("Token does not exist, reauthenticate!");
             /* Do extension stuff here */
         }
 
-        var xhr = new XMLHttpRequest();
 
+        var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function (oEvent) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 201) {
-                    console.log(xhr.responseText)
+                    console.log(xhr.responseText);
+                    var bubbleDOM = document.getElementById("bubbleDOM");
+                    var searchSt = "[value='" + newCard.deck + "']";
+                    var deckName = $("#bubbleDOM").find(searchSt).html();
+                    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:</h4><h5>\"" + deckName + "\"</h5></div><div><h5 style='color: #3399FF'>" + "Front: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.front + "</div></h5></div><div><h5 style='color: #3399FF'>Back: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.back + "</div></h5></div>";
+                    setBubbleClass(bubbleDOM);
                 } else {
-                    console.log("Error", xhr.statusText, xhr.responseText);
+                    console.warn("Error", xhr.statusText, xhr.responseText);
+                    displayError();
+                    setBubbleClass(bubbleDOM);
                 }
             }
 
         };
+            xhr.open("POST", "https://www.thorfc.com/api/cards/", true);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.setRequestHeader("X-CSRFToken", csrftoken.value);
 
-        xhr.open("POST", "https://www.thorfc.com/api/cards/", true);
-        xhr.withCredentials = true;
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.setRequestHeader("X-CSRFToken", csrftoken.value);
+            xhr.send(JSON.stringify(newCard));
 
-        xhr.send(JSON.stringify(newCard));
+
     }
-
-    console.log("Sending message");
-    console.log(chrome);
     /* Get cookie, make API call */
     chrome.runtime.sendMessage("getCSRFToken", flashCardAPICall);
-    debugger;
-    var bubbleDOM = document.getElementById("bubbleDOM");
-    var searchSt = "[value='" + newCard.deck + "']";
-    var deckName = $("#bubbleDOM").find(searchSt).html();
-    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:</h4><h5>\"" + deckName + "\"</h5></div><div><h5 style='color: #3399FF'>" + "Front: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.front + "</div></h5></div><div><h5 style='color: #3399FF'>Back: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.back + "</div></h5></div>";
-    setBubbleClass(bubbleDOM);
 }
 /* Clears the popup and icon button from the screen. */
 function hideAll() {
