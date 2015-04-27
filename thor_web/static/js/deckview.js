@@ -31,7 +31,7 @@ $(document).on('unload', storeDeckState);
 var pathname = window.location.href;
 var res  = pathname.split("/");
 var pk   = res[res.length-2];
-var url  = "http://www.thorfc.com:9005/api/decks/" + pk;
+var url  = "https://www.thorfc.com/api/decks/" + pk;
 var response = '';
 $.ajax({
     method:"GET",
