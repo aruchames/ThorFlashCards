@@ -93,7 +93,7 @@ CardLearner = (function() {
 	}
 	
 	//define this.last for the first card called.
-	if (this.m = 0) this.last = -1;
+	if (this.m == 0) this.last = -1;
 	if (this.last == i) return this.next();
   	this.m = this.m + 1;
   	this.last = i;
