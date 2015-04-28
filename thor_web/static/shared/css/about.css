@@ -19,7 +19,14 @@ html,body {
 .about2{
     padding-top: 3em;
     background-color: #fff;
+}
 
+.navbar{
+    color: #f05f40;
+}
+
+.navbar-default{
+    background-color: #f05f40;
 }
 
 .imgformat{

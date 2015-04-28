@@ -6,9 +6,9 @@
 <link href='{% static "shared/css/decks.css" %}' rel='stylesheet'>
 <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-<div class="container-fluid" style="z-index:-100;">
+<div class="container-fluid visible-lg visible-md visible-sm">
   <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
+    <div class="sidebar">
       <ul class="nav nav-sidebar">
         <li class="active"><a class="sidebarfont">{{user.username | title}}'s Overview<span class="sr-only">(current)</span></a></li>
       </ul>
@@ -17,14 +17,62 @@
         <li><a class="sidebarfont2" href=""><h4># Words Learned: XX</h4></a></li>
         <li><a class="sidebarfont2" href=""><h4># Words Created: YY</h4></a></li>
         <li><a class="sidebarfont2" href=""><h4># Decks: ZZ</h4></a></li>
+        <li> Deck length: {{len(decks)}}</li>
+
       </ul>
     </div>
   </div>
 </div>
-<div class="content">
+
+<div class="row visible-xs topbar">
+  <div class="nav" style="background-color: #428cba;">
+    <ul>
+      <li class="active text-center" style="list-style-type: none; padding-top: 1em;"><a class="sidebarfont">{{user.username | title}}'s Overview</a></li>
+    </ul>
+  </div>
+  <hr>
+  <ul class="nav">
+    <li><a class="sidebarfont2" href=""><h4># Words Learned: XX</h4></a></li>
+    <li><a class="sidebarfont2" href=""><h4># Words Created: YY</h4></a></li>
+    <li><a class="sidebarfont2" href=""><h4># Decks: ZZ</h4></a></li>
+  </ul>
+</div>
+
+<div class="content visible-lg visible-md visible-sm">
   {% for deck in decks %}
   <a href="/decks/{{deck.pk}}" style=" display:block; text-decoration: none; color: black">
-    <div class="col-md-6" style="padding-left: 24em">
+    <div class="col-lg-6 col-md-12" style="padding-left: 24em">
+      <div class="stack">
+        {{deck.deck_name}}
+
+        <div class="row-fluid cardmetainfo">
+          <div class="col-xs-4">
+            <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
+          </div>
+          <div class="col-xs-4">
+            <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
+          </div>
+          <div class="col-xs-4">
+            <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+<hr style="height: 2em" class="visible-sm">
+<hr style="height: 158em" class="visible-md">
+
+{% if decks.length > 6 %}
+<hr style="height: 58em" class="visible-lg hidden">
+{% endif %}
+
+<div class="content visible-xs" style="padding-bottom:2em">
+  {% for deck in decks %}
+  <a href="/decks/{{deck.pk}}" style=" display:block; text-decoration: none; color: black">
+    <div class="col-lg-1 col-centered">
       <div class="stack">
         {{deck.deck_name}}
 
