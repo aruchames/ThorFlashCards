@@ -10,15 +10,13 @@
   <div class="row">
     <div class="sidebar">
       <ul class="nav nav-sidebar">
-        <li class="active"><a class="sidebarfont">{{user.username | title}}'s Overview<span class="sr-only">(current)</span></a></li>
+        <li class="active"><a class="sidebarfont" style="font-size:18px"><strong>{{user.username | title}}'s Overview</strong><span class="sr-only">(current)</span></a></li>
       </ul>
       <hr style="height: 1em">
       <ul class="nav nav-sidebar">
         <li><a class="sidebarfont2" href=""><h4># Words Learned: XX</h4></a></li>
         <li><a class="sidebarfont2" href=""><h4># Words Created: YY</h4></a></li>
         <li><a class="sidebarfont2" href=""><h4># Decks: ZZ</h4></a></li>
-        <li> Deck length: {{len(decks)}}</li>
-
       </ul>
     </div>
   </div>
@@ -27,7 +25,7 @@
 <div class="row visible-xs topbar">
   <div class="nav" style="background-color: #428cba;">
     <ul>
-      <li class="active text-center" style="list-style-type: none; padding-top: 1em;"><a class="sidebarfont">{{user.username | title}}'s Overview</a></li>
+      <li class="active text-center sidebarfont" style="color: white; list-style-type: none; padding-top: 1em; font-size: 18px"><strong>{{user.username | title}}'s Overview</strong></li>
     </ul>
   </div>
   <hr>
@@ -40,11 +38,10 @@
 
 <div class="content visible-lg visible-md visible-sm">
   {% for deck in decks %}
-  <a href="/decks/{{deck.pk}}" style=" display:block; text-decoration: none; color: black">
-    <div class="col-lg-6 col-md-12" style="padding-left: 24em">
+  <div class="col-lg-6 col-md-12" style="padding-left: 24em">
+    <a href="/decks/{{deck.pk}}" style="display:block; text-decoration: none; color: black">
       <div class="stack">
         {{deck.deck_name}}
-
         <div class="row-fluid cardmetainfo">
           <div class="col-xs-4">
             <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
@@ -57,17 +54,10 @@
           </div>
         </div>
       </div>
-    </div>
-  </a>
+    </a>
+  </div>  
   {% endfor %}
 </div>
-
-<hr style="height: 2em" class="visible-sm">
-<hr style="height: 158em" class="visible-md">
-
-{% if decks.length > 6 %}
-<hr style="height: 58em" class="visible-lg hidden">
-{% endif %}
 
 <div class="content visible-xs" style="padding-bottom:2em">
   {% for deck in decks %}
@@ -75,7 +65,6 @@
     <div class="col-lg-1 col-centered">
       <div class="stack">
         {{deck.deck_name}}
-
         <div class="row-fluid cardmetainfo">
           <div class="col-xs-4">
             <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
@@ -93,10 +82,23 @@
   {% endfor %}
 </div>
 
-{% endblock content %}
+{% if num_decks > 2 %}
+<hr style="height: 2em; visibility: hidden;" class="visible-sm">
+{% endif %}
+{% if num_decks > 3 %}
+<hr style="height: 158em; visibility: hidden;" class="visible-md hidden">
+{% endif %}
+{% if num_decks > 6 %}
+<hr style="height: 58em; visibility: hidden;" class="visible-lg hidden">
+{% endif %}
+{% if num_decks > 2 %}
+<hr style="height: 2em; visibility: hidden;" class="visible-xs hidden"
+    {% endif %}
+
+    {% endblock content %}
 
 
 
-{% block ownjavascript %}
+    {% block ownjavascript %}
 
-{% endblock ownjavascript %}
+    {% endblock ownjavascript %}

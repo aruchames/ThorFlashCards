@@ -20,11 +20,13 @@ var decksReceived = false;
 /* Called when the make card button is pressed, it accesses the translated and
     untranslated values from globals as well as the value of the deck. It adds
     the card to the deck selected in the thorFCdeckView element. */
+
 function thorFCmakeCard() {
     var newCard = {};
     newCard.front = document.getElementById("thorFCfront").innerHTML;
     newCard.back = document.getElementById("thorFCback").innerHTML;
     newCard.deck = thorFCdeckView.value;
+    var success;
 
     function flashCardAPICall(csrftoken) {
         console.log("Got token:", csrftoken);
@@ -35,36 +37,34 @@ function thorFCmakeCard() {
         }
 
         var xhr = new XMLHttpRequest();
-
         xhr.onreadystatechange = function (oEvent) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 201) {
-                    console.log(xhr.responseText)
+                    console.log(xhr.responseText);
+                    var bubbleDOM = document.getElementById("bubbleDOM");
+                    var searchSt = "[value='" + newCard.deck + "']";
+                    var deckName = $("#bubbleDOM").find(searchSt).html();
+                    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:</h4><h5>\"" + deckName + "\"</h5></div><div><h5 style='color: #3399FF'>" + "Front: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.front + "</div></h5></div><div><h5 style='color: #3399FF'>Back: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.back + "</div></h5></div>";
+                    setBubbleClass(bubbleDOM);
                 } else {
-                    console.log("Error", xhr.statusText, xhr.responseText);
+                    console.warn("Error", xhr.statusText, xhr.responseText);
+                    displayError();
+                    setBubbleClass(bubbleDOM);
                 }
             }
 
         };
+            xhr.open("POST", "https://www.thorfc.com/api/cards/", true);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.setRequestHeader("X-CSRFToken", csrftoken.value);
 
-        xhr.open("POST", "https://www.thorfc.com/api/cards/", true);
-        xhr.withCredentials = true;
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.setRequestHeader("X-CSRFToken", csrftoken.value);
+            xhr.send(JSON.stringify(newCard));
 
-        xhr.send(JSON.stringify(newCard));
+
     }
-
-    console.log("Sending message");
-    console.log(chrome);
     /* Get cookie, make API call */
     chrome.runtime.sendMessage("getCSRFToken", flashCardAPICall);
-    debugger;
-    var bubbleDOM = document.getElementById("bubbleDOM");
-    var searchSt = "[value='" + newCard.deck + "']";
-    var deckName = $("#bubbleDOM").find(searchSt).html();
-    bubbleDOM.innerHTML = "<div><h4>The following card has been added to:</h4><h5>\"" + deckName + "\"</h5></div><div><h5 style='color: #3399FF'>" + "Front: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.front + "</div></h5></div><div><h5 style='color: #3399FF'>Back: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.back + "</div></h5></div>";
-    setBubbleClass(bubbleDOM);
 }
 /* Clears the popup and icon button from the screen. */
 function hideAll() {
@@ -79,16 +79,35 @@ function setBubbleClass(el) {
     }
 }
 
+function displayError() {
+    var htmlFrag;
+    htmlFrag = "<div style='text-align:center; padding-top: 0.25em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
+    htmlFrag += "<div><h3 style='font-weight:bold'>Whoops, something went wrong! Don't worry, we are right on the issue. In the meantime, refresh the page and try again!</h3></div>";
+    document.getElementById("bubbleDOM").innerHTML = htmlFrag;
+}
+
 /* Shows bubble with translated text and decks. Bubble is already ready, just
     waiting to be shown. */
 function showBubble() {
+    var label = document.createElement("h5");
+    label.innerHTML = "Decks:";
+    $("#thorFCback").after(thorFCdeckView);
+    $("#thorFCback").after(label);
+    if (thorFCdeckView.id === "thorFCnoDecks") {
+        try {
+            document.getElementById("thorFCbutton").style.display = "none";
+        } catch (e) {
+            displayError();
+        }
+    }
+
     if (isThorAuthenticated) {
-        var label = document.createElement("h5");
-        label.innerHTML = "Decks:";
-        $("#thorFCback").after(thorFCdeckView);
-        $("#thorFCback").after(label);
         thorFCdeckView.style.display = "";
-        document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
+        try {
+            document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
+        } catch (e) {
+            displayError();
+        }
     }
 
     document.getElementById("bubbleDOM").style.visibility = "visible";
@@ -154,42 +173,46 @@ function onSelect(e) {
     var result = body.replace(regex, "");
     var translateURL = "https://www.thorfc.com/api/translate_beta/"+ result;
 
-    var htmlFrag;
-    var xhr = new XMLHttpRequest();
-    /*
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status != 200) {
-                htmlFrag = "<div><h3>Whoops, something went wrong. Don't worry, we are looking at the issue right now! For now, please refresh the page and try again</h3></div>";
-                console.warn("SOMETHING WENT WRONG");
-            }
-        }
-    } */
-    xhr.open("GET", translateURL, false);
-    xhr.send();
-    //TODO What if AJAX fails? It 404'd on empty strings.
+    /* Try to translate */
+    try {
+        var htmlFrag;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", translateURL, false);
+        xhr.send();
 
-    var response = JSON.parse(xhr.response);
-    if (response.hasOwnProperty('detail')) {
-        htmlFrag = "<div style='text-align:center; padding-top: 1em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
-        htmlFrag += "<div><h2 style='font-weight:bold'>To start using Thor Flash Cards, please first: <a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/login/\">Log in</a>/<a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>.</h3></div>";
-        bubbleDOM.innerHTML = htmlFrag;
+        var response = JSON.parse(xhr.response);
+        if (response.hasOwnProperty('detail')) {
+            htmlFrag = "<div style='text-align:center; padding-top: 0.25em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
+            htmlFrag += "<div><h2 style='font-weight:bold'>To start using Thor Flash Cards, please first: <a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/login/\">Log in</a>/<a style='font-weight:bold; color: #3399FF;' target=\"_blank\" href=\"http://www.thorfc.com/register/\">Register</a>. If you just logged in, please refresh the page.</h3></div>";
+            bubbleDOM.innerHTML = htmlFrag;
+        }
+        else {
+            var translateCall = response.trans[0];
+            htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div> <button id='thorFCbutton'>Make Card!</button></div>";
+            bubbleDOM.innerHTML = htmlFrag;
+        }
     }
-    else {
-        var translateCall = response.trans[0];
-        htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div> <button id='thorFCbutton'>Make Card!</button></div>";
-        bubbleDOM.innerHTML = htmlFrag;
+    /* If fails, show error message */
+    catch (e) {
+        displayError();
     }
+
+
+    /* Set positions */
     if (startPos.x < 24) {
         bubbleDOM.style.left = "0px";
+    } else if (startPos.x + 240 > $(document).width()) {
+        bubbleDOM.style.left = ($(document).width() - 240) + "px";
     } else {
         bubbleDOM.style.left = (startPos.x - 24) + "px";
     }
 
-    if (startPos.y < 175) {
+    if (startPos.y < 225) {
         bubbleDOM.style.top = "0px";
+    } else if (startPos.y + 220 > $(document).height()) {
+        bubbleDOM.style.top = ($(document).height() - 220) + "px";
     } else {
-        bubbleDOM.style.top = (startPos.y - 175) + "px";
+        bubbleDOM.style.top = (startPos.y - 225) + "px";
     }
 
 }
@@ -223,13 +246,18 @@ window.onload = function() {
 
     /* Get our decks */
     var response = {};
-    if (decksReceived == false){
+    if (decksReceived == false) {
         var xhr2 = new XMLHttpRequest();
         xhr2.open('GET', 'https://www.thorfc.com/api/decks/mine', false);
         xhr2.send();
         var response = JSON.parse(xhr2.responseText);
         if (response.hasOwnProperty('detail')) {
             isThorAuthenticated = false;
+        }
+        else if (response.length === 0) {
+            thorFCdeckView = document.createElement("div");
+            thorFCdeckView.id = "thorFCnoDecks";
+            thorFCdeckView.innerHTML = "<h3>Whoops! Looks like you don't have any decks yet! Create one <a style='color: #3399FF; font-weight:bold' target='_blank' href='https://www.thorfc.com/decks/create'>here</a>. Then, refresh the page. </h3>";
         }
         else {
             isThorAuthenticated = true;

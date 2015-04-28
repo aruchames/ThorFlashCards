@@ -1,7 +1,7 @@
 {
-    "name": "Thor plugin",
-    "description": "Thor plugin",
-    "version": "1.0",
+    "name": "Thor Flash Cards plugin",
+    "description": "Thor Flash Cards plugin",
+    "version": "0.1",
     "permissions": ["contextMenus",
                     "cookies",
                     "https://*/",

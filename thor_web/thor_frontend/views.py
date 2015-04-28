@@ -26,7 +26,7 @@ def deck_flag_convert(country_code):
         "en": "gb",
         "ko": "kr",
         "ja": "jp",
-        "ch": "cn"
+        "zh": "cn"
     }
 
     # Only return a value different from country_code if an alternative 
@@ -60,6 +60,7 @@ def decks(request):
         decks = decks.order_by('-stars', '-views')
 
     decks_list = list(decks)
+    deck_len = len(decks_list)
 
     # Store information on what flag css type to render depending on the 
     # language of the deck
@@ -67,7 +68,7 @@ def decks(request):
         d.fl = deck_flag_convert(d.language)
 
     t = loader.get_template('deck_app/decks.html')
-    c = RequestContext(request, {"decks": decks_list})
+    c = RequestContext(request, {"decks": decks_list, "num_decks": int(deck_len)})
     return HttpResponse(t.render(c))
 
 def deck_create(request):
