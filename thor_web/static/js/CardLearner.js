@@ -81,7 +81,8 @@ CardLearner = (function() {
     CardLearner.prototype.next = function() {
 	//Pick a random number and pick the element whose probability 
 	// brings the sum over that value. 
-	
+
+	debugger;
 	rand = Math.random();
 	acc = 0;
 	
