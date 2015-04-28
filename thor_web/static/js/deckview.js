@@ -22,7 +22,7 @@ $(document).on("keydown", function (e){
 $(document).on('click','#cardText',  thorFCflip);
 $(document).on('swiperight','#cardText', thorFCswipeRight);
 $(document).on('swipeleft','#cardText', thorFCswipeLeft);
-$(document).on('unload', storeDeckState);
+$(window).on('unload', storeDeckState);
 /*****************************************************************************/
 // Build initial frequency generator and grab cards from server. 
 /*****************************************************************************/
@@ -62,7 +62,7 @@ else{
 }
 var currentCard = cards[cardLearner.next()];
 var frontFacing = true;
-thorFCloadCard();   
+//thorFCloadCard();   
 
 /*****************************************************************************/
 // HELPER FUNCTIONS
@@ -96,22 +96,24 @@ function thorFCflip(){
 function fadeOutComplete(){
     $('#cardText').remove(); 
     currentCard = cards[cardLearner.next()];
-    thorFCloadCard();
 }
 // Swipe right, displays green background to indicate answered correctly. 
 function thorFCswipeRight(){    
     if(!frontFacing){
 	$('#cardText').addClass('rotate-left').delay(700).fadeOut(1, fadeOutComplete);
+	thorFCloadCard();
     }
 }
 // Swipe left, displays red background to indicate answered incorrectly.
 function thorFCswipeLeft(){
     if(!frontFacing){
 	$("#cardText").addClass('rotate-right').delay(700).fadeOut(1, fadeOutComplete);
+	thorFCloadCard();
     }
 }
 // Function to store deck state for future review.
 function storeDeckState(){
     var cardLearnerState = cardLearner.dataDump();
     $.cookie("cardLearner", JSON.stringify(cardLearnerState), { expires:10});
+    return true;
 }
