@@ -46,6 +46,7 @@ function thorFCmakeCard() {
                     var deckName = $("#bubbleDOM").find(searchSt).html();
                     bubbleDOM.innerHTML = "<div><h4>The following card has been added to:</h4><h5>\"" + deckName + "\"</h5></div><div><h5 style='color: #3399FF'>" + "Front: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.front + "</div></h5></div><div><h5 style='color: #3399FF'>Back: <div style='border: 1px inset #848484; outline: 2px solid #424242; font-weight:bold;'>" + newCard.back + "</div></h5></div>";
                     setBubbleClass(bubbleDOM);
+                    window.setTimeout(function() {$("#bubbleDOM").fadeOut();}, 3000);
                 } else {
                     console.warn("Error", xhr.statusText, xhr.responseText);
                     displayError();
@@ -82,34 +83,34 @@ function setBubbleClass(el) {
 function displayError() {
     var htmlFrag;
     htmlFrag = "<div style='text-align:center; padding-top: 0.25em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
-    htmlFrag += "<div><h3 style='font-weight:bold'>Whoops, something went wrong! Don't worry, we are right on the issue. In the meantime, refresh the page and try again!</h3></div>";
+    htmlFrag += "<div><h4 style='font-weight:bold'>Whoops, something went wrong! Don't worry, we are right on the issue. In the meantime, refresh the page and try again!</h3></div>";
     document.getElementById("bubbleDOM").innerHTML = htmlFrag;
 }
 
 /* Shows bubble with translated text and decks. Bubble is already ready, just
     waiting to be shown. */
 function showBubble() {
-    var label = document.createElement("h5");
-    label.innerHTML = "Decks:";
-    $("#thorFCback").after(thorFCdeckView);
-    $("#thorFCback").after(label);
-    if (thorFCdeckView.id === "thorFCnoDecks") {
-        try {
-            document.getElementById("thorFCbutton").style.display = "none";
-        } catch (e) {
-            displayError();
-        }
-    }
-
     if (isThorAuthenticated) {
-        thorFCdeckView.style.display = "";
-        try {
-            document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
-        } catch (e) {
-            displayError();
+        var label = document.createElement("h5");
+        label.innerHTML = "Decks:";
+        $("#thorFCback").after(thorFCdeckView);
+        $("#thorFCback").after(label);
+        if (thorFCdeckView.id === "thorFCnoDecks") {
+            try {
+                document.getElementById("thorFCbutton").style.display = "none";
+            } catch (e) {
+                displayError();
+            }
         }
+        else {
+            try {
+                document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
+            } catch (e) {
+                displayError();
+            }
+        }
+        thorFCdeckView.style.display = "";
     }
-
     document.getElementById("bubbleDOM").style.visibility = "visible";
     document.getElementById("bubbleDOM").style.display = "";
     setBubbleClass(document.getElementById("bubbleDOM"));
@@ -144,7 +145,7 @@ function onSelect(e) {
         thorFClastSelectionBox = {};
         return;
     }
-    if (selection.toString() === "") {
+    if (selection.toString() === "" || !selection.toString().trim()) {
         return;
     }
 
@@ -255,6 +256,7 @@ window.onload = function() {
             isThorAuthenticated = false;
         }
         else if (response.length === 0) {
+            isThorAuthenticated = true;
             thorFCdeckView = document.createElement("div");
             thorFCdeckView.id = "thorFCnoDecks";
             thorFCdeckView.innerHTML = "<h3>Whoops! Looks like you don't have any decks yet! Create one <a style='color: #3399FF; font-weight:bold' target='_blank' href='https://www.thorfc.com/decks/create'>here</a>. Then, refresh the page. </h3>";
