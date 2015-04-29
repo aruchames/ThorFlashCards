@@ -61,14 +61,26 @@ def decks(request):
 
     decks_list = list(decks)
     deck_len = len(decks_list)
+    num_cards = 0
+    words_learned = 0;
 
-    # Store information on what flag css type to render depending on the 
-    # language of the deck
+    for d in decks:
+        #DEBUG WHEN CARD CREATION IS FUNCTIONAL
+        num_cards = num_cards + d.cards.count()
+        for c in d.cards.get_queryset():
+            #ADD IF CONDITION
+            words_learned = words_learned + 1
+
+
+    """ Store information on what flag css type to render depending on the 
+     language of the deck """
     for d in decks_list:
         d.fl = deck_flag_convert(d.language)
 
+
+
     t = loader.get_template('deck_app/decks.html')
-    c = RequestContext(request, {"decks": decks_list, "num_decks": int(deck_len)})
+    c = RequestContext(request, {"decks": decks_list, "num_decks": int(deck_len), "num_cards": num_cards, "num_cards_learned": words_learned})
     return HttpResponse(t.render(c))
 
 def deck_create(request):
@@ -199,6 +211,11 @@ def register(request):
         c = RequestContext(request, {})
         return HttpResponse(t.render(c))
    
+def customindex(request):
+    if request.user.is_authenticated():
+        return decks(request)
+    else:
+        return index(request)
 
 def index(request):
     t = loader.get_template('index.html')
