@@ -22,7 +22,7 @@ $(document).on("keydown", function (e){
 $(document).on('click','#cardText',  thorFCflip);
 $(document).on('swiperight','#cardText', thorFCswipeRight);
 $(document).on('swipeleft','#cardText', thorFCswipeLeft); 
-$(window).on('unload', storeDeckState);
+$(window).on('unload', storeDeckState); 
 /*****************************************************************************/
 // Build initial frequency generator and grab cards from server. 
 /*****************************************************************************/
@@ -62,7 +62,7 @@ else{
 }
 var currentCard = cards[cardLearner.next()];
 var frontFacing = true;
-//thorFCloadCard();   
+thorFCloadCard();   
 
 /*****************************************************************************/
 // HELPER FUNCTIONS
@@ -111,6 +111,7 @@ function thorFCswipeLeft(){
 	thorFCloadCard();
     }
 }
+
 // Function to store deck state for future review.
 function storeDeckState(){
     var cardLearnerState = cardLearner.dataDump();
