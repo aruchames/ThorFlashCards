@@ -77,8 +77,11 @@ function thorFCloadCard(){
 	$(".stack").append(cardHTML);
 	frontFacing = true;
     }
-    else{
+    else if (N==0){
 	$(".stack").text("Your deck has no cards");
+    }
+    else {
+	$(".stack").text("Your programmer has no brain");
     }
 }
 // Displays other side of card text. 
