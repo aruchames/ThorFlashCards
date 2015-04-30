@@ -68,7 +68,8 @@ else{
     var nKnown = previousCardLearner.nKnown;
     var cardLearner = new CardLearner(N, probs, known, m, nKnown);
 }
-var currentCard = cards[cardLearner.next()];
+var cardIndex = cardLearner.next();
+var currentCard = cards[cardIndex];
 var frontFacing = true;
 thorFCloadCard();   
 
@@ -104,21 +105,23 @@ function thorFCflip(){
 }
 // Callback for swipe functions, sets next card and then loads it. 
 function fadeOutComplete(){
-    $('#cardText').remove(); 
-    currentCard = cards[1];
+    $('#cardText').remove();
+    cardIndex = cardLearner.next();
+    currentCard = cards[cardIndex];
+    thorFCloadCard();
 }
 // Swipe right, displays green background to indicate answered correctly. 
 function thorFCswipeRight(){    
     if(!frontFacing){
 	$('#cardText').addClass('rotate-left').delay(700).fadeOut(1, fadeOutComplete);
-	thorFCloadCard();
+	cardLearner.learn(cardIndex, true);
     }
 }
 // Swipe left, displays red background to indicate answered incorrectly.
 function thorFCswipeLeft(){
     if(!frontFacing){
 	$("#cardText").addClass('rotate-right').delay(700).fadeOut(1, fadeOutComplete);
-	thorFCloadCard();
+	cardLearner.learn(cardIndex, false);
     }
 }
 
