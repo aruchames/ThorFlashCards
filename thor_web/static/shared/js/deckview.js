@@ -31,7 +31,7 @@ $(document).on('unload', storeDeckState);
 var pathname = window.location.href;
 var res  = pathname.split("/");
 var pk   = res[res.length-2];
-var url  = "https://www.thorfc.com:9005/api/decks/" + pk;
+var url  = "https://www.thorfc.com/api/decks/" + pk;
 var response = '';
 $.ajax({
     method:"GET",
@@ -70,10 +70,6 @@ else{
 }
 var currentCard = cards[cardLearner.next()];
 var frontFacing = true;
-var currentCard = {front:"Hi", back:"World"}
-var cards = [{front:"Hi", back:"World"}, {front:"Hi", back:"World"}]
-var frontFacing = true;
-var N = 2;
 thorFCloadCard();   
 
 /*****************************************************************************/
