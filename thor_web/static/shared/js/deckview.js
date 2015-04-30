@@ -22,7 +22,7 @@ $(document).on("keydown", function (e){
 $(document).on('click','#cardText',  thorFCflip);
 $(document).on('swiperight','#cardText', thorFCswipeRight);
 $(document).on('swipeleft','#cardText', thorFCswipeLeft); 
-$(document).on('unload', storeDeckState); 
+//$(document).on('unload', storeDeckState); 
 /*****************************************************************************/
 // Build initial frequency generator and grab cards from server. 
 /*****************************************************************************/
@@ -31,24 +31,33 @@ $(document).on('unload', storeDeckState);
 var pathname = window.location.href;
 var res  = pathname.split("/");
 var pk   = res[res.length-2];
-var url  = "https://www.thorfc.com/api/decks/" + pk;
+var url  = "http://www.thorfc.com:9006/api/decks/" + pk;
 var response = '';
+/*
 $.ajax({
     method:"GET",
-    url:url ,
+    url:url,
     async:false,
     success : function(text)
     {
         response = text;
+    },
+    error: function(jqXHR, textStatus, errorThrown)
+    {
+	console.log(textStatus);
+	console.log(errorThrown);
     }
 });
+
 var previousCardLearner = $.cookie("cardLearner");
 if (previousCardLearner === undefined)
     previousCardLearner = null;
+
 var cards = response.cards;
 var N = cards.length;
+
 if (previousCardLearner == null){
-    /* Make a card learner from the number of cards in the deck. */
+    /* Make a card learner from the number of cards in the deck. 
     var cardLearner = new CardLearner(N);
 }
 else{
@@ -62,6 +71,11 @@ else{
 }
 var currentCard = cards[cardLearner.next()];
 var frontFacing = true;
+*/
+var currentCard = {front:"Hi", back:"World"}
+var cards = [{front:"Hi", back:"World"}, {front:"Hi", back:"World"}]
+var frontFacing = true;
+var N = 2;
 thorFCloadCard();   
 
 /*****************************************************************************/
@@ -72,7 +86,6 @@ thorFCloadCard();
 // cards are in the deck.
 function thorFCloadCard(){
     if (N!= 0){
-	debugger;
 	var cardHTML = "<div id='cardText'>" + currentCard.front + "</div>";
 	$(".stack").append(cardHTML);
 	frontFacing = true;
@@ -98,7 +111,7 @@ function thorFCflip(){
 // Callback for swipe functions, sets next card and then loads it. 
 function fadeOutComplete(){
     $('#cardText').remove(); 
-    currentCard = cards[cardLearner.next()];
+    currentCard = cards[1];
 }
 // Swipe right, displays green background to indicate answered correctly. 
 function thorFCswipeRight(){    
@@ -114,9 +127,10 @@ function thorFCswipeLeft(){
 	thorFCloadCard();
     }
 }
-
+/*
 // Function to store deck state for future review.
 function storeDeckState(){
     var cardLearnerState = cardLearner.dataDump();
     $.cookie("cardLearner", JSON.stringify(cardLearnerState), { expires:10});
 }
+*/
