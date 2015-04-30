@@ -6,6 +6,7 @@ $(document).ready(function() {
   /* Output fields */
   var deckNameOutput = $('.deckCreateName');
   var flagOutput = $('#FlagDisplay');
+  var nameOutput = $('#LanguageDisplay');
   var langDict = {
     "English": "gb",
     "Korean": "kr",
@@ -29,5 +30,6 @@ $(document).ready(function() {
   langInput.change(function() {
     var lang = langInput.val();
     flagOutput.attr("class", "flag-icon flag-icon-" + langDict[lang]);
+    nameOutput.html(langDict[lang]);
   });
 });
