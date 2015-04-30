@@ -22,7 +22,7 @@ $(document).on("keydown", function (e){
 $(document).on('click','#cardText',  thorFCflip);
 $(document).on('swiperight','#cardText', thorFCswipeRight);
 $(document).on('swipeleft','#cardText', thorFCswipeLeft); 
-//$(document).on('unload', storeDeckState); 
+$(document).on('unload', storeDeckState); 
 /*****************************************************************************/
 // Build initial frequency generator and grab cards from server. 
 /*****************************************************************************/
@@ -31,9 +31,8 @@ $(document).on('swipeleft','#cardText', thorFCswipeLeft);
 var pathname = window.location.href;
 var res  = pathname.split("/");
 var pk   = res[res.length-2];
-var url  = "http://www.thorfc.com:9006/api/decks/" + pk;
+var url  = "https://www.thorfc.com:9005/api/decks/" + pk;
 var response = '';
-/*
 $.ajax({
     method:"GET",
     url:url,
@@ -57,7 +56,7 @@ var cards = response.cards;
 var N = cards.length;
 
 if (previousCardLearner == null){
-    /* Make a card learner from the number of cards in the deck. 
+    /* Make a card learner from the number of cards in the deck. */
     var cardLearner = new CardLearner(N);
 }
 else{
@@ -71,7 +70,6 @@ else{
 }
 var currentCard = cards[cardLearner.next()];
 var frontFacing = true;
-*/
 var currentCard = {front:"Hi", back:"World"}
 var cards = [{front:"Hi", back:"World"}, {front:"Hi", back:"World"}]
 var frontFacing = true;
@@ -127,10 +125,9 @@ function thorFCswipeLeft(){
 	thorFCloadCard();
     }
 }
-/*
+
 // Function to store deck state for future review.
 function storeDeckState(){
     var cardLearnerState = cardLearner.dataDump();
     $.cookie("cardLearner", JSON.stringify(cardLearnerState), { expires:10});
 }
-*/
