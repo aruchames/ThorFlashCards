@@ -81,8 +81,8 @@ def deck_cards(request, deck_pk):
         return redirect('deck_view')
     else:
         t = loader.get_template('deck_app/cards.html')
-        c = RequestContext(request, {"cards": deck.cards})
-        
+        c = RequestContext(request, {"deck": deck})
+        return HttpResponse(t.render(c))
 
 def decks(request):
     """ 
@@ -133,13 +133,13 @@ def deck_create(request):
         lang_code = inv_lang_dict[language]
 
         if viewability == 'public':
-            Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
+            d = Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
                 private=False)
         else:
-            Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
+            d = Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
                 private=True)
 
-        return redirect('deck_view')
+        return redirect('card_create', d.pk)
     else:
         t = loader.get_template('deck_app/deckcreate.html')
         c = RequestContext(request, {"languages": [a[1] for a in Deck.LANGUAGE_CHOICES] })

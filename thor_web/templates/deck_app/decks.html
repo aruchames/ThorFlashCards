@@ -41,7 +41,7 @@
 <div class="content visible-lg visible-md visible-sm">
   {% for deck in decks %}
   <div class="col-lg-6 col-md-12" style="padding-left: 24em">
-    <a href="/decks/{{deck.pk}}" style="display:block; text-decoration: none; color: black">
+    <a href="{% url 'deck_cards' deck.pk %}" style="display:block; text-decoration: none; color: black">
       <div class="stack">
         {{deck.deck_name}}
         <div class="row-fluid cardmetainfo">
@@ -63,7 +63,7 @@
 
 <div class="content visible-xs" style="padding-bottom:2em">
   {% for deck in decks %}
-  <a href="/decks/{{deck.pk}}" style=" display:block; text-decoration: none; color: black">
+  <a href="{% url 'deck_cards' deck.pk %}" style=" display:block; text-decoration: none; color: black">
     <div class="col-lg-1 col-centered">
       <div class="stack">
         {{deck.deck_name}}

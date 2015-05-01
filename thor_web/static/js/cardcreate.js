@@ -56,6 +56,8 @@ $(document).ready(function() {
         success: function(data, status, jq) {
           successDisplay.text("Created card: " + data["front"]);
           successDisplay.show();
+          frontInput.val("");
+          backInput.val("");
         },
         error: function(jq, status, error) {
           errorDisplay.text("Error: " + jq["statusText"]);

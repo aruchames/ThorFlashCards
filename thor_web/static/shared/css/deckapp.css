@@ -17,6 +17,14 @@ html,body {
     overflow: auto;
 }
 
+.deck-app-header {
+  color: white;
+}
+
+.deck-app-text {
+  color: white;
+}
+
 .formalign {
     text-align: center;
     position: relative;
