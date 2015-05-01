@@ -75,9 +75,10 @@ def deck_cards(request, deck_pk):
     """
     deck = get_deck(deck_pk)
 
-    if not request.user.is_authenticated():
-        return redirect('login')
-    elif deck_view_forbidden(deck, request.user):
+    if deck_view_forbidden(deck, request.user):
+        if not request.user.is_authenticated():
+            return redirect('login')
+
         return redirect('deck_view')
     else:
         t = loader.get_template('deck_app/cards.html')
