@@ -6,7 +6,7 @@
     display: none;
 }
 .stack {
-  cursor: hand;
+  /* cursor: hand; */
   width: 300px;
   height: 300px;
   align-items: center;
@@ -29,9 +29,9 @@
     user-select: none;
 }
 .stack:hover{
-    font-size: 22px;
-    height: 250px;
-    width: 325px;
+    font-size: 20px;
+    height: 300px;
+    width: 300px;
 }
 .rotate-left {
   transform: rotate(0deg) scale(0.8);
