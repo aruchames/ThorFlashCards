@@ -106,7 +106,11 @@ function showBubble() {
             try {
                 document.getElementById("thorFCbutton").addEventListener('click', thorFCmakeCard);
             } catch (e) {
-                displayError();
+                if ($('#thorFCerror').length === 1) {
+                    // If another error exists, show that error.
+                } else {
+                    displayError();
+                }
             }
         }
         thorFCdeckView.style.display = "";
@@ -121,10 +125,7 @@ function showBubble() {
 /* This function could probably be split into two. Also nt sure what the first
     part of it is doing. */
 function onSelect(e) {
-
-
     var el = e.target;
-
     if (el.id == "thorfcIcon") {
         el.style.display = "hidden";
         return;
@@ -133,10 +134,12 @@ function onSelect(e) {
         return;
     }
 
-
     hideAll();
     var selection = rangy.getSelection();
+    var startPos = selection.getStartDocumentPos();
 
+
+    /* Do not show icon if selection is empty or is same as before */
     var box = selection.getBoundingDocumentRect();
     if (box.width == 0 && box.height == 0) {
         return;
@@ -148,13 +151,11 @@ function onSelect(e) {
     if (selection.toString() === "" || !selection.toString().trim()) {
         return;
     }
-
     thorFClastSelectionBox = box;
 
-    var startPos = selection.getStartDocumentPos();
 
+    /* Set position of thorfcIcon */
     var thorfcIcon = document.getElementById("thorfcIcon");
-
     if (startPos.x < 23) {
         thorfcIcon.style.left = "0px";
     } else {
@@ -165,7 +166,6 @@ function onSelect(e) {
     } else {
         thorfcIcon.style.top = (startPos.y - 23) + "px";
     }
-
     thorfcIcon.style.display = "inline";
 
     var bubbleDOM = document.getElementById("bubbleDOM");
@@ -173,6 +173,7 @@ function onSelect(e) {
     var body = rangy.getSelection().toString();
     var result = body.replace(regex, "");
     var translateURL = "https://www.thorfc.com/api/translate_beta/"+ result;
+
 
     /* Try to translate */
     try {
@@ -191,15 +192,23 @@ function onSelect(e) {
             var translateCall = response.trans[0];
             htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div> <button id='thorFCbutton'>Make Card!</button></div>";
             bubbleDOM.innerHTML = htmlFrag;
+            loadDecks();
         }
     }
     /* If fails, show error message */
     catch (e) {
-        displayError();
+        if (xhr.status === 413) {
+            htmlFrag = "<div id='thorFCerror' style='text-align:center; padding-top: 0.25em;'><img src='" + chrome.extension.getURL("/iconCentered.png") + "'/></div>";
+            htmlFrag += "<div><h2 style='font-weight:bold'>Woah, we can't process that much text. Please choose a smaller selection for us to translate!</h2></div>"
+            bubbleDOM.innerHTML = htmlFrag;
+        }
+        else {
+            displayError();
+        }
     }
 
 
-    /* Set positions */
+    /* Set position of bubbleDOM */
     if (startPos.x < 24) {
         bubbleDOM.style.left = "0px";
     } else if (startPos.x + 240 > $(document).width()) {
@@ -207,7 +216,6 @@ function onSelect(e) {
     } else {
         bubbleDOM.style.left = (startPos.x - 24) + "px";
     }
-
     if (startPos.y < 225) {
         bubbleDOM.style.top = "0px";
     } else if (startPos.y + 220 > $(document).height()) {
@@ -215,38 +223,11 @@ function onSelect(e) {
     } else {
         bubbleDOM.style.top = (startPos.y - 225) + "px";
     }
-
 }
-/* Unknown purpose. Not called in code. */
-function onSelectDelayed(e) {
-    window.setTimeout(onSelect(e), 200);
-}
-/* Prepares elements for usage, making the container elements and fetching the
-    decks via a call to our API. Also stores deck values in storage, possibly
-    move that to background. */
-window.onload = function() {
-    rangy.init();
 
-    var thorfcIcon = document.createElement("img");
-    thorfcIcon.setAttribute("src", chrome.extension.getURL("icon24.png"));
-    thorfcIcon.addEventListener("click", showBubble);
-    thorfcIcon.id = "thorfcIcon";
-
-    var bubbleDOM = document.createElement("div");
-    bubbleDOM.id = "bubbleDOM";
-
-    bubbleDOM.className = "bubbleEl";
-
-    document.body.appendChild(thorfcIcon);
-    document.body.appendChild(bubbleDOM);
-    hideAll();
-
-    document.addEventListener('mouseup', onSelect);
-
-
-
+function loadDecks() {
+    debugger;
     /* Get our decks */
-    var response = {};
     if (decksReceived == false) {
         var xhr2 = new XMLHttpRequest();
         xhr2.open('GET', 'https://www.thorfc.com/api/decks/mine', false);
@@ -263,6 +244,7 @@ window.onload = function() {
         }
         else {
             isThorAuthenticated = true;
+            decksReceived = true;
 
             thorFCdeckView = document.createElement("select");
             thorFCdeckView.id = "thorFCdecks";
@@ -279,4 +261,27 @@ window.onload = function() {
             chrome.storage.sync.set({"thorFCdeckViewHTML":thorFCdeckView.innerHTML});
         }
     }
+}
+
+/* Prepares elements for usage, making the container elements and fetching the
+    decks via a call to our API. Also stores deck values in storage, possibly
+    move that to background. */
+window.onload = function() {
+    rangy.init();
+
+    var thorfcIcon = document.createElement("img");
+    thorfcIcon.setAttribute("src", chrome.extension.getURL("icon24.png"));
+    thorfcIcon.addEventListener("click", showBubble);
+    thorfcIcon.id = "thorfcIcon";
+    document.body.appendChild(thorfcIcon);
+
+    var bubbleDOM = document.createElement("div");
+    bubbleDOM.id = "bubbleDOM";
+    bubbleDOM.className = "bubbleEl";
+    document.body.appendChild(bubbleDOM);
+
+
+    hideAll();
+    document.addEventListener('mouseup', onSelect);
+    loadDecks();
 }

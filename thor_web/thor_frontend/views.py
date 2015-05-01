@@ -252,9 +252,11 @@ def register(request):
    
 def customindex(request):
     if request.user.is_authenticated():
-        return decks(request)
+        return redirect('deck_view')
     else:
-        return index(request)
+        t = loader.get_template('index.html')
+        c = RequestContext(request, {})
+        return HttpResponse(t.render(c))
 
 def index(request):
     t = loader.get_template('index.html')
