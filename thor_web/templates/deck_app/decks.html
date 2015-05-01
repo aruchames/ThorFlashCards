@@ -38,50 +38,52 @@
   </ul>
 </div>
 
-<div class="content visible-lg visible-md visible-sm">
-  {% for deck in decks %}
-  <div class="col-lg-6 col-md-12" style="padding-left: 24em">
-    <a href="{% url 'deck_cards' deck.pk %}" style="display:block; text-decoration: none; color: black">
-      <div class="stack">
-        {{deck.deck_name}}
-        <div class="row-fluid cardmetainfo">
-          <div class="col-xs-4">
-            <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
+<div class="cardcontainer">
+  <div class="content visible-lg visible-md visible-sm">
+    {% for deck in decks %}
+    <div class="col-lg-6 col-md-12">
+      <a href="{% url 'deck_cards' deck.pk %}" style="display:block; text-decoration: none; color: black">
+        <div class="stack">
+          {{deck.deck_name}}
+          <div class="row-fluid cardmetainfo">
+            <div class="col-xs-4">
+              <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
+            </div>
+            <div class="col-xs-4">
+              <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
+            </div>
+            <div class="col-xs-4">
+              <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
+            </div>
           </div>
-          <div class="col-xs-4">
-            <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
-          </div>
-          <div class="col-xs-4">
-            <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
+        </div>
+      </a>
+    </div>  
+    {% endfor %}
+  </div>
+
+  <div class="content visible-xs" style="padding-bottom:2em">
+    {% for deck in decks %}
+    <a href="{% url 'deck_cards' deck.pk %}" style=" display:block; text-decoration: none; color: black">
+      <div class="col-lg-1 col-centered">
+        <div class="stack">
+          {{deck.deck_name}}
+          <div class="row-fluid cardmetainfo">
+            <div class="col-xs-4">
+              <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
+            </div>
+            <div class="col-xs-4">
+              <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
+            </div>
+            <div class="col-xs-4">
+              <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
+            </div>
           </div>
         </div>
       </div>
     </a>
-  </div>  
-  {% endfor %}
-</div>
-
-<div class="content visible-xs" style="padding-bottom:2em">
-  {% for deck in decks %}
-  <a href="{% url 'deck_cards' deck.pk %}" style=" display:block; text-decoration: none; color: black">
-    <div class="col-lg-1 col-centered">
-      <div class="stack">
-        {{deck.deck_name}}
-        <div class="row-fluid cardmetainfo">
-          <div class="col-xs-4">
-            <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.language}}
-          </div>
-          <div class="col-xs-4">
-            <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
-          </div>
-          <div class="col-xs-4">
-            <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </a>
-  {% endfor %}
+    {% endfor %}
+  </div>
 </div>
 
 {% if num_decks > 2 %}
