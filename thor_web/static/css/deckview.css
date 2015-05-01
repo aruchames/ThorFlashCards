@@ -1,5 +1,10 @@
-.content{
+.content {
     display: table;
+    min-height: initial;
+    height: 300px;
+}
+#contentCardView {
+    height: 310px;
 }
 
 ::-webkit-scrollbar {
@@ -14,10 +19,14 @@
   vertical-align: center;
   display: inline-block;
   text-align: center;
+  padding: 0px;
 }
 .card {
   cursor: hand;
   text-align: center;
+/*  border-style: solid;
+  border-width: 1px; */
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.5)
 }
 .stack{
     perspective: 1000px;
@@ -58,13 +67,9 @@
 
 .stack:hover{
     font-size: 20px;
-<<<<<<< HEAD
-    height: 305px;
-    width: 310px;
-=======
     height: 300px;
     width: 300px;
->>>>>>> d2d979f4a08f72b2ace967f93cce33de5ad67434
+
 }
 .rotate-left {
   transform: rotate(0deg) scale(0.8);

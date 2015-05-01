@@ -23,7 +23,9 @@ $(document).on('click','.card',  thorFCflip);
 $(document).on('swiperight','.card', thorFCswipeRight);
 $(document).on('swipeleft','.card', thorFCswipeLeft); 
 $(document).on('unload', storeDeckState); 
-
+$('#leftArrow').on('click', thorFCswipeLeft);
+$('#rightArrow').on('click', thorFCswipeRight);
+$(document).on('click', '#flipButton', thorFCflip);
 /*****************************************************************************/
 // Build initial frequency generator and grab cards from server. 
 /*****************************************************************************/
