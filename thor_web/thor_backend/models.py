@@ -11,6 +11,23 @@ class Deck(models.Model):
     private    : if true, only the creator can view
     """
 
+    # FOr the beta version, we will only show these languages
+    LANGUAGE_CHOICES_BETA = (
+        ('en', 'English'),
+        ('zh', 'Chinese Simplified'),
+        ('fr', 'French'),
+        ('de', 'German'),
+        ('el', 'Greek'),
+        ('hi', 'Hindi'),
+        ('ja', 'Japanese'),
+        ('ko', 'Korean'),
+        ('la', 'Latin'),
+        ('ro', 'Romanian'),
+        ('ru', 'Russian'),
+        ('sr', 'Serbian'),
+        ('es', 'Spanish'),    
+    )
+
     # TODO: Input all languages here:
     # https://cloud.google.com/translate/v2/using_rest
     LANGUAGE_CHOICES = (

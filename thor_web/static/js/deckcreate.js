@@ -10,7 +10,7 @@ $(document).ready(function() {
     "English": "gb",
     "Korean": "kr",
     "Japanese": "jp",
-    "Chinese": "cn",
+    "Chinese Simplified": "cn",
     "Spanish": "es",
     "German": "de",
     "French": "fr"

@@ -42,8 +42,47 @@ def get_deck(deck_pk):
     except Deck.DoesNotExist:
         raise Http404
 
+# Is the user allowed to edit the deck?
+def deck_edit_forbidden(deck, user):
+  return deck.created_by.id != user.id
+
+# Is the user allowed allowed to view the deck
+def deck_view_forbidden(deck, user):
+  return deck.created_by.id != user.id and deck.private
+
 # Front end view logic
 # ============================================================================
+
+def card_create(request, deck_pk):
+    """
+    Interface for creating cards 
+    """
+    # Attempt to fetch the deck with the given pk. On failure, raise 404.
+    deck = get_deck(deck_pk)
+
+    if not request.user.is_authenticated():
+        return redirect('login')
+    elif deck_edit_forbidden(deck, request.user):
+        return redirect('deck_view')
+    else:
+        t = loader.get_template('deck_app/cardcreate.html')
+        c = RequestContext(request, {"deck": deck})
+        return HttpResponse(t.render(c))
+
+def deck_cards(request, deck_pk):
+    """
+    View all cards in a given deck
+    """
+    deck = get_deck(deck_pk)
+
+    if not request.user.is_authenticated():
+        return redirect('login')
+    elif deck_view_forbidden(deck, request.user):
+        return redirect('deck_view')
+    else:
+        t = loader.get_template('deck_app/cards.html')
+        c = RequestContext(request, {"cards": deck.cards})
+        
 
 def decks(request):
     """ 
