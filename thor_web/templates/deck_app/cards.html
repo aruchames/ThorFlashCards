@@ -6,6 +6,8 @@
     <h1 class="deck-app-header">{{deck.deck_name}}</h1>
     <h3 class="deck-app-text">{{deck.cards.all.count}} cards</h3>
 
+    <input type="hidden" type="hidden" id="deckId" value="{{ deck.pk }}">
+
     <a href="{% url 'card_create' deck.pk %}" style="color: black;">
       <button class="btn-lg btn-primary">Add new cards</button>
     </a>
@@ -13,6 +15,8 @@
     <a href="{% url 'deck_detail' deck.pk %}" style="color: white;">
       <button class="btn-lg btn-success">Study this deck</button>
     </a>
+
+    <button class="btn" id="DeleteButton" style="float: right;">Delete</button>
 
     {% for card in deck.cards.all %}
       <div class="list-group-item">
@@ -29,5 +33,41 @@
 
 
 {% block ownjavascript %}
+
+<script>
+$(document).ready(function() {
+  var pk = $("#deckId").val();
+  var url = "/api/decks/" + pk;
+
+  $("#DeleteButton").click(function() {
+    $.ajax({
+      "url": url,
+      "method": "DELETE",
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken")
+      },
+      success: function() {
+        window.location.replace("{% url 'deck_view' %}");
+      },
+      error: function(jq) {
+        console.log(jq);
+      }
+    })
+  });
+});
+
+function getCookie(c_name) {
+  if (document.cookie.length > 0) {
+    c_start = document.cookie.indexOf(c_name + "=");
+    if (c_start != -1) {
+      c_start = c_start + c_name.length + 1;
+      c_end = document.cookie.indexOf(";", c_start);
+      if (c_end == -1) c_end = document.cookie.length;
+      return unescape(document.cookie.substring(c_start,c_end));
+    }
+  }
+  return "";
+}
+</script>
 
 {% endblock ownjavascript %}
