@@ -4,7 +4,7 @@
 
 // Set event listeners for browser and mobile navigation of cards.
 $(document).on("keydown", function (e){
-    if (e.keyCode == '32') {
+    if (e.keyCode == '32' || e.keyCode == '38' || e.keyCode == '40' ) {
         // spacebar to flip.
 	e.preventDefault();
         thorFCflip();
