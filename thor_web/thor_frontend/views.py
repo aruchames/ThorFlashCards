@@ -91,6 +91,9 @@ def decks(request):
     If the user is logged in, only his decks will be listed.
     If the user is not logged in, all public decks will be listed.
     """
+    if not request.user.is_authenticated():
+        return redirect('login')
+
     if request.user.is_authenticated():
         decks = Deck.objects.filter(created_by=request.user.id)
         decks = decks.order_by('-stars', '-views')
