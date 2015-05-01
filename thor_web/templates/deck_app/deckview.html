@@ -4,15 +4,24 @@
 <link rel="stylesheet" type="text/css"  href="/static/css/deckview.css">
 {% endblock owncss%}
 
-  {% block content %}
-  <div class="content">
-    <div class="stack">
-    </div>
+{% block content %}
+<div class="row">
+  <div class="col-md-4"><div id="leftArrow" style="float: right; padding-top: 150px;" class="fa fa-arrow-left fa-3x wow bounceIn"></div></div>
+  <div class="col-md-4">
+    <div id="#contentCardView" class="content"><div class="stack"></div></div>
   </div>
-  {% endblock content %}
-  {% block ownjavascript %}
+  <div class="col-md-4"><div id="rightArrow" style="float: left; padding-top: 150px;" class="fa fa-arrow-right fa-3x wow bounceIn"></div></div>
+</div> 
+
+<div class="row span4">
+  <div class="col-md-4"></div>
+  <div class="col-md-4" id="flipButton" style="padding-top: 70px"><h1 style="background-color: black; color: white; text-align:center;" >FLIP</h1></div>
+  <div class="col-md-4"></div>
+</div>
+{% endblock content %}
+{% block ownjavascript %}
 <!--  <script src='//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js'></script> -->
-  <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js'></script>
-  <script type="text/javascript" src='/static/shared/js/CardLearner.js'></script>
-  <script type="text/javascript" src='/static/shared/js/deckview.js'></script>
-  {% endblock ownjavascript %}
+<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js'></script>
+<script type="text/javascript" src='/static/shared/js/CardLearner.js'></script>
+<script type="text/javascript" src='/static/shared/js/deckview.js'></script>
+{% endblock ownjavascript %}
