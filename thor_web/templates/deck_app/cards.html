@@ -1,0 +1,32 @@
+{% extends "deck_app/deckbase.html" %}
+
+{% block content %}
+<div class="content">
+  <div class="container deckholder">  
+    <h1 class="deck-app-header">{{deck.deck_name}}</h1>
+    <h3 class="deck-app-text">{{deck.cards.all.count}} cards</h3>
+
+    {% for card in deck.cards.all %}
+      <div class="list-group-item">
+        <h4 class="list-group-item-heading">{{card.front}}</h4>
+        <p class="list-group-item-text">{{card.back}}</p>
+      </div>
+    {% endfor %}
+
+    <a href="{% url 'card_create' deck.pk %}" style="color: black;">
+      <button class="btn-lg btn-primary">Add new cards</button>
+    </a>
+
+    <a href="{% url 'deck_detail' deck.pk %}" style="color: white;">
+      <button class="btn-lg btn-success">Study this deck</button>
+    </a>
+  </div>
+</div>
+
+{% endblock content %}
+
+
+
+{% block ownjavascript %}
+
+{% endblock ownjavascript %}

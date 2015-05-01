@@ -1,7 +1,64 @@
+{% extends "deck_app/deckbase.html" %}
+
+{% block content %}
 <div class="content">
   <div class="container deckholder">  
-    {% csrf_token %}
 
-    
+    <div class="row-fluid">
+      <div class="col-md-6">
+
+        <form class="formalign" onsubmit="return false;">
+          <div style="display: none;" class="alert alert-success" id="SuccessMessage">Successfully created.</div>
+          <div style="display: none;" class="alert alert-danger"  id="ErrorMessage">Error!</div>
+
+          <hr/>
+          <h2 class="deck-app-header">New card for {{deck.deck_name}}</h2>
+
+          <input type="hidden" type="hidden" id="deckId" value="{{ deck.pk }}">
+
+          <div class="form-group">
+            <label for="FrontContent"></label>
+            <input type="text" class="form-control" 
+                      id="FrontContent" placeholder="Front of Card" name="deck_name" maxlength="100" required>
+          </div>
+
+          <div class="form-group">
+            <label for="BackContent"></label>
+            <input type="text" class="form-control" 
+                      id="BackContent" placeholder="Back of Card" name="deck_name" maxlength="100" required>
+          </div>
+
+          <hr style="visibility: hidden;"/>
+
+          <button id="CreateButton" class="btn">Create new card!</button>
+
+          <a class="btn btn-success" href="/deck/cards/{{deck.pk}}">View cards</a>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <div class="col-md-12">
+          <div class="stacknohover">
+            <!-- Use jquery to insert the deck name here !-->
+            <div class="frontText">Front of Card</div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="stacknohover">
+            <!-- Use jquery to insert the deck name here !-->
+            <div class="backText">Back of Card</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </div>
+
+{% endblock %}
+
+{% block ownjavascript %}
+<script src="/static/js/cardcreate.js"></script>
+{% endblock %}

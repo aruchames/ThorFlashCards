@@ -13,6 +13,7 @@
 #bubbleDOM {
   position: absolute;
   width: 240px;
+  min-height: 220px;
   outline:1px solid #424242;
   overflow-x:hidden;
   overflow-y:hidden;
@@ -21,7 +22,6 @@
   font-family: 'Merriweather','Helvetica Neue',Arial,sans-serif;
   display: table-cell;
   vertical-align: middle;
-  height: 220px;
 }
 
 #card{

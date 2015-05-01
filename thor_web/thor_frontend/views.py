@@ -42,8 +42,47 @@ def get_deck(deck_pk):
     except Deck.DoesNotExist:
         raise Http404
 
+# Is the user allowed to edit the deck?
+def deck_edit_forbidden(deck, user):
+  return deck.created_by.id != user.id
+
+# Is the user allowed allowed to view the deck
+def deck_view_forbidden(deck, user):
+  return deck.created_by.id != user.id and deck.private
+
 # Front end view logic
 # ============================================================================
+
+def card_create(request, deck_pk):
+    """
+    Interface for creating cards 
+    """
+    # Attempt to fetch the deck with the given pk. On failure, raise 404.
+    deck = get_deck(deck_pk)
+
+    if not request.user.is_authenticated():
+        return redirect('login')
+    elif deck_edit_forbidden(deck, request.user):
+        return redirect('deck_view')
+    else:
+        t = loader.get_template('deck_app/cardcreate.html')
+        c = RequestContext(request, {"deck": deck})
+        return HttpResponse(t.render(c))
+
+def deck_cards(request, deck_pk):
+    """
+    View all cards in a given deck
+    """
+    deck = get_deck(deck_pk)
+
+    if not request.user.is_authenticated():
+        return redirect('login')
+    elif deck_view_forbidden(deck, request.user):
+        return redirect('deck_view')
+    else:
+        t = loader.get_template('deck_app/cards.html')
+        c = RequestContext(request, {"deck": deck})
+        return HttpResponse(t.render(c))
 
 def decks(request):
     """ 
@@ -94,13 +133,13 @@ def deck_create(request):
         lang_code = inv_lang_dict[language]
 
         if viewability == 'public':
-            Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
+            d = Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
                 private=False)
         else:
-            Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
+            d = Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
                 private=True)
 
-        return redirect('deck_view')
+        return redirect('card_create', d.pk)
     else:
         t = loader.get_template('deck_app/deckcreate.html')
         c = RequestContext(request, {"languages": [a[1] for a in Deck.LANGUAGE_CHOICES] })
