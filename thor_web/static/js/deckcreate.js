@@ -6,7 +6,7 @@ $(document).ready(function() {
   /* Output fields */
   var deckNameOutput = $('.deckCreateName');
   var flagOutput = $('#FlagDisplay');
-  var nameOutput = $('#deckLanguageName');
+  var nameOutput = $('.deckLanguageName');
   var langDict = {
 	"Afrikaans": "af",
 	"Albanian": "al",
