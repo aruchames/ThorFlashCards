@@ -14,7 +14,7 @@ class Deck(models.Model):
     # FOr the beta version, we will only show these languages
     LANGUAGE_CHOICES_BETA = (
         ('en', 'English'),
-        ('zh', 'Chinese Simplified'),
+        ('zh', 'Chinese'),
         ('fr', 'French'),
         ('de', 'German'),
         ('el', 'Greek'),
@@ -40,7 +40,7 @@ class Deck(models.Model):
         ('be', 'Belarusian'),
         ('bg', 'Bulgarian'),
         ('ca', 'Catalan'),
-        ('zh', 'Chinese Simplified'),
+        ('zh', 'Chinese'),
         ('hr', 'Croatian'),
         ('cs', 'Czech'),
         ('da', 'Danish'),

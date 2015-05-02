@@ -19,7 +19,13 @@
 
           <select name="language" id="LanguageInput" class="form-control">
             {% for language in languages %}
-              <option value="{{language}}">{{language}}</option>
+
+              {% if not language == "English" %}
+                <option value="{{language}}">{{language}}</option>
+              {% else %}
+                <option value="{{language}}" selected="selected">{{language}}</option>
+              {% endif %}
+              
             {% endfor %}
           </select>
 
@@ -49,7 +55,7 @@
           <div class="col-xs-4">
             <!-- USe jquery to insert deck language here -->
             <span id="FlagDisplay" class="flag-icon flag-icon-gb"></span> 
-            <div class="deckLanguageName" style="display: inline">en</div>
+            <div class="deckLanguageName" style="display: inline">English</div>
 
           </div>
         </div>

@@ -26,7 +26,11 @@ def deck_flag_convert(country_code):
         "en": "gb",
         "ko": "kr",
         "ja": "jp",
-        "zh": "cn"
+        "zh": "cn",
+        "hi": "in",
+        "sr": "rs",
+        "la": "va",
+        "el": "gr",
     }
 
     # Only return a value different from country_code if an alternative 
@@ -82,6 +86,7 @@ def deck_cards(request, deck_pk):
         return redirect('deck_view')
     else:
         t = loader.get_template('deck_app/cards.html')
+        deck.fl = deck_flag_convert(deck.language)
         c = RequestContext(request, {"deck": deck})
         return HttpResponse(t.render(c))
 
@@ -102,6 +107,9 @@ def decks(request):
             Deck.objects.filter(private=True, created_by=request.user.id)
         decks = decks.order_by('-stars', '-views')
 
+    """Dictionary mapping key code to language"""
+    lang_dict = dict(Deck.LANGUAGE_CHOICES)
+
     decks_list = list(decks)
     deck_len = len(decks_list)
     num_cards = 0
@@ -116,11 +124,10 @@ def decks(request):
 
 
     """ Store information on what flag css type to render depending on the 
-     language of the deck """
+     language of the deck and what language the deck is """
     for d in decks_list:
         d.fl = deck_flag_convert(d.language)
-
-
+        d.lang_readable = lang_dict[d.language]
 
     t = loader.get_template('deck_app/decks.html')
     c = RequestContext(request, {"decks": decks_list, "num_decks": int(deck_len), "num_cards": num_cards, "num_cards_learned": words_learned})
@@ -133,6 +140,7 @@ def deck_create(request):
         language = request.POST['language']
         viewability = request.POST['viewability']
 
+        # Maps language to key
         inv_lang_dict = dict( (lang, key) for key, lang in Deck.LANGUAGE_CHOICES )
         lang_code = inv_lang_dict[language]
 
@@ -146,7 +154,7 @@ def deck_create(request):
         return redirect('card_create', d.pk)
     else:
         t = loader.get_template('deck_app/deckcreate.html')
-        c = RequestContext(request, {"languages": [a[1] for a in Deck.LANGUAGE_CHOICES] })
+        c = RequestContext(request, {"languages": [a[1] for a in Deck.LANGUAGE_CHOICES_BETA] })
         return HttpResponse(t.render(c))
 
 def deck_detail(request, deck_pk):
