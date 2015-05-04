@@ -101,17 +101,19 @@
     };
 
     function consoleLog(msg) {
+        /*
         if (isHostObject(window, "console") && isHostMethod(window.console, "log")) {
             window.console.log(msg);
         }
+        */
     }
 
     function alertOrLog(msg, shouldAlert) {
-        if (shouldAlert) {
+        /*if (shouldAlert) {
             window.alert(msg);
         } else  {
             consoleLog(msg);
-        }
+        }*/
     }
 
     function fail(reason) {
