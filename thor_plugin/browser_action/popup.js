@@ -1,5 +1,5 @@
 $(window).load(window.setTimeout(function () {
-	var userURL = "https://www.thorfc.com/api/users/me";
+    var userURL = "https://www.thorfc.com/api/users/me";
     var deckURL = "https://www.thorfc.com/api/decks/";
 
     var xhr = new XMLHttpRequest();

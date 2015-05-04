@@ -43,7 +43,10 @@ $(document).ready(function() {
         "X-CSRFToken": getCookie("csrftoken")
       },
       success: function() {
-        card.hide("slide", { direction: "left" }, 300);
+	  var numCards = $(".deck-app-text").text().split(" ")[0];
+	  numCards = numCards - 1;
+	  $(".deck-app-text").text(numCards + " cards");
+          card.hide("slide", { direction: "left" }, 300);
       }
     })
   });
