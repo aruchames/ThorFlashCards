@@ -1,76 +1,40 @@
-.content {
-    display: table;
-    min-height: initial;
-    height: 300px;
-}
-#contentCardView {
-    height: 310px;
-}
-
 ::-webkit-scrollbar {
     display: none;
 }
-.stack {
-  cursor: hand;
-  width: 305px;
-  height: 310px;
-  align-items: center;
-  justify-content:center;
-  vertical-align: center;
-  display: inline-block;
-  text-align: center;
-  padding: 0px;
-}
+
 .card {
   cursor: hand;
-  text-align: center;
 /*  border-style: solid;
   border-width: 1px; */
-  box-shadow: 1px 1px rgba(0, 0, 0, 0.5)
 }
-.stack{
-    perspective: 1000px;
-    width: 305px;
-    height: 310px;
-    position:relative;
+
+.card.flipped{
+   transform: translateX( -100% ) rotateY(180deg );
 }
-.stack .card.flipped{
-   transform: translateX( -100% ) rotateY(-180deg );
-}
-.stack .card {
-    width: 100%;
-    height: 100%;
+
+.card {
     transform-style: preserve-3d;
     transition: 0.5s;
-}
-.stack .card .face {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility:hidden;
-    z-index: 2;
-    text-align: center; 
-}
-.stack .card .front{
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%
+
+    position: relative;
 }
 
-.stack .card .back {
-    transform:  rotateY(-180deg);
-    z-index: 1;
+.front, .back {
+  backface-visibility:hidden;
+}
+
+.card .front {
+  z-index: 2;
+  /* for firefox 31 */
+  transform: rotateY(0deg);
+}
+
+.card .back {
+    transform:  rotateY(180deg);
     height: 100%;
     width: 100%;
 }
 
-.stack:hover{
-    font-size: 20px;
-    height: 300px;
-    width: 300px;
-
-}
 .rotate-left {
   transform: rotate(0deg) scale(0.8);
   transition: 1s;
@@ -79,6 +43,7 @@
   opacity: 0;
   background-color: green;
 }
+
 .rotate-right {
   transform: rotate(0deg) scale(0.8);
   transition: 1s;
@@ -90,8 +55,8 @@
 
 .face{
     padding: 10px;
-    text-align: center;
 }
+
 .card{
     transform-origin: right center;
 }

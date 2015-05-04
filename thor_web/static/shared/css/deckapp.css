@@ -118,12 +118,31 @@ html,body {
     
 }
 
+/* basically a stack, but only one card :) ; */
+.card {
+  background-color: white;
+  height: 250px;
+  margin-top: 30px;
+  padding: 20px 20px 20px 20px;
+  word-wrap: break-word;
+  width: 95%;
+  font-size: 20px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 10px;
+  -webkit-box-shadow: 
+        3px 3px   0 rgba(0,   0,   0,   0.100), 
+  -moz-box-shadow: 
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+  box-shadow: 
+        1px 1px   0 rgba(0,   0,   0,   0.100), 
+}
+
 /* Credit: https://css-tricks.com/snippets/css/stack-of-paper/ */
 .stack {
   background-color: white;
   height: 250px;
   margin-top: 30px;
-  padding: 20px 30px 20px 20px;
+  padding: 20px 20px 20px 20px;
   word-wrap: break-word;
   width: 95%;
   font-size: 20px;

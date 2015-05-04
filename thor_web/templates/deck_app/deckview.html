@@ -5,18 +5,22 @@
 {% endblock owncss%}
 
 {% block content %}
-<div class="row">
-  <div class="col-md-4"><div id="leftArrow" style="float: right; padding-top: 150px;" class="fa fa-arrow-left fa-3x wow bounceIn"></div></div>
-  <div class="col-md-4">
-    <div id="#contentCardView" class="content"><div class="stack"></div></div>
-  </div>
-  <div class="col-md-4"><div id="rightArrow" style="float: left; padding-top: 150px;" class="fa fa-arrow-right fa-3x wow bounceIn"></div></div>
-</div> 
+<div class="content">
+  <div class="container deckholder">
+    <div class="row fluid">
 
-<div class="row span4">
-  <div class="col-md-4"></div>
-  <div class="col-md-4" id="flipButton" style="padding-top: 70px"><h1 style="background-color: black; color: white; text-align:center;" >FLIP</h1></div>
-  <div class="col-md-4"></div>
+      <div class="col-md-6 col-md-offset-3">
+        <div id="ContentCardView" class="content">
+        </div>
+
+        <div id="CardMeta">
+          <button class="btn-lg btn-primary">No</button>
+          <button class="btn-lg btn-default">Flip</button>  
+          <button class="btn-lg btn-success">Yes</button>
+        </div>
+      </div>
+    </div> 
+  </div>
 </div>
 {% endblock content %}
 {% block ownjavascript %}
