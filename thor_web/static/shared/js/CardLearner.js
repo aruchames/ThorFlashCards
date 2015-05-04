@@ -80,8 +80,7 @@ CardLearner = (function() {
      */
     CardLearner.prototype.next = function() {
 	//Pick a random number and pick the element whose probability 
-	// brings the sum over that value. 
-	
+	// brings the sum over that value.
 	if (this.N == 1) return 0;
 	rand = Math.random();
 	acc = 0;
@@ -95,7 +94,10 @@ CardLearner = (function() {
 	
 	//define this.last for the first card called.
 	if (this.m == 0) this.last = -1;
-	if (this.last == i) return this.next();
+	if (this.last == i){
+	    debugger;
+	    return this.next();
+	}
   	this.m = this.m + 1;
   	this.last = i;
   	return i;
@@ -109,6 +111,7 @@ CardLearner = (function() {
 	dump.known = this.known;
 	dump.m = this.m;
 	dump.nKnown = this.nKnown
+	return dump;
     }
 
   return CardLearner;
