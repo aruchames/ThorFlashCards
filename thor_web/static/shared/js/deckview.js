@@ -6,16 +6,16 @@
 $(document).on("keydown", function (e){
     if (e.keyCode == '32' || e.keyCode == '38' || e.keyCode == '40' ) {
         // spacebar to flip.
-	    e.preventDefault();
+	e.preventDefault();
         thorFCflip();
     }
     else if (e.keyCode == '37') {
-	    // left arrow
+	// left arrow
         e.preventDefault();
     	thorFCswipeLeft();
     }
     else if (e.keyCode == '39') {
-	    // right arrow
+	// right arrow
         e.preventDefault();
     	thorFCswipeRight();
     }

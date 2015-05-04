@@ -94,10 +94,11 @@ CardLearner = (function() {
 	
 	//define this.last for the first card called.
 	if (this.m == 0) this.last = -1;
-	if (this.last == i){
+	//For now we'll return the same card twice in a row if it so happens
+	/*if (this.last == i){
 	    debugger;
 	    return this.next();
-	}
+	}*/
   	this.m = this.m + 1;
   	this.last = i;
   	return i;
