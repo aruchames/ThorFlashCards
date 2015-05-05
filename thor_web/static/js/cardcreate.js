@@ -58,6 +58,14 @@ $(document).ready(function() {
           successDisplay.show();
           frontInput.val("");
           backInput.val("");
+
+          $('.display').hide("slide", { direction: "right" }, 300, function() {
+            frontOut.text("Front of Card");
+            backOut.text("Back of Card");
+
+            $('.display').show(200);
+
+          });
         },
         error: function(jq, status, error) {
           errorDisplay.text("Error: " + jq["statusText"]);
