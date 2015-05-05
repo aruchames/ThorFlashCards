@@ -7,7 +7,7 @@
 {% block content %}
 <div class="content">
   <div class="container deckholder">
-    <div class="row fluid">
+    <div class="row">
       <div class="col-md-12">
 
         <a id="BackButton" class="btn-lg btn-primary" 
@@ -20,20 +20,30 @@
       <div class="col-md-6 col-md-offset-3">
         <div class="row">
           <div class="col-md-12">
-            <div id="ContentCardView"></div>
+            <div id="ContentCardView">
+
+              <div id="NoCardsMessage" style="text-align: center;">
+                <hr>
+                <a href="{% url 'card_create' deck.pk %}" class="btn-lg btn-success">
+                  Create one here
+                </a>
+              </div>
+
+            </div>
           </div>
 
-          <div class="col-xs-2 col-sm-offset-3">
+          <div class="col-xs-2 col-sm-offset-3 btn-container">
             <button id="MissedButton" class="btn btn-primary actbtn">No</button>
           </div>
 
-          <div class="col-xs-2">
+          <div class="col-xs-2 btn-container">
             <button id="FlipButton" class="btn btn-default actbtn">Flip</button>
           </div>
 
-          <div id="KnowButton" class="col-xs-2">
+          <div id="KnowButton" class="col-xs-2 btn-container">
             <button id="KnowButton" class="btn btn-success actbtn">Yes</button>
           </div>
+
         </div>
       </div>
 

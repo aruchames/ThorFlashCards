@@ -1,9 +1,24 @@
 body {
   overflow: hidden;
 }
+.container.deckholder{
+    overflow:hidden;
+}
+    
+.btn-container {
+  display: none;
+}
 
 #BackButton {
   margin-right: 20px;
+}
+
+.navbar{
+    background-color: #f05f40;
+}
+
+#NoCardsMessage {
+  display: none;
 }
 
 .actbtn {

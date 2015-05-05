@@ -154,7 +154,7 @@ def deck_create(request):
         return redirect('card_create', d.pk)
     else:
         t = loader.get_template('deck_app/deckcreate.html')
-        c = RequestContext(request, {"languages": [a[1] for a in Deck.LANGUAGE_CHOICES] })
+        c = RequestContext(request, {"languages": [a[1] for a in Deck.LANGUAGE_CHOICES_BETA] })
         return HttpResponse(t.render(c))
 
 def deck_detail(request, deck_pk):
@@ -253,7 +253,10 @@ def register(request):
         # Pre-Authenticate the user after creation
         user = authenticate(username=username, password=password)
         auth_login(request, user)
-        messages.add_message(request, messages.SUCCESS, "User created successfully")
+
+        # Remove success message for now
+        # messages.add_message(request, messages.SUCCESS, "User created successfully")
+
         return redirect('index')
 
     # If the user requests to GET the register page
