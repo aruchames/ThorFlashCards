@@ -38,7 +38,7 @@
   </ul>
 </div>
 
-<div class="cardcontainer">
+<div class="cardcontainer" style="position: relative">
   <div class="content visible-lg visible-md visible-sm">
     {% for deck in decks %}
     <div class="col-lg-6 col-md-12">
@@ -50,7 +50,7 @@
               <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.lang_readable}}
             </div>
             <div class="col-xs-3">
-              <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
+              <span class="glyphicon glyphicon-list-alt"></span> {{deck.cards.all.count}}
             </div>
             <div class="col-xs-3">
               <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
@@ -61,7 +61,6 @@
     </div>  
     {% endfor %}
   </div>
-
   <div class="content visible-xs" style="padding-bottom:2em">
     {% for deck in decks %}
     <a href="{% url 'deck_cards' deck.pk %}" style=" display:block; text-decoration: none; color: black">
@@ -73,7 +72,7 @@
               <span class="flag-icon flag-icon-{{deck.fl}}"></span> {{deck.lang_readable}}
             </div>
             <div class="col-xs-3">
-              <span class="glyphicon glyphicon-star"></span> {{deck.stars}}
+              <span class="glyphicon glyphicon-list-alt"></span> {{deck.cards.all.count}}
             </div>
             <div class="col-xs-3">
               <span class="glyphicon glyphicon-eye-open"></span> {{deck.views}}
@@ -86,23 +85,6 @@
   </div>
 </div>
 
-{% if num_decks > 2 %}
-<hr style="height: 2em; visibility: hidden;" class="visible-sm">
-{% endif %}
-{% if num_decks > 3 %}
-<hr style="height: 158em; visibility: hidden;" class="visible-md hidden">
-{% endif %}
-{% if num_decks > 6 %}
-<hr style="height: 58em; visibility: hidden;" class="visible-lg hidden">
-{% endif %}
-{% if num_decks > 2 %}
-<hr style="height: 2em; visibility: hidden;" class="visible-xs hidden"
-    {% endif %}
-
-    {% endblock content %}
-
-
-
-    {% block ownjavascript %}
-
-    {% endblock ownjavascript %}
+{% endblock content %}
+{% block ownjavascript %}
+{% endblock ownjavascript %}
