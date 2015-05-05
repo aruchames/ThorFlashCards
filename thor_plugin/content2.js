@@ -29,10 +29,10 @@ function thorFCmakeCard() {
     var success;
 
     function flashCardAPICall(csrftoken) {
-        console.log("Got token:", csrftoken);
+        /*console.log("Got token:", csrftoken);*/
 
         if (csrftoken === null) {
-            console.log("Token does not exist, reauthenticate!");
+            /* console.log("Token does not exist, reauthenticate!"); */
             /* Do extension stuff here */
         }
 
@@ -40,7 +40,7 @@ function thorFCmakeCard() {
         xhr.onreadystatechange = function (oEvent) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 201) {
-                    console.log(xhr.responseText);
+                    /* console.log(xhr.responseText); */
                     var bubbleDOM = document.getElementById("bubbleDOM");
                     var searchSt = "[value='" + newCard.deck + "']";
                     var deckName = $("#bubbleDOM").find(searchSt).html();
@@ -268,7 +268,10 @@ function loadDecks() {
     move that to background. */
 window.onload = function() {
     rangy.init();
-
+    
+    if(window.location.href === "https://www.thorfc.com/decks/")
+	$(".thorFCextension").text("Rate and Review Extension here!");
+    
     var thorfcIcon = document.createElement("img");
     thorfcIcon.setAttribute("src", chrome.extension.getURL("icon24.png"));
     thorfcIcon.addEventListener("click", showBubble);
