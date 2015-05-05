@@ -1,11 +1,10 @@
 html,body {
     height: 100%;
     padding-top: 25px;
-    background-color: #f05f40;
+    background-color: #85caf5;
 }
 
 .content{
-    height:auto !important;
     margin: 0 auto -45px; 
     min-height: 100%;
 }

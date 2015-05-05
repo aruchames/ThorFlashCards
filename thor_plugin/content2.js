@@ -268,7 +268,10 @@ function loadDecks() {
     move that to background. */
 window.onload = function() {
     rangy.init();
-
+    
+    if(window.location.href === "https://www.thorfc.com/decks/")
+	$(".thorFCextension").text("Rate and Review Extension here!");
+    
     var thorfcIcon = document.createElement("img");
     thorfcIcon.setAttribute("src", chrome.extension.getURL("icon24.png"));
     thorfcIcon.addEventListener("click", showBubble);

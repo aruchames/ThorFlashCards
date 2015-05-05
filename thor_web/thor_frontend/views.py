@@ -154,7 +154,7 @@ def deck_create(request):
         return redirect('card_create', d.pk)
     else:
         t = loader.get_template('deck_app/deckcreate.html')
-        c = RequestContext(request, {"languages": [a[1] for a in Deck.LANGUAGE_CHOICES_BETA] })
+        c = RequestContext(request, {"languages": [a[1] for a in Deck.LANGUAGE_CHOICES] })
         return HttpResponse(t.render(c))
 
 def deck_detail(request, deck_pk):

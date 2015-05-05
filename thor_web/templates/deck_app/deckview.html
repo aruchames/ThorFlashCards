@@ -8,17 +8,35 @@
 <div class="content">
   <div class="container deckholder">
     <div class="row fluid">
+      <div class="col-md-12">
+
+        <a id="BackButton" class="btn-lg btn-primary" 
+            href="{% url 'deck_cards' deck.pk %} ">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+          Back to {{deck.deck_name}}
+        </a>
+      </div>
 
       <div class="col-md-6 col-md-offset-3">
-        <div id="ContentCardView" class="content">
-        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div id="ContentCardView"></div>
+          </div>
 
-        <div id="CardMeta">
-          <button class="btn-lg btn-primary">No</button>
-          <button class="btn-lg btn-default">Flip</button>  
-          <button class="btn-lg btn-success">Yes</button>
+          <div class="col-xs-2 col-sm-offset-3">
+            <button id="MissedButton" class="btn btn-primary actbtn">No</button>
+          </div>
+
+          <div class="col-xs-2">
+            <button id="FlipButton" class="btn btn-default actbtn">Flip</button>
+          </div>
+
+          <div id="KnowButton" class="col-xs-2">
+            <button id="KnowButton" class="btn btn-success actbtn">Yes</button>
+          </div>
         </div>
       </div>
+
     </div> 
   </div>
 </div>
