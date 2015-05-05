@@ -4,6 +4,10 @@ html,body {
     background-color: #85caf5;
 }
 
+#SuccessMessage, #ErrorMessage {
+  margin-top: 10px;
+}
+
 .content{
     margin: 0 auto -45px; 
     min-height: 100%;
@@ -12,6 +16,7 @@ html,body {
 .deckholder {
     padding: 3em 1em 3em 1em;
     background-color: #85caf5;
+    max-width: 100%;
     width: 100%;
     overflow: auto;
 }

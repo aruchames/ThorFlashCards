@@ -59,11 +59,11 @@ $(document).ready(function() {
           frontInput.val("");
           backInput.val("");
 
-          $('.display').hide("slide", { direction: "right" }, 300, function() {
+          $('.card').hide("slide", { direction: "right" }, 300, function() {
             frontOut.text("Front of Card");
             backOut.text("Back of Card");
 
-            $('.display').show(200);
+            $('.card').show("slide", { direction: "left"}, 200);
 
           });
         },
