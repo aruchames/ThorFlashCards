@@ -1,7 +1,10 @@
 body {
   overflow: hidden;
 }
-
+.container.deckholder{
+    overflow:hidden;
+}
+    
 .btn-container {
   display: none;
 }

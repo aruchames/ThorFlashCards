@@ -31,7 +31,7 @@ body, html{
     z-index: -100;
     height: 0em;
 }
-
+                      
 /*
  * Base structure
  */
@@ -42,6 +42,10 @@ body, html{
 .sub-header {
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
+}
+
+.thorFCextension{
+    z-index: 1000;
 }
 
 /*
@@ -84,8 +88,8 @@ body, html{
     }
 
     .cardcontainer {
-        padding-left: 24em;
-	z-index: -1000;
+        margin-left: 24em;
+	z-index:0;
     }
 }
 
