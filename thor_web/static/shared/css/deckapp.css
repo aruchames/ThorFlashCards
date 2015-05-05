@@ -5,7 +5,6 @@ html,body {
 }
 
 .content{
-    height:auto !important;
     margin: 0 auto -45px; 
     min-height: 100%;
 }

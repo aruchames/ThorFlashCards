@@ -25,9 +25,9 @@ $(document).on('click','.card',  thorFCflip);
 $(document).on('swiperight','.card', thorFCswipeRight);
 $(document).on('swipeleft','.card', thorFCswipeLeft); 
 $(document).on('unload', storeDeckState); 
-$('#leftArrow').on('click', thorFCswipeLeft);
-$('#rightArrow').on('click', thorFCswipeRight);
-$(document).on('click', '#flipButton', thorFCflip);
+$('#MissedButton').on('click', thorFCswipeLeft);
+$('#KnowButton').on('click', thorFCswipeRight);
+$(document).on('click', '#FlipButton', thorFCflip);
 /*****************************************************************************/
 // Build initial frequency generator and grab cards from server. 
 /*****************************************************************************/
@@ -111,7 +111,7 @@ function thorFCflip(){
     } else {
         $('.back').hide();
         $('.content').find('.card').toggleClass('flipped');
-        frontFacing = !frontFacing;
+        frontFacing = !frontFacing; 
         $('.front').show();
     }
 }

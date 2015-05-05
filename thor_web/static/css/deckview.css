@@ -1,11 +1,24 @@
-::-webkit-scrollbar {
-    display: none;
+body {
+  overflow: hidden;
+}
+
+#BackButton {
+  margin-right: 20px;
+}
+
+.actbtn {
+  margin: 0 auto;
+  margin-top: 10px;
 }
 
 .card {
   cursor: hand;
 /*  border-style: solid;
   border-width: 1px; */
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 .card.flipped{
@@ -20,11 +33,12 @@
 }
 
 .front, .back {
-  backface-visibility:hidden;
+    backface-visibility:hidden;
 }
 
 .card .front {
   z-index: 2;
+
   /* for firefox 31 */
   transform: rotateY(0deg);
 }
