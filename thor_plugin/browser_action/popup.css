@@ -1,6 +1,6 @@
 body {
-    width: 200px;
-    height: 200px;
+    width: 210px;
+    height: 210px;
     font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif; !important
 }
 input{
@@ -71,4 +71,12 @@ input{
 }
 .row {
     padding: 0.5em;
+}
+a {
+    cursor: pointer;
+    cursor: hand;
+    font-weight: bold;
+}
+.nopadding {
+    padding: 0px;
 }

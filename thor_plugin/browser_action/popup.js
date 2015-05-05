@@ -1,3 +1,7 @@
+function create() {
+	chrome.tabs.create({"url" : "https://www.thorfc.com/decks/create"});
+}
+
 $(window).load(window.setTimeout(function () {
     var userURL = "https://www.thorfc.com/api/users/me";
     var deckURL = "https://www.thorfc.com/api/decks/";
@@ -33,24 +37,36 @@ $(window).load(window.setTimeout(function () {
     	//deckView.innerHTML="<div class='row'>User: <div id ='user'>"+username+"</div></div> <div class='row'>Current Deck:";
 
         var stringHTML = "";
-        for (i = 0; i < decks.length; i++){
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", deckURL+decks[i], false);
-            xhr.send();
-            deckData=JSON.parse(xhr.responseText);
+		if (decks.length > 0) {
+	        for (i = 0; i < decks.length; i++) {
+	            var xhr = new XMLHttpRequest();
+	            xhr.open("GET", deckURL+decks[i], false);
+	            xhr.send();
+	            deckData = JSON.parse(xhr.responseText);
 
-            deckLanguage = deckData.language;
-            deckName = deckData.deck_name;
+	            deckLanguage = deckData.language;
+	            deckName = deckData.deck_name;
 
-            if (i == 0)
-                stringHTML += "<div class='row'><select class='form-control' id='decks'><option value='" + deckData.pk + "'>" + deckName+ "</option>";
-            else
-                stringHTML += "<option value='" + deckData.pk + "'>" + deckName + "</option>";
-        }
-        stringHTML += "</select></div><div class='row'><a style='float:right' id='deckChange' class='btn btn-sm btn-primary'>Study Deck</div></div></div>";
-        deckView.innerHTML += stringHTML;
-		$('#loading').css('display', 'none');
-		body.appendChild(deckView);
+	            if (i == 0)
+	                stringHTML = "<div class='row'><select class='form-control' id='decks'><option value='" + deckData.pk + "'>" + deckName+ "</option>";
+	            else
+	                stringHTML += "<option value='" + deckData.pk + "'>" + deckName + "</option>";
+	        }
+	        stringHTML += "</select></div><div class='row'><a style='float:right' id='deckChange' class='btn btn-sm btn-primary'>Study Deck</div></div></div>";
+			deckView.innerHTML += stringHTML;
+			$('#loading').css('display', 'none');
+			body.appendChild(deckView);
+			$("#noDecks").css('display', 'none');
+        } else {
+			$('#loading').css('display', 'none');
+			body.appendChild(deckView);
+			var noDecks = document.createElement("div");
+			noDecks.className = "row";
+			noDecks.innerHTML = "No decks yet! Please create a deck <a id='noDecks'>here</a>!";
+			deckView.appendChild(noDecks);
+			$("#noDecks").click(function() {chrome.tabs.create({"url":"https://www.thorfc.com/decks/create"})});
+		}
+
 		$("#deckChange").on('click', function() {
 			var deckID = document.getElementById("decks").value;
 			console.error("run");

@@ -2,8 +2,16 @@ body {
   overflow: hidden;
 }
 
+.btn-container {
+  display: none;
+}
+
 #BackButton {
   margin-right: 20px;
+}
+
+#NoCardsMessage {
+  display: none;
 }
 
 .actbtn {

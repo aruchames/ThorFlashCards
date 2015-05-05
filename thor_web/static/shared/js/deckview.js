@@ -92,10 +92,16 @@ function thorFCloadCard(){
     	$('.front').text(currentCard.front);
     	$('.back').text(currentCard.back);
     	$('.card').show();
+
+        $('.btn-container').show();
+
     	frontFacing = true;
     }
     else if (N==0){
-	   $('#ContentCardView').text("This deck does not have any cards.");
+        $('#NoCardsMessage').prepend('<h1 class="nocardsmessage deck-app-header"></h1>')
+	    $('.nocardsmessage').text("This deck does not have any cards.");
+
+        $('#NoCardsMessage').show();
     }
     else {
 	   $('#ContentCardView').text("Your programmer has no brain");
