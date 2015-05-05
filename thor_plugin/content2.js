@@ -23,8 +23,8 @@ var decksReceived = false;
 
 function thorFCmakeCard() {
     var newCard = {};
-    newCard.front = document.getElementById("thorFCfront").innerHTML;
-    newCard.back = document.getElementById("thorFCback").innerHTML;
+    newCard.front = document.getElementById("thorFCfront").value;
+    newCard.back = document.getElementById("thorFCback").value;
     newCard.deck = thorFCdeckView.value;
     var success;
 
@@ -190,7 +190,7 @@ function onSelect(e) {
         }
         else {
             var translateCall = response.trans[0];
-            htmlFrag = "<div id='card'><h5>Original Text:</h5><div id='thorFCfront'>" + result + "</div><h5>Translated Text:</h5> <div id='thorFCback'>"+ translateCall + "</div> <button id='thorFCbutton'>Make Card!</button></div>";
+            htmlFrag = "<div id='card'><h5>Original Text:</h5><input type='text' id='thorFCfront' value='" + result + "'><h5>Translated Text:</h5> <input type='text' id='thorFCback' value='"+ translateCall + "'> <button id='thorFCbutton'>Make Card!</button></div>";
             bubbleDOM.innerHTML = htmlFrag;
             loadDecks();
         }
@@ -226,7 +226,7 @@ function onSelect(e) {
 }
 
 function loadDecks() {
-    debugger;
+    // debugger;
     /* Get our decks */
     if (decksReceived == false) {
         var xhr2 = new XMLHttpRequest();

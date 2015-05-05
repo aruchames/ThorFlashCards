@@ -40,6 +40,7 @@
   margin-right:10px;
   margin-bottom:5px;
   margin-top: 5px;
+  width: 95%;
 }
 
 #thorFCback {
@@ -51,6 +52,7 @@
   margin-right:10px;
   margin-bottom:5px;
   margin-top: 5px;
+  width: 95%;
 }
 
 #thorFCbutton {
@@ -66,7 +68,7 @@
   margin-right:10px;
   top: 5px;
   background-color:#f05f40;
-  width: 93%;
+  width: 95%;
   border: 1px inset #848484;
   outline: 2px solid #424242;
   margin-top: 5px;
