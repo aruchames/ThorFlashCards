@@ -84,6 +84,7 @@ body, html{
 
     .cardcontainer {
         padding-left: 24em;
+	z-index: -1000;
     }
 }
 
