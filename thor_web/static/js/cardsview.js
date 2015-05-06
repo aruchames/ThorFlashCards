@@ -16,6 +16,33 @@ $(document).ready(function() {
   var pk = $("#deckId").val();
   var url = "/api/decks/" + pk;
 
+  $(document).on('click','.card', function (e) {
+      front = $(this).find('.front');
+      back = $(this).find('.back');
+      card = $(this);
+
+      console.log(front);
+      console.log(back);
+      console.log(card);
+
+      front.toggle();
+      back.toggle();
+      card.toggleClass('flipped');
+  });
+
+  $('.zoom-btn').click(function() {
+    var frontText = $(this).parent().find('.card-front').text();
+    var backText = $(this).parent().find('.card-back').text();
+
+    console.log(frontText);
+    console.log(backText);
+
+    $('#ModalFront').text(frontText);
+    $('#ModalBack').text(backText);
+
+    $('#ViewModal').modal('toggle');
+  });
+
   $("#DeleteButton").click(function() {
     $.ajax({
       "url": url,

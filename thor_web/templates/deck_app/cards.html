@@ -22,11 +22,11 @@
     <input type="hidden" type="hidden" id="deckId" value="{{ deck.pk }}">
 
     <a href="{% url 'card_create' deck.pk %}" style="color: black;">
-      <button class="btn-lg btn-primary">Add new cards</button>
+      <button id="AddCardsButton" class="btn-lg btn-primary">Add new cards</button>
     </a>
 
     <a href="{% url 'deck_detail' deck.pk %}" style="color: white;">
-      <button class="btn-lg btn-success">Study this deck</button>
+      <button id="StudyButton" class="btn-lg btn-success">Study this deck</button>
     </a>
 
     <button class="btn"  style="float: right;" data-toggle="modal" data-target="#DeleteModal">Delete</button>
@@ -53,17 +53,51 @@
     <hr style="visibility: hidden;"/>
 
     <div class="list-group">
-      {% for card in deck.cards.all %}
+      {% for card in deck.cards.all%}
       <div class="list-group-item">
         <button id="del{{card.pk}}" class="btn btn-primary del-card-btn" style="float: right;">
           <span class="glyphicon glyphicon-remove"></span>
         </button>
 
-        <h4 class="list-group-item-heading">{{card.front}}</h4>
-        <p class="list-group-item-text">{{card.back}}</p>
+        <button class="btn btn-success zoom-btn" style="float: right;" value="{{deck.pk}}">
+          <span class="glyphicon glyphicon-zoom-in"></span>
+        </button>
+
+        <h4 class="list-group-item-heading card-front">{{card.front}}</h4>
+        <p class="list-group-item-text card-back">{{card.back}}</p>
       </div>
       {% endfor %}
     </div>
+
+    <div id="ViewModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+
+            <h4 class="modal-title">View Card</h4>
+          </div>
+
+          <div class="modal-body deckholder">
+
+            <div class="container-fluid">
+              <div class="card">
+                <div id="ModalFront" class="face front">
+                  Front of the card
+                </div>
+
+                <div id="ModalBack" class="face back" style="display: none;">
+                  Back of the card
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 
   </div>
 </div>

@@ -1,6 +1,7 @@
 body {
   overflow: hidden;
 }
+
 .container.deckholder{
     overflow:hidden;
 }
@@ -38,17 +39,26 @@ a:hover {
 
 .card.flipped{
    transform: translateX( -100% ) rotateY(180deg );
+   -webkit-transform: translateX( -100% ) rotateY(180deg );
+   -moz-transform: translateX( -100% ) rotateY(180deg );
 }
 
 .card {
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+
     transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
 
     position: relative;
 }
 
 .front, .back {
     backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    -moz-backface-visibility: hidden;
 }
 
 .card .front {
@@ -56,17 +66,28 @@ a:hover {
 
   /* for firefox 31 */
   transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
 }
 
 .card .back {
     transform:  rotateY(180deg);
+    -webkit-transform:  rotateY(180deg);
+    -moz-transform:  rotateY(180deg);
+
     height: 100%;
     width: 100%;
 }
 
 .rotate-left {
   transform: rotate(0deg) scale(0.8);
+  -webkit-transform: rotate(0deg) scale(0.8);
+  -moz-transform: rotate(0deg) scale(0.8);
+
   transition: 1s;
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+
   margin-left: 400px;
   cursor: e-resize;
   opacity: 0;
@@ -75,7 +96,13 @@ a:hover {
 
 .rotate-right {
   transform: rotate(0deg) scale(0.8);
+  -webkit-transform: rotate(0deg) scale(0.8);
+  -moz-transform: rotate(0deg) scale(0.8);
+
   transition: 1s;
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+
   opacity: 0;
   margin-left: -400px;
   cursor: w-resize;
@@ -88,5 +115,7 @@ a:hover {
 
 .card{
     transform-origin: right center;
+    -webkit-transform-origin: right center;
+    -moz-transform-origin: right center;
 }
 
