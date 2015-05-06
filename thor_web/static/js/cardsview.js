@@ -21,10 +21,6 @@ $(document).ready(function() {
       back = $(this).find('.back');
       card = $(this);
 
-      console.log(front);
-      console.log(back);
-      console.log(card);
-
       front.toggle();
       back.toggle();
       card.toggleClass('flipped');
@@ -34,11 +30,12 @@ $(document).ready(function() {
     var frontText = $(this).parent().find('.card-front').text();
     var backText = $(this).parent().find('.card-back').text();
 
-    console.log(frontText);
-    console.log(backText);
+    $('#ModalFront').show();
+    $('#ModalBack').hide();
 
     $('#ModalFront').text(frontText);
     $('#ModalBack').text(backText);
+    $('.card').removeClass('flipped');
 
     $('#ViewModal').modal('toggle');
   });
