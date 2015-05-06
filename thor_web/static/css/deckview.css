@@ -13,6 +13,10 @@ body {
   margin-right: 20px;
 }
 
+.navbar{
+    background-color: #f05f40;
+}
+
 #NoCardsMessage {
   display: none;
 }

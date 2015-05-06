@@ -1,7 +1,7 @@
 {
     "name": "Thor Flash Cards",
     "description": "Thor Flash Cards",
-    "version": "0.3.1",
+    "version": "0.3.3",
     "permissions": ["contextMenus",
                     "cookies",
                     "https://*/",

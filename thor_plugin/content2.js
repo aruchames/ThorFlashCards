@@ -117,6 +117,7 @@ function showBubble() {
     }
     document.getElementById("bubbleDOM").style.visibility = "visible";
     document.getElementById("bubbleDOM").style.display = "";
+    document.getElementById("thorfcIcon").style.displaye = "none";
     setBubbleClass(document.getElementById("bubbleDOM"));
 }
 
@@ -216,12 +217,12 @@ function onSelect(e) {
     } else {
         bubbleDOM.style.left = (startPos.x - 24) + "px";
     }
-    if (startPos.y < 225) {
+    if (startPos.y < 215) {
         bubbleDOM.style.top = "0px";
-    } else if (startPos.y + 220 > $(document).height()) {
-        bubbleDOM.style.top = ($(document).height() - 220) + "px";
+    } else if (startPos.y + 210 > $(document).height()) {
+        bubbleDOM.style.top = ($(document).height() - 210) + "px";
     } else {
-        bubbleDOM.style.top = (startPos.y - 225) + "px";
+        bubbleDOM.style.top = (startPos.y - 215) + "px";
     }
 }
 
@@ -268,10 +269,10 @@ function loadDecks() {
     move that to background. */
 window.onload = function() {
     rangy.init();
-    
+
     if(window.location.href === "https://www.thorfc.com/decks/")
 	$(".thorFCextension").text("Rate and Review Extension here!");
-    
+
     var thorfcIcon = document.createElement("img");
     thorfcIcon.setAttribute("src", chrome.extension.getURL("icon24.png"));
     thorfcIcon.addEventListener("click", showBubble);
