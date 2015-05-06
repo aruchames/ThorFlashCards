@@ -59,10 +59,11 @@ a:hover {
     backface-visibility:hidden;
     -webkit-backface-visibility:hidden;
     -moz-backface-visibility: hidden;
+
+    z-index: 300;
 }
 
 .card .front {
-  z-index: 2;
 
   /* for firefox 31 */
   transform: rotateY(0deg);
