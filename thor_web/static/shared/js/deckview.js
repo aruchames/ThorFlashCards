@@ -46,6 +46,7 @@ $.ajax({
     success : function(text)
     {
         response = text;
+        $('#LoadingInfo').hide();
     },
     error: function(jqXHR, textStatus, errorThrown)
     {

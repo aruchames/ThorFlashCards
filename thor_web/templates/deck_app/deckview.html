@@ -22,6 +22,11 @@
           <div class="col-md-12">
             <div id="ContentCardView">
 
+              <div id="LoadingInfo">
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+                </span> Loading cards...
+              </div>
+
               <div id="NoCardsMessage" style="text-align: center;">
                 <hr>
                 <a href="{% url 'card_create' deck.pk %}" class="btn-lg btn-success">

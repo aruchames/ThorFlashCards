@@ -4,6 +4,36 @@ html,body {
     background-color: #85caf5;
 }
 
+/* Loading css from: https://gist.github.com/alexandrevicenzi/680147013e902a4eaa5d; */
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -ms-animation: spin .7s infinite linear;
+    -webkit-animation: spinw .7s infinite linear;
+    -moz-animation: spinm .7s infinite linear;
+}
+ 
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+  
+@-webkit-keyframes spinw {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+ 
+@-moz-keyframes spinm {
+    from { -moz-transform: rotate(0deg);}
+    to { -moz-transform: rotate(360deg);}
+}
+
+#LoadingInfo {
+  font-size: x-large;
+  text-align: center;
+}
+
+/* End loading css */
+
 #SuccessMessage, #ErrorMessage {
   margin-top: 10px;
 }

@@ -1,0 +1,82 @@
+    
+.btn-container {
+  display: none;
+}
+
+#BackButton {
+  margin-right: 20px;
+}
+
+#NoCardsMessage {
+  display: none;
+}
+
+.actbtn {
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.card {
+  cursor: hand;
+/*  border-style: solid;
+  border-width: 1px; */
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.card.flipped{
+   transform: translateX( -100% ) rotateY(180deg );
+}
+
+.card {
+    transform-style: preserve-3d;
+    transition: 0.5s;
+
+    position: relative;
+}
+
+.front, .back {
+    backface-visibility:hidden;
+}
+
+.card .front {
+  z-index: 2;
+
+  /* for firefox 31 */
+  transform: rotateY(0deg);
+}
+
+.card .back {
+    transform:  rotateY(180deg);
+    height: 100%;
+    width: 100%;
+}
+
+.rotate-left {
+  transform: rotate(0deg) scale(0.8);
+  transition: 1s;
+  margin-left: 400px;
+  cursor: e-resize;
+  opacity: 0;
+  background-color: green;
+}
+
+.rotate-right {
+  transform: rotate(0deg) scale(0.8);
+  transition: 1s;
+  opacity: 0;
+  margin-left: -400px;
+  cursor: w-resize;
+  background-color: red;
+}
+
+.face{
+    padding: 10px;
+}
+
+.card{
+    transform-origin: right center;
+}
+

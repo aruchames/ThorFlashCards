@@ -1,6 +1,10 @@
 {% extends "deck_app/deckbase.html" %}
 {% load static %}
 
+{% block owncss %}
+<link rel="stylesheet" type="text/css"  href="/static/shared/css/cardview.css">
+{% endblock owncss%}
+
 {% block content %}
 <link href='{% static "shared/css/decks.css" %}' rel='stylesheet'>
 
@@ -48,16 +52,18 @@
 
     <hr style="visibility: hidden;"/>
 
-    {% for card in deck.cards.all %}
-    <div class="list-group-item">
-      <button id="del{{card.pk}}" class="btn btn-primary del-card-btn" style="float: right;">
-        <span class="glyphicon glyphicon-remove"></span>
-      </button>
+    <div class="list-group">
+      {% for card in deck.cards.all %}
+      <div class="list-group-item">
+        <button id="del{{card.pk}}" class="btn btn-primary del-card-btn" style="float: right;">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
 
-      <h4 class="list-group-item-heading">{{card.front}}</h4>
-      <p class="list-group-item-text">{{card.back}}</p>
+        <h4 class="list-group-item-heading">{{card.front}}</h4>
+        <p class="list-group-item-text">{{card.back}}</p>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
 
   </div>
 </div>
