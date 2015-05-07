@@ -52,9 +52,11 @@ a:hover {
 }
 
 .front, .back {
+    /*
     backface-visibility:hidden;
     -webkit-backface-visibility:hidden;
     -moz-backface-visibility: hidden;
+    */
 
     z-index: 300;
 }
@@ -71,7 +73,6 @@ a:hover {
     -webkit-transform:  rotateY(180deg);
     -moz-transform:  rotateY(180deg);
 
-    height: 100%;
     width: 100%;
 }
 
@@ -103,10 +104,6 @@ a:hover {
   margin-left: -400px;
   cursor: w-resize;
   background-color: red;
-}
-
-.face{
-    padding: 10px;
 }
 
 .card{

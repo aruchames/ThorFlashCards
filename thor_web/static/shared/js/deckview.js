@@ -39,46 +39,53 @@ var res  = pathname.split("/");
 var pk   = res[res.length-2];
 var url  = "/api/decks/" + pk;
 var response = '';
+var N;
+var cardIndex;
+var currentCard;
+var frontFacing;
+var cardLearner
+var cards;
+
 $.ajax({
     method:"GET",
     url:url,
-    async:false,
     success : function(text)
     {
         response = text;
         $('#LoadingInfo').hide();
+        var previousCardLearner = $.cookie("cardLearner");
+        if (previousCardLearner === undefined)
+            previousCardLearner = null;
+
+        cards = response.cards;
+        N = cards.length;
+
+        if (previousCardLearner == null){
+            /* Make a card learner from the number of cards in the deck. */
+            cardLearner = new CardLearner(N);
+        }
+        else{
+            previousCardLearner = JSON.parse(previousCardLearner);
+            N = previousCardLearner.N;
+            var probs = previousCardLearner.probs;
+            var known = previousCardLearner.known;
+            var m = previousCardLearner.m;
+            var nKnown = previousCardLearner.nKnown;
+
+            cardLearner = new CardLearner(N, probs, known, m, nKnown);
+        }
+        cardIndex = cardLearner.next();
+        currentCard = cards[cardIndex];
+        frontFacing = true;
+        thorFCloadCard();  
     },
     error: function(jqXHR, textStatus, errorThrown)
     {
-	console.log(textStatus);
-	console.log(errorThrown);
+    	console.log(textStatus);
+    	console.log(errorThrown);
+        thorFCloadCard(); 
     }
-});
-
-var previousCardLearner = $.cookie("cardLearner");
-if (previousCardLearner === undefined)
-    previousCardLearner = null;
-
-var cards = response.cards;
-var N = cards.length;
-
-if (previousCardLearner == null){
-    /* Make a card learner from the number of cards in the deck. */
-    var cardLearner = new CardLearner(N);
-}
-else{
-    previousCardLearner = JSON.parse(previousCardLearner);
-    N = previousCardLearner.N;
-    var probs = previousCardLearner.probs;
-    var known = previousCardLearner.known;
-    var m = previousCardLearner.m;
-    var nKnown = previousCardLearner.nKnown;
-    var cardLearner = new CardLearner(N, probs, known, m, nKnown);
-}
-var cardIndex = cardLearner.next();
-var currentCard = cards[cardIndex];
-var frontFacing = true;
-thorFCloadCard();   
+}); 
 
 /*****************************************************************************/
 // HELPER FUNCTIONS
@@ -87,12 +94,12 @@ thorFCloadCard();
 // Loads next card in deck based on cardLearner, displays placeholder if no
 // cards are in the deck.
 function thorFCloadCard(){
-    if (N!= 0){
-    	$('#ContentCardView').append('<div class="card"></div>')
-    	$('.card').append('<div class="face front"></div><div class="face back"></div>');
+    if (N != 0){
+        $('#ContentCardView').append('<div class="card"></div>');
+        $('.card').append('<div class="front face flashcard"></div>');
+        $('.card').append('<div class="back face flashcard" style="display: none;"></div>');
     	$('.front').text(currentCard.front);
     	$('.back').text(currentCard.back);
-    	$('.card').show();
 
         $('.btn-container').show();
 
@@ -125,10 +132,13 @@ function thorFCflip(){
 }
 // Callback for swipe functions, sets next card and then loads it. 
 function fadeOutComplete(){
-    frontFacing = true;
     $('.card').remove();
     cardIndex = cardLearner.next();
     currentCard = cards[cardIndex];
+
+    
+    frontFacing = true;
+
     thorFCloadCard();
 }
 // Swipe right, displays green background to indicate answered correctly. 
