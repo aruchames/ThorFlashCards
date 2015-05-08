@@ -19,25 +19,25 @@ CardLearner = (function() {
 	//make 5 bins
 	this.NBins = 5;
 	//put all cards in the first bin (unkown cards) at first
-	this.BinNo = [];
-	for (var i = 0; i < N; i++) {
-		BinNo[i] = 0;
+	this.bin_of_card = [];
+	for (var i = 0; i < this.N; i++) {
+		this.bin_of_card[i] = 0;
 	}
 
 	//probability to draw from each bin
 	//first bin is most frequent, last bin is least frequent
 	//goes from NBins...1
-	BinProbs = [];
-	for (var i = 0; i < NBins; i++) {
-		BinProbs[i] = NBins - i;
+	this.BinProbs = [];
+	for (var i = 0; i < this.NBins; i++) {
+		this.BinProbs[i] = this.NBins - i;
 	}
 
-	cards_in_bin = [];
-	for (var i = 0; i < NBins; i++) {
-		cards_in_bin[i] = 0;
+	this.cards_in_bin = [];
+	for (var i = 0; i < this.NBins; i++) {
+		this.cards_in_bin[i] = 0;
 	}
 	//put all cards in the first bin
-	cards_in_bin[0] = N;
+	this.cards_in_bin[0] = this.N;
 
 
 	if(arguments.length > 1){
@@ -67,7 +67,7 @@ CardLearner = (function() {
    	//got it
    	else {
    		//move to next bin
-   		targetBin = Math.min(bin + 1, NBins - 1);
+   		targetBin = Math.min(sourceBin + 1, this.NBins - 1);
    	}
    		//update bin of this card
    		this.bin_of_card[id] = targetBin;
@@ -110,35 +110,42 @@ CardLearner = (function() {
 
 	//get ids of non empty bins and their weights
 	for (var i = 0; i < this.NBins; i++) {
-		if cards_in_bin[i] > 0) {
+		if (this.cards_in_bin[i] > 0) {
 			probs[k] = this.BinProbs;
-			sum += probs[k];
+			sum += parseInt(probs[k]);
 			bin_ids[k] = i;
 			k++;
 		}
 	}
-
+        //Find i
 	//choose a non-empty bin to draw a card from
-	rand = Math.random() * sum;
-
+	rand = Math.random() * sum ;
+        acc = 0;
 	for (var i = 0; i < this.N; i++) {
-		acc += probs[i];
+		acc += parseInt(probs[i]);
 		if (rand <= acc) {
 			break;
 		}
 	}
 	//draw a card from bin # bin_ids[i]
-
-	//get cards in that bin
+        //get cards in that bin
 	card_ids = [];
 	var nCards = 0;
-	for (var j = 0; j < N; j++) {
-		if (bin_of_card[j] == bin_ids[i]) {
+	for (var j = 0; j < this.N; j++) {
+                if (this.bin_of_card[j] == bin_ids[i]) {
 			card_ids[nCards++] = j;
 		}
 	}
-
-	nextCard = card_ids[Math.floor(Math.random() * nCards)];
+        
+  var nextCard = card_ids[Math.floor(Math.random() * nCards) ];
+  
+      //hack for debugging, remove this
+      if (nextCard >= N) {
+          nextCard  = N - 1;
+        }
+       if (nextCard < 0) {
+         nextCard = 0;
+       }
 
 	return nextCard;
 
