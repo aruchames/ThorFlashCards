@@ -55,6 +55,7 @@ $.ajax({
         response = text;
 
         cards = response.cards;
+        N = cards.length;
         for (var i = 0; i < cards.length; i++) {
             var pk = cards[i].pk;
             cardPkMapping[pk] = cards[i];
