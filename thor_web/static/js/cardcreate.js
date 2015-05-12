@@ -17,7 +17,7 @@ $(document).ready(function() {
     if (newFront.length > 0) {
       frontOut.text(newFront);
     } else {
-      frontOut.text("Front of Card");
+      frontOut.text("Term");
     }
   });
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
     if (newBack.length > 0) {
       backOut.text(newBack);
     } else {
-      backOut.text("Back of Card");
+      backOut.text("Definition");
     }
   });
 
@@ -62,8 +62,8 @@ $(document).ready(function() {
           frontInput.focus();
 
           $('.flashcard').hide("slide", { direction: "right" }, 300, function() {
-            frontOut.text("Front of Card");
-            backOut.text("Back of Card");
+            frontOut.text("Term");
+            backOut.text("Definition");
 
             $('.flashcard').show("slide", { direction: "left"}, 200);
 
