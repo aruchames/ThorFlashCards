@@ -70,6 +70,7 @@ $.ajax({
         currentCard = cardPkMapping[cardPk];
         frontFacing = true;
         thorFCloadCard();  
+
     },
     error: function(jqXHR, textStatus, errorThrown)
     {
@@ -93,6 +94,8 @@ function thorFCloadCard(){
     	$('.back').text(currentCard.back);
 
         $('.btn-container').show();
+        $('#HelpButton').show();
+        $("[data-toggle=popover]").popover();
 
     	frontFacing = true;
     }

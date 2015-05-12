@@ -10,6 +10,14 @@
     <div class="row">
       <div class="col-md-12">
 
+        <button type="button" id="HelpButton" class="btn btn-info" data-toggle="popover" 
+          data-placement="left" data-trigger="hover"
+          data-content="'Yes' indicates you know the card, 'No' indicates
+          you forgot it. Try using your arrow keys on desktop for faster studying!"
+          style="float: right; display: none;">
+          Help
+        </button>
+
         <a id="BackButton" class="btn-lg btn-primary" 
             href="{% url 'deck_cards' deck.pk %} ">
           <span class="glyphicon glyphicon-chevron-left"></span>
