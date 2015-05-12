@@ -1,4 +1,9 @@
+/* Learn the card number */
+/* Many sleazy hacks were employed in the development of this module */
 CardLearner = (function() {
+  /* Disable console.log for production. This is very very sleazy. */
+  console.log = function() {};
+
   /* There will be 5 bins */
   var NBINS = 5;
 
@@ -6,9 +11,10 @@ CardLearner = (function() {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  function pickBinNumber() {
+  function pickBinNumber(bins) {
     /* In the case of 5 bins, I will calculate denominator to be
-     * 1 + 2 + 4 + 8 + 16
+     * 1 * 1 * bin_5_count + 2 * 2 * bin_4_count + 4 * 4 * bin_3_count + 
+     *     8 * bin_2_count + 16 * bin_1_count
      * The probability of a card from bin 1 chosen will be 
      * 16 / denominator
      * From bin 2
@@ -17,21 +23,38 @@ CardLearner = (function() {
      * 4 / denominator and so on.
      * The probabilities are exponentially decreasing.
      */
-    var total_num = getRandomInt(1, Math.pow(2, NBINS));
+    var total_sum = 0;
+    var upper_limits = [];
+    var divide_counter = Math.pow(2, NBINS - 1);
+    for (var i = 0; i < NBINS; i++) {
+      var this_bin_len = Object.keys(bins[i]).length;
+      var this_addition = divide_counter * divide_counter * this_bin_len;
 
-    /* This is hard coded for now, I'll standardize it later
-     *   - Mike                                               */
-    if (total_num <= 16) {
-      return 0;
-    } else if (total_num <= 24) {
-      return 1;
-    } else if (total_num <= 28) {
-      return 2;
-    } else if (total_num <= 30) {
-      return 3;
-    } else {
-      return 4;
+      if (i > 0) {
+        upper_limits[i] = upper_limits[i - 1] + this_addition;
+      } else {
+        upper_limits[i] = this_addition;
+      }
+
+      total_sum += this_addition;
+      divide_counter /= 2;
     }
+
+    console.log("Generating a new bin number: ");
+    console.log("The bin number cutoffs are: ");
+    console.log(upper_limits);
+
+    var gen_num = getRandomInt(1, total_sum + 1);
+
+    console.log("Number generated was ", gen_num);
+
+    for (var i = 0; i < upper_limits.length; i++) {
+      if (gen_num <= upper_limits[i]) {
+        console.log("Returning bin ", i);
+        return i;
+      }
+    }
+
   }
 
   /* Card learner constructor */
@@ -58,6 +81,7 @@ CardLearner = (function() {
     } else { 
       /* The reloaded old learner */
       var oldLearner = arguments[1];
+      var newMapping = arguments[2];
 
       /* Load old bins and card bin numbers */
       this.bins = oldLearner.bins;
@@ -72,6 +96,24 @@ CardLearner = (function() {
         if (! (pk in this.cardBinNumbers)) {
           this.bins[0][cards[i].pk] = true;
           this.cardBinNumbers[cards[i].pk] = 0;
+        }
+      }
+
+      console.log(newMapping);
+
+      /* Ensure that no cards were deleted */
+      var binNumbers = Object.keys(this.cardBinNumbers);
+      for (var i = 0; i < binNumbers.length; i++) {
+        var thisNum = binNumbers[i];
+
+        /* The pk is no longer in the mapping: the card
+         * must have been deleted */
+        if (! (thisNum in newMapping) ) {
+          var oldBinNumber = this.cardBinNumbers[thisNum];
+          var oldBin = this.bins[oldBinNumber];
+
+          delete this.cardBinNumbers[thisNum];
+          delete oldBin[thisNum];
         }
       }
 
@@ -94,7 +136,7 @@ CardLearner = (function() {
 
   CardLearner.prototype.next = function() {
     /* Get the bin number */
-    var binNumberChosen = pickBinNumber();
+    var binNumberChosen = pickBinNumber(this.bins);
     var finalBinSelected = binNumberChosen;
     var binSelected = false;
 
@@ -119,10 +161,6 @@ CardLearner = (function() {
         }
         finalBinSelected++;
       }
-    }
-
-    if (!binSelected) {
-      throw("CRITICAL ERROR: BIN SELECTION FAILURE");
     }
 
 
@@ -181,12 +219,12 @@ CardLearner = (function() {
 
     console.log("Saving object: ");
     console.log(objectString);
-    
+
     localStorage.setItem(key, objectString);
   }
 
   /* Load a card learner */
-  CardLearner.load = function(deckPk, cards) {
+  CardLearner.load = function(deckPk, cards, cardPkMapping) {
     var key = "deck" + deckPk;
 
     /* Load the original item */
@@ -196,7 +234,7 @@ CardLearner = (function() {
     console.log("Loaded object: ");
     console.log(loadedObject);
 
-    return new CardLearner(cards, parsedObject);
+    return new CardLearner(cards, parsedObject, cardPkMapping);
 
   }
 

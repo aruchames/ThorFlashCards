@@ -55,12 +55,12 @@ $.ajax({
         response = text;
 
         cards = response.cards;
-        cardLearner = CardLearner.load(response.pk, response.cards);
-
         for (var i = 0; i < cards.length; i++) {
             var pk = cards[i].pk;
             cardPkMapping[pk] = cards[i];
         }
+
+        cardLearner = CardLearner.load(response.pk, response.cards, cardPkMapping);
 
         /* Hide the loading information */
         $('#LoadingInfo').hide();
