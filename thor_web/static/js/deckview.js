@@ -40,11 +40,12 @@ var pk   = res[res.length-2];
 var url  = "/api/decks/" + pk;
 var response = '';
 var N;
-var cardIndex;
 var currentCard;
 var frontFacing;
 var cardLearner
 var cards;
+var cardPkMapping = {};
+var cardPk;
 
 $.ajax({
     method:"GET",
@@ -53,39 +54,19 @@ $.ajax({
     {
         response = text;
 
-        /* Load the card learner information */
-        var previousCardLearner = $.cookie("cardLearner");
-        if (previousCardLearner === undefined)
-            previousCardLearner = null;
-
-        /* Log the card learner informat */
-        console.log("Previous Card Learner: ", previousCardLearner);
-
         cards = response.cards;
-        N = cards.length;
+        cardLearner = CardLearner.load(response.pk, response.cards);
 
-        if (!previousCardLearner){
-
-            /* Make a card learner from the number of cards in the deck. */
-            cardLearner = new CardLearner(N);
-        }
-        else{
-            previousCardLearner = JSON.parse(previousCardLearner);
-            N = previousCardLearner.N;
-            var probs = previousCardLearner.probs;
-            var known = previousCardLearner.known;
-            var m = previousCardLearner.m;
-            var nKnown = previousCardLearner.nKnown;
-
-            cardLearner = new CardLearner(N, probs, known, m, nKnown);
+        for (var i = 0; i < cards.length; i++) {
+            var pk = cards[i].pk;
+            cardPkMapping[pk] = cards[i];
         }
 
         /* Hide the loading information */
         $('#LoadingInfo').hide();
 
-
-        cardIndex = cardLearner.next();
-        currentCard = cards[cardIndex];
+        cardPk = cardLearner.next();
+        currentCard = cardPkMapping[cardPk];
         frontFacing = true;
         thorFCloadCard();  
     },
@@ -93,7 +74,6 @@ $.ajax({
     {
     	console.log(textStatus);
     	console.log(errorThrown);
-        thorFCloadCard(); 
     }
 }); 
 
@@ -127,7 +107,6 @@ function thorFCloadCard(){
 }
 // Displays other side of card text. 
 function thorFCflip(){
-
     if (frontFacing) {
         $('.front').hide();
         $('.content').find('.card').toggleClass('flipped');
@@ -143,8 +122,8 @@ function thorFCflip(){
 // Callback for swipe functions, sets next card and then loads it. 
 function fadeOutComplete(){
     $('.card').remove();
-    cardIndex = cardLearner.next();
-    currentCard = cards[cardIndex];
+    cardPk = cardLearner.next();
+    currentCard = cardPkMapping[cardPk];
 
     
     frontFacing = true;
@@ -154,16 +133,17 @@ function fadeOutComplete(){
 // Swipe right, displays green background to indicate answered correctly. 
 function thorFCswipeRight(){    
 	$('.card').addClass('rotate-left').delay(700).fadeOut(1, fadeOutComplete);
-	cardLearner.learn(cardIndex, true)
+	cardLearner.learn(cardPk, true)
+    CardLearner.save(cardLearner, response.pk);
 }
 // Swipe left, displays red background to indicate answered incorrectly.
 function thorFCswipeLeft(){
 	$('.card').addClass('rotate-right').delay(700).fadeOut(1, fadeOutComplete);
-	cardLearner.learn(cardIndex, false);
+	cardLearner.learn(cardPk, false);
+    CardLearner.save(cardLearner, response.pk);
 }
 
 // Function to store deck state for future review.
 function storeDeckState(){
-    var cardLearnerState = cardLearner.dataDump();
-    $.cookie("cardLearner", JSON.stringify(cardLearnerState), { expires:10 });
+    CardLearner.save(cardLearner, response.pk);
 }
