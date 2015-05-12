@@ -88,7 +88,10 @@ CardLearner = (function() {
       this.cardBinNumbers = oldLearner.cardBinNumbers;
 
       /* Set new size */
-      this.size = cards.size;
+      this.size = cards.length;
+
+      /* Index used for when there are only a small number of cards */
+      this.nextIndex = 0;
 
       /* Ensure that all new cards are inserted into bin 1 */
       for (var i = 0; i < cards.length; i++) {
@@ -134,12 +137,29 @@ CardLearner = (function() {
     console.log("");
   }
 
+  CardLearner.prototype.nextSmallCutoff = function() {
+    var returnVal = Object.keys(this.cardBinNumbers)[this.nextIndex];
+    this.nextIndex++;
+
+    if (this.nextIndex > this.size - 1) {
+      this.nextIndex = 0;
+    }
+
+    return returnVal;
+  }
+
   CardLearner.prototype.next = function() {
-    /* Get the bin number */
     if (Object.keys(this.cardBinNumbers).length == 0) {
       return null;
     }
 
+    console.log("Deck size: ", this.size);
+    if (this.size <= 5) {
+      console.log("Small cutoff detected.");
+      return this.nextSmallCutoff();
+    }
+
+    /* Get the bin number */
     var binNumberChosen = pickBinNumber(this.bins);
     var finalBinSelected = binNumberChosen;
     var binSelected = false;
