@@ -2,7 +2,7 @@
 /* Many sleazy hacks were employed in the development of this module */
 CardLearner = (function() {
   /* Disable console.log for production. This is very very sleazy. */
-  console.log = function() {};
+  // console.log = function() {};
 
   /* There will be 5 bins */
   var NBINS = 5;
@@ -64,6 +64,9 @@ CardLearner = (function() {
       this.cardBinNumbers = {};
       this.size = cards.length;
 
+      /* Index used for when there are only a small number of cards */
+      this.nextIndex = 0;
+      
       /* Each bin will be an empty object */
       for (var i = 0; i < NBINS; i++) {
         this.bins[i] = {};
@@ -138,8 +141,10 @@ CardLearner = (function() {
   }
 
   CardLearner.prototype.nextSmallCutoff = function() {
+    console.log("Next index:", this.nextIndex);
     var returnVal = Object.keys(this.cardBinNumbers)[this.nextIndex];
     this.nextIndex++;
+    console.log("Return val:", returnVal);
 
     if (this.nextIndex > this.size - 1) {
       this.nextIndex = 0;
@@ -154,6 +159,7 @@ CardLearner = (function() {
     }
 
     console.log("Deck size: ", this.size);
+    console.log(Object.keys(this.cardBinNumbers));
     if (this.size <= 5) {
       console.log("Small cutoff detected.");
       return this.nextSmallCutoff();
