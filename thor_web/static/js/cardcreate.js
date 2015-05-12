@@ -59,6 +59,8 @@ $(document).ready(function() {
           frontInput.val("");
           backInput.val("");
 
+          frontInput.focus();
+
           $('.flashcard').hide("slide", { direction: "right" }, 300, function() {
             frontOut.text("Front of Card");
             backOut.text("Back of Card");

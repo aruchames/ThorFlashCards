@@ -2,7 +2,7 @@
 /* Many sleazy hacks were employed in the development of this module */
 CardLearner = (function() {
   /* Disable console.log for production. This is very very sleazy. */
-  // console.log = function() {};
+  console.log = function() {};
 
   /* There will be 5 bins */
   var NBINS = 5;

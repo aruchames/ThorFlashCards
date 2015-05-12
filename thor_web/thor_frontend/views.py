@@ -87,7 +87,10 @@ def deck_cards(request, deck_pk):
     else:
         t = loader.get_template('deck_app/cards.html')
         deck.fl = deck_flag_convert(deck.language)
-        c = RequestContext(request, {"deck": deck})
+
+        editForbidden = deck_edit_forbidden(deck, request.user)
+
+        c = RequestContext(request, {"deck": deck, "forbidEdit": editForbidden})
         return HttpResponse(t.render(c))
 
 def decks(request):
