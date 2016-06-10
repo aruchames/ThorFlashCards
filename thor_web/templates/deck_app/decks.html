@@ -40,6 +40,25 @@
 
 <div class="cardcontainer" style="position: relative">
   <div class="content visible-lg visible-md visible-sm">
+      {% if num_decks == 0 %}
+      <div class="col-lg-6 col-md-12">
+          <a href="create" style="display:block; text-decoration:none; color: black">
+              <div class="stack">
+                Create your first Deck!
+                <div class="row-fluid cardmetainfo">
+                    <div class="col-xs-6">
+                    <span class="flag-icon flag-icon-fr"></span></div>
+            <div class="col-xs-3">
+              <span class="glyphicon glyphicon-list-alt"></span>0
+            </div>
+            <div class="col-xs-3">
+              <span class="glyphicon glyphicon-eye-open"></span>0
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>   {% endif %}
+      
     {% for deck in decks %}
     <div class="col-lg-6 col-md-12">
       <a href="{% url 'deck_cards' deck.pk %}" style="display:block; text-decoration: none; color: black">
