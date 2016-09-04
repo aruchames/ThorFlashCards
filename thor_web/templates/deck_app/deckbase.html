@@ -19,10 +19,10 @@
 
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.6/animate.min.css" type="text/css">
-    <link rel="stylesheet" type="text/css" href='{% static "shared/css/deckapp.css" %}'> 
+    <link rel="stylesheet" type="text/css" href='{% static "shared/css/deckapp.css" %}'>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    
+
     <!-- Plugin JavaScript -->
     <script src='//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
     <script src='//cdnjs.cloudflare.com/ajax/libs/FitText.js/1.1/jquery.fittext.min.js'></script>
@@ -30,7 +30,7 @@
     <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
 
     {% block owncss %}
-    {% endblock owncss %} 
+    {% endblock owncss %}
   </head>
 
   <body id="page-top" class="index">
@@ -58,7 +58,7 @@
               <!-- find a way to change this to href="decks" and still be able to make ajax  requests from api/-->
               <a href="/decks">{{user.username | title}}'s decks</a>
             </li>
-            
+
             <li>
               <a href="/decks/create" data-toggle="tooltip" title="Create A Deck"><i id="glyphiconplus" class="fa fa-plus fa-3x wow bounceIn" data-wow-delay=".1s"> </i></a>
             </li>
@@ -95,7 +95,7 @@
       </div>
       <!-- /.container-fluid -->
     </nav>
- 
+
     {% block content %}
     <p>This is default content</p>
     {% endblock content %}
@@ -115,7 +115,7 @@
     <!-- Custom Theme JavaScript -->
     <script src='{% static "shared/js/creative.js" %}'></script>
 
-    {% block ownjavascript %}    
+    {% block ownjavascript %}
     {% endblock ownjavascript %}
 
   </body>

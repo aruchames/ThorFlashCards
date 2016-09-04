@@ -3,7 +3,7 @@ from thor_frontend import views
 
 handler404 = views.error404
 
-urlpatterns = patterns('thor_frontend.views',    
+urlpatterns = patterns('thor_frontend.views',
     url(r'^$', views.customindex, name='index'),
     url(r'^login/$', views.login, name='login'),
     url(r'^register/$', views.register, name='register'),
@@ -12,6 +12,7 @@ urlpatterns = patterns('thor_frontend.views',
     url(r'^decks/$', views.decks, name='deck_view'),
     url(r'^decks/create$', views.deck_create, name='deck_create'),
     url(r'^decks/(?P<deck_pk>[0-9]+)/$', views.deck_detail, name='deck_detail'),
-    url(r'^deck/cards/(?P<deck_pk>[0-9]+)/create/$', views.card_create, name='card_create'), 
+    url(r'^deck/cards/(?P<deck_pk>[0-9]+)/create/$', views.card_create, name='card_create'),
     url(r'^deck/cards/(?P<deck_pk>[0-9]+)/', views.deck_cards, name='deck_cards'),
+    url(r'^profile/$', views.profile_base, name='profile_base'),
 )

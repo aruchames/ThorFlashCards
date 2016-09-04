@@ -18,7 +18,7 @@ Figure out how to reverse lookup urls (ie redirect to a specific view rather tha
 """
 
 def deck_flag_convert(country_code):
-    """ 
+    """
     Convert between language code and flag css classes.
     The current flag css library used is in /static/shared/flag-icon.min.css
     """
@@ -33,7 +33,7 @@ def deck_flag_convert(country_code):
         "el": "gr",
     }
 
-    # Only return a value different from country_code if an alternative 
+    # Only return a value different from country_code if an alternative
     # is specified in cc_dict
     if country_code in cc_dict:
         return cc_dict[country_code]
@@ -59,7 +59,7 @@ def deck_view_forbidden(deck, user):
 
 def card_create(request, deck_pk):
     """
-    Interface for creating cards 
+    Interface for creating cards
     """
     # Attempt to fetch the deck with the given pk. On failure, raise 404.
     deck = get_deck(deck_pk)
@@ -94,7 +94,7 @@ def deck_cards(request, deck_pk):
         return HttpResponse(t.render(c))
 
 def decks(request):
-    """ 
+    """
     View all decks associated with the current user or with anonymous users.
     If the user is logged in, only his decks will be listed.
     If the user is not logged in, all public decks will be listed.
@@ -126,7 +126,7 @@ def decks(request):
             words_learned = words_learned + 1
 
 
-    """ Store information on what flag css type to render depending on the 
+    """ Store information on what flag css type to render depending on the
      language of the deck and what language the deck is """
     for d in decks_list:
         d.fl = deck_flag_convert(d.language)
@@ -148,10 +148,10 @@ def deck_create(request):
         lang_code = inv_lang_dict[language]
 
         if viewability == 'public':
-            d = Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
+            d = Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user,
                 private=False)
         else:
-            d = Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user, 
+            d = Deck.objects.create(language=lang_code, deck_name=deck_name, created_by=request.user,
                 private=True)
 
         return redirect('card_create', d.pk)
@@ -162,7 +162,7 @@ def deck_create(request):
 
 def deck_detail(request, deck_pk):
     """
-    Explore the cards of a given deck. 
+    Explore the cards of a given deck.
     """
 
     # Attempt to fetch the deck with the given pk. On failure, raise 404.
@@ -175,7 +175,7 @@ def deck_detail(request, deck_pk):
     t = loader.get_template('deck_app/deckview.html')
     c = RequestContext(request, {"deck": deck})
     return HttpResponse(t.render(c));
-                                                    
+
 def login(request):
     """
     The login form logic.
@@ -199,7 +199,7 @@ def login(request):
 
                 # TODO; find out how to reverse lookup URLS
                 return redirect('login')
- 
+
         messages.add_message(request, messages.ERROR, "Login credentials invalid")
         return redirect('login')
     else:
@@ -214,8 +214,8 @@ def logout(request):
 
 def register(request):
     """
-    The register form logic. 
-    Assumptions: 
+    The register form logic.
+    Assumptions:
     User MUST supply an email
     At max a user can have 1 account
     """
@@ -267,7 +267,15 @@ def register(request):
         t = loader.get_template('register.html')
         c = RequestContext(request, {})
         return HttpResponse(t.render(c))
-   
+
+def profile_base(request):
+    if request.user.is_authenticated():
+        t = loader.get_template('profile/profile_details.html')
+        c = RequestContext(request, {})
+        return HttpResponse(t.render(c))
+    else:
+        return redirect('register')
+
 def customindex(request):
     if request.user.is_authenticated():
         return redirect('deck_view')

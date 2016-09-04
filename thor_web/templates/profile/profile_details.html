@@ -1,0 +1,42 @@
+{% extends "profile/profile_base.html" %}
+{% load static %}
+{% block ownjs %}
+{% endblock ownjs %}
+
+{% block owncss %}
+<link rel="stylesheet" type="text/css" href='{% static "shared/css/profile.css" %}'>
+{% endblock owncss %}
+
+{% block content %}
+
+<div class="col-lg-2">This is spacing</div>
+<div class="container col-lg-6">
+    <div id="profile-block">
+        <div class="panel panel-default">
+            <div class="panel-content" style="text-align:center">
+                <div class="profile-image-container">
+                    <div class="profile-image"></div>
+                </div>
+                <div class="text-center h2">{{user.username}}</div>
+                <div class="text-center h4">Check out your profile!</div>
+            </div>
+        </div>
+        <div id="activity-block">
+            This is where your activity will go.
+        </div>
+    </div>
+</div>
+<div class="container col-lg-4">
+    <div>
+        <div id="achievements-block">
+            This is where your progress will show
+        </div>
+        <br>
+
+        <div id="friends-block">
+            your friends will show up here.
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

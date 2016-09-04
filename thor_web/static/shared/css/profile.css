@@ -1,0 +1,18 @@
+.profile-image {
+    margin-top: 40px;
+    text-align:center;
+    height: 300px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    background: url("/static/shared/img/ruchames.png")no-repeat center center;
+    vertical-align:bottom;
+}
+
+.profile-image-container{
+    text-align:center;
+}
+
+.panel{
+    margin-top:50px;
+}
